@@ -3,6 +3,7 @@
     <RouterLink to="/data-usage">Data usage</RouterLink>
     <RouterLink to="/activity-log">Asset management</RouterLink>
     <RouterLink to="/asset-management">Activity log</RouterLink>
+    <RouterLink to="/service-ticket-reporting">Service ticket reporting</RouterLink>
   </header>
 </template>
 
