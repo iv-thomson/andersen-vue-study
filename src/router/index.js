@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+// Check how to add new routes here: https://router.vuejs.org/
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
