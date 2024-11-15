@@ -1,0 +1,203 @@
+[
+    {
+      "name": "John Doe",
+      "number": "+1234567890",
+      "status": "active",
+      "costCenter": "IT Department",
+      "splitRecent": false,
+      "carrierIMEI": "356938035643809",
+      "ratePlan": "Unlimited Plan",
+      "dataUsage": "3GB"
+    },
+    {
+      "name": "Jane Smith",
+      "number": "+0987654321",
+      "status": "inactive",
+      "costCenter": "HR Department",
+      "splitRecent": true,
+      "carrierIMEI": "490154203237518",
+      "ratePlan": "Standard Plan",
+      "dataUsage": "1GB"
+    },
+    {
+      "name": "Bob Johnson",
+      "number": "+1122334455",
+      "status": "suspended",
+      "costCenter": "Finance",
+      "splitRecent": false,
+      "carrierIMEI": "867530986753091",
+      "ratePlan": "Premium Plan",
+      "dataUsage": "0GB"
+    },
+    {
+      "name": "Alice Brown",
+      "number": "+1987654321",
+      "status": "active",
+      "costCenter": "Sales",
+      "splitRecent": true,
+      "carrierIMEI": "123456789012345",
+      "ratePlan": "Basic Plan",
+      "dataUsage": "2GB"
+    },
+    {
+      "name": "Charlie White",
+      "number": "+1239874560",
+      "status": "active",
+      "costCenter": "Engineering",
+      "splitRecent": false,
+      "carrierIMEI": "098765432109876",
+      "ratePlan": "Unlimited Plan",
+      "dataUsage": "5GB"
+    },
+    {
+      "name": "Daisy Blue",
+      "number": "+1654321098",
+      "status": "inactive",
+      "costCenter": "Marketing",
+      "splitRecent": true,
+      "carrierIMEI": "123098456712345",
+      "ratePlan": "Standard Plan",
+      "dataUsage": "1.5GB"
+    },
+    {
+      "name": "Ethan Black",
+      "number": "+1123581321",
+      "status": "active",
+      "costCenter": "Customer Support",
+      "splitRecent": false,
+      "carrierIMEI": "567890123456789",
+      "ratePlan": "Enterprise Plan",
+      "dataUsage": "4GB"
+    },
+    {
+      "name": "Fiona Green",
+      "number": "+1987651234",
+      "status": "suspended",
+      "costCenter": "Legal",
+      "splitRecent": true,
+      "carrierIMEI": "876543210987654",
+      "ratePlan": "Basic Plan",
+      "dataUsage": "0.5GB"
+    },
+    {
+      "name": "George King",
+      "number": "+1560982341",
+      "status": "active",
+      "costCenter": "Operations",
+      "splitRecent": false,
+      "carrierIMEI": "234567890123456",
+      "ratePlan": "Unlimited Plan",
+      "dataUsage": "7GB"
+    },
+    {
+      "name": "Hannah Grey",
+      "number": "+1123908456",
+      "status": "inactive",
+      "costCenter": "Administration",
+      "splitRecent": true,
+      "carrierIMEI": "543210987654321",
+      "ratePlan": "Standard Plan",
+      "dataUsage": "1.2GB"
+    },
+    {
+      "name": "Ian Silver",
+      "number": "+1654987320",
+      "status": "active",
+      "costCenter": "Product Development",
+      "splitRecent": false,
+      "carrierIMEI": "654321098765432",
+      "ratePlan": "Premium Plan",
+      "dataUsage": "6GB"
+    },
+    {
+      "name": "Julia White",
+      "number": "+1234569870",
+      "status": "suspended",
+      "costCenter": "IT Department",
+      "splitRecent": false,
+      "carrierIMEI": "890123456789012",
+      "ratePlan": "Enterprise Plan",
+      "dataUsage": "0GB"
+    },
+    {
+      "name": "Kevin Red",
+      "number": "+1450987612",
+      "status": "active",
+      "costCenter": "Sales",
+      "splitRecent": true,
+      "carrierIMEI": "210987654321098",
+      "ratePlan": "Unlimited Plan",
+      "dataUsage": "8GB"
+    },
+    {
+      "name": "Liam Violet",
+      "number": "+1324905876",
+      "status": "inactive",
+      "costCenter": "Engineering",
+      "splitRecent": false,
+      "carrierIMEI": "345678901234567",
+      "ratePlan": "Standard Plan",
+      "dataUsage": "2GB"
+    },
+    {
+      "name": "Mia Brown",
+      "number": "+1678902345",
+      "status": "active",
+      "costCenter": "Marketing",
+      "splitRecent": true,
+      "carrierIMEI": "456789012345678",
+      "ratePlan": "Basic Plan",
+      "dataUsage": "3GB"
+    },
+    {
+      "name": "Noah Gold",
+      "number": "+1902345678",
+      "status": "active",
+      "costCenter": "Finance",
+      "splitRecent": false,
+      "carrierIMEI": "567890123456789",
+      "ratePlan": "Premium Plan",
+      "dataUsage": "1GB"
+    },
+    {
+      "name": "Olivia Crimson",
+      "number": "+1234098765",
+      "status": "suspended",
+      "costCenter": "HR Department",
+      "splitRecent": true,
+      "carrierIMEI": "098765432198765",
+      "ratePlan": "Enterprise Plan",
+      "dataUsage": "0GB"
+    },
+    {
+      "name": "Paul Indigo",
+      "number": "+1098765432",
+      "status": "active",
+      "costCenter": "Legal",
+      "splitRecent": false,
+      "carrierIMEI": "789012345678901",
+      "ratePlan": "Unlimited Plan",
+      "dataUsage": "5GB"
+    },
+    {
+      "name": "Quinn Sky",
+      "number": "+1987098765",
+      "status": "inactive",
+      "costCenter": "Customer Support",
+      "splitRecent": true,
+      "carrierIMEI": "123450987654321",
+      "ratePlan": "Standard Plan",
+      "dataUsage": "2.5GB"
+    },
+    {
+      "name": "Riley Amber",
+      "number": "+1345987021",
+      "status": "active",
+      "costCenter": "Operations",
+      "splitRecent": false,
+      "carrierIMEI": "234567891234567",
+      "ratePlan": "Basic Plan",
+      "dataUsage": "4.5GB"
+    }
+  ]
+  
