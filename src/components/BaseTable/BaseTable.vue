@@ -122,7 +122,6 @@ export default {
         item => !isNaN(parseFloat(item[key])),
       )
 
-      // Определяем текущее направление сортировки
       const sortDirection = this.sortDirections[key] || 'asc'
 
       this.itemsTableData.sort((a, b) => {
@@ -140,14 +139,12 @@ export default {
         }
       })
 
-      // Обновляем направление сортировки для следующего клика
       this.sortDirections[key] = sortDirection === 'asc' ? 'desc' : 'asc'
     },
 
     handleButtonClick(index) {
-      // Проверяем, если сортируем новую колонку, сбрасываем направление сортировки для других
       if (this.rotatedIndex !== index) {
-        this.sortDirections = {} // сбрасываем направления сортировки
+        this.sortDirections = {}
       }
 
       this.rotateIcon(index)
