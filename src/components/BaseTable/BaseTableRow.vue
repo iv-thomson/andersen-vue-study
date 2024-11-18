@@ -1,5 +1,15 @@
 <template>
-  <li class="base-table__row">
+  <li
+    class="base-table__row"
+    :class="{ 'base-table__row--checked': isChecked }"
+  >
+    <div class="base-table__checkboxCell">
+      <BaseTableCheckbox
+        ref="checkbox"
+        :value="isChecked"
+        :on-change="toggleCheckbox"
+      />
+    </div>
     <ul class="base-table__rowData">
       <li
         v-for="(key, index) in itemData"
@@ -13,45 +23,71 @@
 </template>
 
 <script>
+import BaseTableCheckbox from '@/components/BaseTable/BaseTableCheckbox.vue'
+
 export default {
   name: 'BaseTableRow',
+  components: {
+    BaseTableCheckbox,
+  },
   props: {
     itemData: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
   },
+  emits: ['row-checked'],
   data() {
-    return {}
+    return {
+      isChecked: false,
+    }
   },
   computed: {
     uniqueIndex() {
       return index => `${index}-${Math.random().toString(36).substring(2, 9)}`
     },
   },
+  methods: {
+    toggleCheckbox(newCheckedState) {
+      this.isChecked = newCheckedState
+      this.$emit('row-checked', this.isChecked)
+    },
+  },
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .base-table__row {
   height: 56px;
   list-style-type: none;
   display: flex;
   border-bottom: 1px solid #bdbfc1;
+  transition: background-color 0.3s ease;
+
+  &--checked {
+    background-color: #daeaf1;
+  }
 }
 
-.base-table__rowData {
-  display: flex;
-  align-items: center;
-  flex-grow: 1;
-  width: 95.8%;
-  padding: 0;
-}
+.base-table {
+  &__checkboxCell {
+    width: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-.base-table__cell {
-  /* width: 148px; */
-  list-style-type: none;
-  flex-basis: 11.11%;
-  font-size: 0.8rem;
+  &__rowData {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    padding: 0;
+  }
+
+  &__cell {
+    list-style-type: none;
+    flex-basis: 12.5%;
+    font-size: 0.8rem;
+  }
 }
 </style>
