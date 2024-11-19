@@ -1,7 +1,7 @@
 <template>
   <div>
     <ProgressSpinner v-if="loading"/>
-    <div v-else class="data-usage">
+    <div class="data-usage">
       <div class="overview-header">
         <h1 class="overview-header__title">
           <i class="pi pi-chart-pie title-icon"></i>
@@ -28,39 +28,17 @@
           </Card>
         </div>
       </section>
-      <section class="tree-table__wrapper">
-        <TreeTable 
-        :value="nodes" 
-        :paginator="true" 
+      <DataTable 
+        :nodes="nodes" 
+        :filters="filters" 
         :rows="rows" 
-        :loading="loading"
-        :total-records="totalRecords"
-        :filters="filters"
-        table-style="min-width: 50rem"
-        @page="onPage"
-      >
-        <template #header>
-            <div class="table-header">
-              <h1>Detailed Data Usage</h1>
-                <IconField>
-                    <InputIcon class="pi pi-search" />
-                    <InputText v-model="filters['global']" placeholder="Input" />
-                </IconField>
-            </div>
-        </template>
-        <template #empty>
-          <div class="table-empty">
-            <i class="pi pi-info-circle" style="font-size: 1rem;"></i>
-            <span> No data available for the selected filters.</span>
-          </div>
-        </template>
-        <Column field="name" header="Name" sortable></Column>
-        <Column field="number" header="Employee Number" sortable></Column>
-        <Column field="status" header="Status" sortable></Column>
-        <Column field="costCenter" header="Cost Center" sortable></Column>
-        <span class="showing-info">Showing {{ first + 1 }} to {{ last }} of {{ totalRecords }}</span>
-      </TreeTable>
-      </section>
+        :loading="loading" 
+        :total-records="totalRecords" 
+        :first="first" 
+        :last="last" 
+        @update:page="handlePageChange"
+        @update:filters="updateFilters" 
+      />
    </div>
  </div>
 </template>
@@ -68,25 +46,22 @@
 <script>
 import { fetchDataUsage, fetchKeyFigures } from "@/api/data-usage.api";
 import { fileDowload } from '@/services/fileDowload';
+import DataTable from "@/components/DataTable.vue";
 import ProgressSpinner from 'primevue/progressspinner';
 import PrimeButton from 'primevue/button';
-import TreeTable from 'primevue/treetable';
 import Message from 'primevue/message';
 import SelectButton from 'primevue/selectbutton';
 import Card from 'primevue/card';
-import Column from 'primevue/column';
-import IconField from 'primevue/iconfield';
-import InputIcon from 'primevue/inputicon';
-import InputText from 'primevue/inputtext';
+
 export default {
   name: 'DataUsageView',
-  components: { ProgressSpinner, PrimeButton, Message, SelectButton, Card, TreeTable, Column, IconField, InputIcon, InputText },
+  components: { DataTable, ProgressSpinner, PrimeButton, Message, SelectButton, Card },
   data() {
     return {
       value: 'All',
       options: ['All', 'Top Data Users (>5GB)', '0531177937 - Bell'],
       figures: [],
-      nodes: null,
+      nodes: {},
       filters: {},
       rows: 10,
       loading: false,
@@ -112,11 +87,14 @@ export default {
         leaf: true,
       }));
     },
-    onPage(event) {
+    handlePageChange(event) {
       this.first = event.first;
       this.last = event.first + event.rows;
       this.loading = true;
       this.loadPageData();
+    },
+    updateFilters(event) {
+      this.filters = { ...this.filters, global: event.target.value };
     },
     loadPageData() {
       this.loading = true;
@@ -241,59 +219,5 @@ export default {
 }
 .data-usage__card-list .p-card-title {
   font-size: 49px;
-}
-.tree-table__wrapper {
-  border: 1px solid #BDBFC1;
-  border-radius: 28px;
-  margin-top: 18px;
-  margin-bottom: 36px;
-  box-shadow: 0px 20px 25px -5px #0000001A;
-  padding: 28px 36px;
-  background: #FFFFFF;
-}
-.p-treetable.p-component {
-  margin-top: 18px;
-  margin-bottom: 18px;
-}
-.p-treetable-thead {
-  border: 1px solid #BDBFC1;
-}
-.p-treetable-header-cell.p-treetable-sortable-column {
-  color: #485066;
-  background-color:  #E9F0F4;
-  font-weight: bold;
-  padding: 10px 18px; 
-}
-.p-inputtext.p-component {
-  border-radius: 14px;
-}
-.p-paginator.p-component {
-  justify-content: end;
-  padding-top: 18px;
-  padding-bottom: 0;
-}
-.p-paginator-pages>.p-paginator-page.p-paginator-page-selected {
-  background: #007BFF;
-  color: #FFFFFF;
-}
-.showing-info {
-  position: absolute;
-  bottom: 12px;
-  font-size: 13px;
-  color: #485066;
-}
-.table-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 6px;
-}
-.table-header h1 {
-  margin: 0; 
-  font-size: 25px;
-}
-.table-header .p-iconfield {
-  display: flex;
-  align-items: center;
 }
 </style>
