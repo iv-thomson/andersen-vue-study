@@ -1,70 +1,74 @@
 <template>
-  <div class="data-usage">
-    <div class="overview-header">
-      <h1 class="overview-header__title">
-        <i class="pi pi-chart-pie title-icon"></i>
-        <b> All Data usage</b> - September 2024
-      </h1>
-      <PrimeButton label="Export to CSV" icon="pi pi-file" class="export-button" @click="handleExportToCSV"/>
-    </div>
-    <Message  closable icon="pi pi-exclamation-circle" class="closable-disclaimer">
-      <b>Disclaimer</b>
-      <div class="p-message-text">
-        Data received can be 1—2 days delayed from the carrier.
+  <div>
+    <ProgressSpinner v-if="loading"/>
+    <div v-else class="data-usage">
+      <div class="overview-header">
+        <h1 class="overview-header__title">
+          <i class="pi pi-chart-pie title-icon"></i>
+          <b> All Data usage</b> - September 2024
+        </h1>
+        <PrimeButton label="Export to CSV" icon="pi pi-file" class="export-button" @click="handleExportToCSV"/>
       </div>
-    </Message>
-    <section class="data-usage__cards">
-      <SelectButton v-model="value" :options="options"/>
-      <div class="data-usage__card-list">
-        <Card
-          v-for="(figure, index) in figures"
-          :key="index"
-          style="width: 25rem; overflow: hidden"
-        >
-          <template #title>{{ figure.value}}</template>
-          <template #subtitle>{{ figure.description }}</template>
-        </Card>
-      </div>
-    </section>
-    <section class="tree-table__wrapper">
-      <TreeTable 
-      :value="nodes" 
-      :paginator="true" 
-      :rows="rows" 
-      :loading="loading"
-      :total-records="totalRecords"
-      :filters="filters"
-      table-style="min-width: 50rem"
-      @page="onPage"
-    >
-      <template #header>
-          <div class="table-header">
-            <h1>Detailed Data Usage</h1>
-              <IconField>
-                  <InputIcon class="pi pi-search" />
-                  <InputText v-model="filters['global']" placeholder="Input" />
-              </IconField>
-          </div>
-      </template>
-      <template #empty>
-        <div class="table-empty">
-          <i class="pi pi-info-circle" style="font-size: 1rem;"></i>
-          <span> No data available for the selected filters.</span>
+      <Message  closable icon="pi pi-exclamation-circle" class="closable-disclaimer">
+        <b>Disclaimer</b>
+        <div class="p-message-text">
+          Data received can be 1—2 days delayed from the carrier.
         </div>
-      </template>
-      <Column field="name" header="Name" sortable></Column>
-      <Column field="number" header="Employee Number" sortable></Column>
-      <Column field="status" header="Status" sortable></Column>
-      <Column field="costCenter" header="Cost Center" sortable></Column>
-      <span class="showing-info">Showing {{ first + 1 }} to {{ last }} of {{ totalRecords }}</span>
-    </TreeTable>
-    </section>
-  </div>
+      </Message>
+      <section class="data-usage__cards">
+        <SelectButton v-model="value" :options="options"/>
+        <div class="data-usage__card-list">
+          <Card
+            v-for="(figure, index) in figures"
+            :key="index"
+            style="width: 25rem; overflow: hidden"
+          >
+            <template #title>{{ figure.value}}</template>
+            <template #subtitle>{{ figure.description }}</template>
+          </Card>
+        </div>
+      </section>
+      <section class="tree-table__wrapper">
+        <TreeTable 
+        :value="nodes" 
+        :paginator="true" 
+        :rows="rows" 
+        :loading="loading"
+        :total-records="totalRecords"
+        :filters="filters"
+        table-style="min-width: 50rem"
+        @page="onPage"
+      >
+        <template #header>
+            <div class="table-header">
+              <h1>Detailed Data Usage</h1>
+                <IconField>
+                    <InputIcon class="pi pi-search" />
+                    <InputText v-model="filters['global']" placeholder="Input" />
+                </IconField>
+            </div>
+        </template>
+        <template #empty>
+          <div class="table-empty">
+            <i class="pi pi-info-circle" style="font-size: 1rem;"></i>
+            <span> No data available for the selected filters.</span>
+          </div>
+        </template>
+        <Column field="name" header="Name" sortable></Column>
+        <Column field="number" header="Employee Number" sortable></Column>
+        <Column field="status" header="Status" sortable></Column>
+        <Column field="costCenter" header="Cost Center" sortable></Column>
+        <span class="showing-info">Showing {{ first + 1 }} to {{ last }} of {{ totalRecords }}</span>
+      </TreeTable>
+      </section>
+   </div>
+ </div>
 </template>
 
 <script>
 import { fetchDataUsage, fetchKeyFigures } from "@/api/data-usage.api";
 import { fileDowload } from '@/services/fileDowload';
+import ProgressSpinner from 'primevue/progressspinner';
 import PrimeButton from 'primevue/button';
 import TreeTable from 'primevue/treetable';
 import Message from 'primevue/message';
@@ -76,7 +80,7 @@ import InputIcon from 'primevue/inputicon';
 import InputText from 'primevue/inputtext';
 export default {
   name: 'DataUsageView',
-  components: { PrimeButton, Message, SelectButton, Card, TreeTable, Column, IconField, InputIcon, InputText },
+  components: { ProgressSpinner, PrimeButton, Message, SelectButton, Card, TreeTable, Column, IconField, InputIcon, InputText },
   data() {
     return {
       value: 'All',
