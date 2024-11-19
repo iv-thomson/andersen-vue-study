@@ -1,8 +1,13 @@
 <template>
   <div class="service-ticket-reporting">
-    <h1 class="service-ticket-reporting__page-title">
-      Service ticket reporting
-    </h1>
+    <div class="service-ticket-reporting__header">
+      <h1 class="service-ticket-reporting__page-title">
+        Service ticket reporting
+      </h1>
+      <button class="service-ticket-reporting__exportBtn">
+        <img src="@/assets/icons/file-excel.svg" alt="export" />Export to Excel
+      </button>
+    </div>
     <div class="service-ticket-reporting__tableWrapper">
       <div class="service-ticket-reporting__tableHeader">
         <h2 class="service-ticket-reporting__tableTitle">Service tickets</h2>
@@ -12,9 +17,14 @@
             :selected-value="selectedValue"
             @select="handleSelectOption"
           />
+          <BaseSearch
+            v-model="searchValue"
+            placeholder="Search Device List..."
+            @search="handleSearchClick"
+          />
         </div>
       </div>
-      <BaseTable :items-data="filteredTickets" />
+      <BaseTable :items-data="filteredData" />
     </div>
   </div>
 </template>
@@ -22,6 +32,7 @@
 <script>
 import BaseTable from '@/components/BaseTable/BaseTable.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
+import BaseSearch from '@/components/BaseSearch.vue'
 import { getHttpRequest } from '@/services/httpService'
 
 export default {
@@ -29,6 +40,7 @@ export default {
   components: {
     BaseTable,
     BaseSelect,
+    BaseSearch,
   },
   data() {
     return {
@@ -41,33 +53,43 @@ export default {
       ],
       selectedValue: 'Ticket Type',
       filteredData: [],
+      searchValue: '',
     }
-  },
-  computed: {
-    filteredTickets() {
-      if (this.filteredData.length) return this.filteredData
-      else return this.ticketsData
-    },
   },
   async created() {
     try {
       const data = await getHttpRequest('/service-ticket-reporting.json')
       this.ticketsData = data
+      this.filteredData = [...data]
     } catch (error) {
-      console.error('Ошибка загрузки данных:', error)
+      console.error('Data fetching error:', error)
     }
   },
   methods: {
     handleSelectOption(option) {
       this.selectedValue = option.name
-      this.filteredData = []
-      let that = this
-      if (option.name === 'all') return (this.filteredData = [])
-      this.ticketsData.map(function (item) {
-        if (item.status === option.name) {
-          that.filteredData.push(item)
-        }
-      })
+      this.searchValue = ''
+
+      if (option.name === 'all') {
+        this.filteredData = [...this.ticketsData]
+      } else {
+        this.filteredData = this.ticketsData.filter(
+          item => item.status === option.name,
+        )
+      }
+    },
+
+    handleSearchClick(value) {
+      if (value) {
+        this.filteredData = this.filteredData.filter(item => {
+          return Object.values(item).some(field =>
+            String(field).toLowerCase().includes(value.toLowerCase()),
+          )
+        })
+      } else {
+        this.filteredData = this.ticketsData
+        this.selectedValue = 'all'
+      }
     },
   },
 }
@@ -76,25 +98,49 @@ export default {
 <style lang="scss" scoped>
 .service-ticket-reporting {
   position: relative;
-  padding: 30px 80px;
+  padding: 0 80px 30px;
+
+  &__header {
+    max-width: 1308px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__page-title {
+    padding-left: 40px;
+  }
 
   &__page-title::before {
     content: '';
     position: absolute;
-    top: 55px;
-    left: 35px;
+    top: 25px;
+    left: 0;
     width: 32px;
     height: 32px;
-    background-image: url('../assets/icons/chart-line.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
+    background: url('../assets/icons/chart-line.svg') no-repeat center/contain;
+  }
+
+  &__exportBtn {
+    width: 157px;
+    height: 36px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: none;
+    background-color: #004b85;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
   }
 
   &__tableWrapper {
     max-width: 1308px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 25px;
     padding: 36px;
     border: 1px solid #bdbfc1;
     border-radius: 28px;
@@ -108,7 +154,13 @@ export default {
   }
 
   &__tableTitle {
-    margin-top: 0;
+    margin: 0;
+  }
+
+  &__tableFilters {
+    display: flex;
+    align-items: center;
+    gap: 18px;
   }
 }
 </style>
