@@ -136,7 +136,9 @@
     }
   }
 }
+</style>
 
+<style scoped lang="scss">
 .showing-info {
   position: absolute;
   bottom: 60px;
@@ -152,11 +154,6 @@
   h1 {
     margin: 0;
     font-size: 25px;
-  }
-
-  .p-iconfield {
-    display: flex;
-    align-items: center;
   }
 }
 </style>

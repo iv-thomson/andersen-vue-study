@@ -15,19 +15,12 @@
           Data received can be 1—2 days delayed from the carrier.
         </div>
       </Message>
-      <section class="data-usage__cards">
-        <SelectButton v-model="value" :options="options"/>
-        <div class="data-usage__card-list">
-          <Card
-            v-for="(figure, index) in figures"
-            :key="index"
-            style="width: 25rem; overflow: hidden"
-          >
-            <template #title>{{ figure.value}}</template>
-            <template #subtitle>{{ figure.description }}</template>
-          </Card>
-        </div>
-      </section>
+      <DataCards
+        :value="value"
+        :options="options"
+        :figures="figures"
+        @update:value="updateSelectedValue"
+      />
       <DataTable 
         :nodes="nodes" 
         :filters="filters" 
@@ -44,18 +37,17 @@
 </template>
 
 <script>
-import { fetchDataUsage, fetchKeyFigures } from "@/api/data-usage.api";
+import { fetchDataUsage, fetchKeyFigures } from '@/api/data-usage.api';
 import { fileDowload } from '@/services/fileDowload';
-import DataTable from "@/components/DataTable.vue";
+import DataTable from '@/components/DataTable.vue';
+import DataCards from '@/components/DataCards.vue'
 import ProgressSpinner from 'primevue/progressspinner';
 import PrimeButton from 'primevue/button';
 import Message from 'primevue/message';
-import SelectButton from 'primevue/selectbutton';
-import Card from 'primevue/card';
 
 export default {
   name: 'DataUsageView',
-  components: { DataTable, ProgressSpinner, PrimeButton, Message, SelectButton, Card },
+  components: { DataTable, DataCards, ProgressSpinner, PrimeButton, Message },
   data() {
     return {
       value: 'All',
@@ -79,10 +71,10 @@ export default {
       return data.map((item, index) => ({
         key: index.toString(),
         data: {
-          name: item.name || "-", 
-          number: item.number || "-",
-          status: item.status || "-",
-          costCenter: item.costCenter || "-",
+          name: item.name || '-', 
+          number: item.number || '-',
+          status: item.status || '-',
+          costCenter: item.costCenter || '-',
         },
         leaf: true,
       }));
@@ -96,6 +88,9 @@ export default {
     updateFilters(event) {
       this.filters = { ...this.filters, global: event.target.value };
     },
+    updateSelectedValue(newValue) {
+      this.value = newValue;
+    },
     loadPageData() {
       this.loading = true;
       fetchDataUsage()
@@ -105,7 +100,7 @@ export default {
           this.loading = false;
         })
         .catch((error) => {
-          console.error("Error fetching data-usage.json:", error);
+          console.error('Error fetching data-usage.json:', error);
           this.loading = false;
         });
     },
@@ -117,7 +112,7 @@ export default {
           this.loading = false;
         })
         .catch((error) => {
-          console.error("Error fetching key-figures.json:", error);
+          console.error('Error fetching key-figures.json:', error);
           this.loading = false;
         });
     },
@@ -136,88 +131,53 @@ export default {
   }
 </script>
 
-<style>
+<style lang="scss">
+.export-button {
+  &.p-button {
+    background: #004b85;
+    border: none;
+    height: 36px;
+
+    &.p-component:hover {
+      background: #005a9c;
+      border: none;
+    }
+  }
+}
+.closable-disclaimer {
+  &.p-message {
+    color: #004B85;
+    font-size: 16px;
+    border: 1px solid #004B85;
+    padding: 10px;
+    border-radius: 16px;
+    background: #F0F9FF;
+  }
+}
+</style>
+
+<style scoped lang="scss">
 .data-usage {
   display: flex;
   flex-direction: column;
   margin-top: 41px;
   padding: 0 36px;
   gap: 36px;
-}
-.overview-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center
-}
-.overview-header__title {
-  font-weight: 400;
-  font-size: 31px;
-}
-.title-icon {
-  font-size: 32px;
-  color: #007BFF;
-}
-.export-button.p-button {
-  background:#004B85;
-  border: none;
-  height: 36px;
-}
-.export-button.p-button.p-component:hover {
-  background: #005A9C;
-  border: none;
-}
-.closable-disclaimer.p-message {
-  color: #004B85;
-  font-size: 16px;
-  border: 1px solid #004B85;
-  padding: 10px;
-  border-radius: 16px;
-  background: #F0F9FF;
-}
-.data-usage__cards {
-  padding: 36px;
-  border: 1px solid #BDBFC1;
-  border-radius: 28px;
-  background: #ffffff;
-  box-shadow: 0px 20px 25px -5px #0000001A;
-}
-.data-usage__cards > .p-selectbutton.p-component {
-  height: 44px;
-  border-radius: 16px;
-  border: 1px solid #BDBFC1
-}
-.p-togglebutton.p-component {
-  color: #AAACAD;
-  background: #FFFFFF;
-  font-size: 13px;
-  border-radius: 16px !important;
-  border-color: #FFFFFF;
-}
-.p-togglebutton.p-component.p-togglebutton-checked {
-  padding: 10px 18px;
-  color: #FFFFFF;
-  background: #FFFFFF;
-  border: none;
-}
-.p-togglebutton.p-component.p-togglebutton-checked::before {
-  border-radius: 16px;
-  background: linear-gradient(135deg, #0E1629 -0.52%, #485066 99.48%);
-}
-.data-usage__card-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 36px;
-}
-.data-usage__card-list > .p-card {
-  min-width: 419px;
-  height: 164px;
-  justify-content: center;
-  background: linear-gradient(135deg, #0E1629 -0.52%, #485066 99.48%);
-  color: #FFFFFF;
 
-}
-.data-usage__card-list .p-card-title {
-  font-size: 49px;
+  .overview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__title {
+      font-weight: 400;
+      font-size: 31px;
+    }
+  }
+
+  .title-icon {
+    font-size: 32px;
+    color: #007BFF;
+  }
 }
 </style>
