@@ -51,7 +51,7 @@ export default {
   data() {
     return {
       value: 'All',
-      options: ['All', 'Top Data Users (>5GB)', '0531177937 - Bell'],
+      options: ["All", "Domestic", "Roaming"],
       figures: [],
       nodes: {},
       filters: {},
@@ -61,6 +61,9 @@ export default {
       first: 0,
       last: 0,
     };
+  },
+  watch: {
+    value: "loadFiguresData"
   },
   mounted() {
     this.loadPageData();
@@ -106,9 +109,9 @@ export default {
     },
     loadFiguresData() {
       this.loading = true;
-      fetchKeyFigures()
+      fetchKeyFigures(this.value)
         .then((data) => {
-          this.figures = data;
+          this.figures = data[this.value];
           this.loading = false;
         })
         .catch((error) => {

@@ -1,16 +1,21 @@
 <template>
     <section class="data-usage__cards">
       <SelectButton v-model="selectedValue" :options="options" @change="updateValue" />
-      <div class="data-usage__card-list">
+      <TransitionGroup 
+        name="fade"
+        tag="div" 
+        appear
+        class="data-usage__card-list"
+        >
         <Card
-          v-for="(figure, index) in figures"
-          :key="index"
+          v-for="figure in figures"
+          :key="figure"
           style="width: 25rem; overflow: hidden"
         >
           <template #title>{{ figure.value }}</template>
           <template #subtitle>{{ figure.description }}</template>
         </Card>
-      </div>
+      </TransitionGroup>
     </section>
 </template>
   
@@ -110,5 +115,16 @@
       margin-top: 36px;
     }
   }
+
+.fade-move, .fade-enter-active, .fade-leave-active {
+  transition: all 0.5s ease-in-out;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.fade-leave-active {
+  position: absolute;
+}
 </style>
   
