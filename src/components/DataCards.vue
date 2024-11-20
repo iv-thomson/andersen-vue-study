@@ -1,6 +1,6 @@
 <template>
     <section class="data-usage__cards">
-      <SelectButton v-model="selectedValue" :options="options" @change="updateValue" />
+      <SelectButton v-model="selectedValue" :options="options" />
       <TransitionGroup 
         name="fade"
         tag="div" 
@@ -42,15 +42,14 @@
       },
     },
     emits: ['update:value'],
-    data() {
-      return {
-        selectedValue: this.value, 
-      };
-    },
-    methods: {
-      updateValue(event) {
-        this.selectedValue = event.value;
-        this.$emit('update:value', event.value);
+    computed: {
+      selectedValue: {
+        get() {
+          return this.value;
+        },
+        set(newValue) {
+          this.$emit('update:value', newValue);
+        }
       }
     }
   };
