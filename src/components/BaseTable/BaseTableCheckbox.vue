@@ -1,7 +1,7 @@
 <template>
   <button
     class="base-table__checkbox"
-    :class="{ checked: isChecked }"
+    :class="{ checked: value }"
     aria-label="Select Row"
     @click="handleClick"
   />
@@ -15,20 +15,11 @@ export default {
       type: Boolean,
       default: false,
     },
-    onChange: {
-      type: Function,
-      required: true,
-    },
   },
-  data() {
-    return {
-      isChecked: this.value,
-    }
-  },
+  emits: ['update:value'],
   methods: {
     handleClick() {
-      this.isChecked = !this.isChecked
-      this.onChange(this.isChecked)
+      this.$emit('update:value', !this.value)
     },
   },
 }

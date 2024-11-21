@@ -1,6 +1,10 @@
 <template>
   <div class="base-select">
-    <p class="base-select__title" @click="toggleVisibility">
+    <p
+      ref="selectTitle"
+      class="base-select__title"
+      @click.stop="toggleVisibility"
+    >
       {{ selectedValue }}
       <img src="@/assets/icons/angle-down.svg" alt="selectIcon" />
     </p>
@@ -38,14 +42,13 @@ export default {
     }
   },
   mounted() {
-    document.addEventListener('click', this.hideSelect.bind(this), true)
+    document.addEventListener('click', this.hideSelect, true)
   },
   beforeUnmount() {
-    document.removeEventListener('click', this.hideSelect.bind(this))
+    document.removeEventListener('click', this.hideSelect)
   },
   methods: {
-    toggleVisibility(event) {
-      event.stopPropagation()
+    toggleVisibility() {
       this.isVisible = !this.isVisible
     },
 
@@ -55,7 +58,7 @@ export default {
     },
 
     hideSelect(event) {
-      const titleElement = this.$el.querySelector('.base-select__title')
+      const titleElement = this.$refs.selectTitle
       if (titleElement.contains(event.target)) {
         return
       }

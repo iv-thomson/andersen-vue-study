@@ -9,14 +9,13 @@
     <img
       src="@/assets/icons/search.svg"
       alt="SearchIcon"
-      class="base-search__iconSearch"
-      @click="emitSearch"
+      class="base-search__icon-search"
     />
     <img
       v-show="localSearchValue !== ''"
       src="@/assets/icons/cross.svg"
-      alt="SearchIcon"
-      class="base-search__iconCancel"
+      alt="ClearIcon"
+      class="base-search__icon-cancel"
       @click="clearSearch"
     />
   </div>
@@ -26,7 +25,7 @@
 export default {
   name: 'BaseSearch',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: '',
     },
@@ -35,26 +34,20 @@ export default {
       default: 'Search...',
     },
   },
-  emits: ['input', 'search'],
-  data() {
-    return {
-      localSearchValue: this.value,
-    }
-  },
-  watch: {
-    value(newValue) {
-      this.localSearchValue = newValue
+  emits: ['update:modelValue'],
+  computed: {
+    localSearchValue: {
+      get() {
+        return this.modelValue
+      },
+      set(value) {
+        this.$emit('update:modelValue', value)
+      },
     },
   },
   methods: {
-    emitSearch() {
-      this.$emit('input', this.localSearchValue)
-      this.$emit('search', this.localSearchValue)
-    },
-
     clearSearch() {
       this.localSearchValue = ''
-      this.emitSearch()
     },
   },
 }
@@ -75,20 +68,15 @@ export default {
     border-radius: 16px;
   }
 
-  &__iconSearch {
+  &__icon-search {
     border-radius: 50%;
     position: absolute;
     padding: 10px;
     left: 0;
     top: 1px;
-    cursor: pointer;
   }
 
-  &__icon:hover {
-    background-color: #bdbfc1;
-  }
-
-  &__iconCancel {
+  &__icon-cancel {
     position: absolute;
     right: 10px;
     top: 11px;

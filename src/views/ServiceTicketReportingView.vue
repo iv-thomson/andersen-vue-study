@@ -4,14 +4,14 @@
       <h1 class="service-ticket-reporting__page-title">
         Service ticket reporting
       </h1>
-      <button class="service-ticket-reporting__exportBtn">
+      <button class="service-ticket-reporting__export-btn">
         <img src="@/assets/icons/file-excel.svg" alt="export" />Export to Excel
       </button>
     </div>
-    <div class="service-ticket-reporting__tableWrapper">
-      <div class="service-ticket-reporting__tableHeader">
-        <h2 class="service-ticket-reporting__tableTitle">Service tickets</h2>
-        <div class="service-ticket-reporting__tableFilters">
+    <div class="service-ticket-reporting__table-wrapper">
+      <div class="service-ticket-reporting__table-header">
+        <h2 class="service-ticket-reporting__table-title">Service tickets</h2>
+        <div class="service-ticket-reporting__table-filters">
           <BaseSelect
             :options="selectOptions"
             :selected-value="selectedValue"
@@ -20,7 +20,6 @@
           <BaseSearch
             v-model="searchValue"
             placeholder="Search Device List..."
-            @search="handleSearchClick"
           />
         </div>
       </div>
@@ -51,16 +50,35 @@ export default {
         { name: 'inactive', value: 2 },
         { name: 'suspended', value: 3 },
       ],
-      selectedValue: 'Ticket Type',
-      filteredData: [],
+      selectedValue: 'all',
       searchValue: '',
     }
+  },
+  computed: {
+    filteredData() {
+      let result = [...this.ticketsData]
+
+      if (this.selectedValue !== 'all') {
+        result = result.filter(item => item.status === this.selectedValue)
+      }
+
+      if (this.searchValue) {
+        result = result.filter(item =>
+          Object.values(item).some(field =>
+            String(field)
+              .toLowerCase()
+              .includes(this.searchValue.toLowerCase()),
+          ),
+        )
+      }
+
+      return result
+    },
   },
   async created() {
     try {
       const data = await getHttpRequest('/service-ticket-reporting.json')
       this.ticketsData = data
-      this.filteredData = [...data]
     } catch (error) {
       console.error('Data fetching error:', error)
     }
@@ -69,27 +87,6 @@ export default {
     handleSelectOption(option) {
       this.selectedValue = option.name
       this.searchValue = ''
-
-      if (option.name === 'all') {
-        this.filteredData = [...this.ticketsData]
-      } else {
-        this.filteredData = this.ticketsData.filter(
-          item => item.status === option.name,
-        )
-      }
-    },
-
-    handleSearchClick(value) {
-      if (value) {
-        this.filteredData = this.filteredData.filter(item => {
-          return Object.values(item).some(field =>
-            String(field).toLowerCase().includes(value.toLowerCase()),
-          )
-        })
-      } else {
-        this.filteredData = this.ticketsData
-        this.selectedValue = 'all'
-      }
     },
   },
 }
@@ -122,7 +119,7 @@ export default {
     background: url('../assets/icons/chart-line.svg') no-repeat center/contain;
   }
 
-  &__exportBtn {
+  &__export-btn {
     width: 157px;
     height: 36px;
     border-radius: 12px;
@@ -136,7 +133,7 @@ export default {
     gap: 4px;
   }
 
-  &__tableWrapper {
+  &__table-wrapper {
     max-width: 1308px;
     display: flex;
     flex-direction: column;
@@ -148,16 +145,16 @@ export default {
     box-shadow: 0px 20px 25px -5px #0000001a;
   }
 
-  &__tableHeader {
+  &__table-header {
     display: flex;
     justify-content: space-between;
   }
 
-  &__tableTitle {
+  &__table-title {
     margin: 0;
   }
 
-  &__tableFilters {
+  &__table-filters {
     display: flex;
     align-items: center;
     gap: 18px;

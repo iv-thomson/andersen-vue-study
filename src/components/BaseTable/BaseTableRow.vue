@@ -7,13 +7,13 @@
       <BaseTableCheckbox
         ref="checkbox"
         :value="isChecked"
-        :on-change="toggleCheckbox"
+        @update:value="toggleCheckbox"
       />
     </div>
     <ul class="base-table__rowData">
       <li
         v-for="(key, index) in itemData"
-        :key="uniqueIndex(index)"
+        :key="`${key}-${index}`"
         class="base-table__cell"
       >
         {{ key }}
@@ -41,11 +41,6 @@ export default {
     return {
       isChecked: false,
     }
-  },
-  computed: {
-    uniqueIndex() {
-      return index => `${index}-${Math.random().toString(36).substring(2, 9)}`
-    },
   },
   methods: {
     toggleCheckbox(newCheckedState) {
