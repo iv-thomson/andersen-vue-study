@@ -23,12 +23,12 @@ export default {
 </script>
 
 <style lang="scss">
-  .page {
-    // Define global styles here:
-    h1 {
-      color: black;
-    }
+.page {
+  // Define global styles here:
+  h1 {
+    color: black;
   }
+}
 </style>
 
 <style scoped lang="scss">
