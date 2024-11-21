@@ -1,26 +1,20 @@
-[
-    {
-        "description": "Devices With Domestic Usage",
-        "value": "150"
-    },
-    {
-        "description": "Devices With Roaming Usage",
-        "value": "30"
-    },
-    {
-        "description": "Domestic Data Usage",
-        "value": "120 GB"
-    },
-    {
-        "description": "Roaming Data Usage",
-        "value": "20 GB"
-    },
-    {
-        "description": "Domestic Data Charges",
-        "value": "$200"
-    },
-    {
-        "description": "Roaming Data Charges",
-        "value": "$50"
-    }
-]
+{
+  "All": [
+    { "description": "Devices With Domestic Usage", "value": "150" },
+    { "description": "Devices With Roaming Usage", "value": "30" },
+    { "description": "Domestic Data Usage", "value": "120 GB" },
+    { "description": "Roaming Data Usage", "value": "20 GB" },
+    { "description": "Domestic Data Charges", "value": "$200" },
+    { "description": "Roaming Data Charges", "value": "$50" }
+  ],
+  "Domestic": [
+    { "description": "Devices With Domestic Usage", "value": "200" },
+    { "description": "Domestic Data Usage", "value": "150 GB" },
+    { "description": "Domestic Data Charges", "value": "$250" }
+  ],
+  "Roaming": [
+    { "description": "Devices With Roaming Usage", "value": "40" },
+    { "description": "Roaming Data Usage", "value": "25 GB" },
+    { "description": "Roaming Data Charges", "value": "$60" }
+  ]
+}
