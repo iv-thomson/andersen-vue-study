@@ -104,7 +104,7 @@ computed: {
   sortedData() {
     if (!this.sortField) return this.filteredData;
 
-    return [...this.filteredData].toSorted((a, b) => {
+    return this.filteredData.toSorted((a, b) => {
       const valueA = a[this.sortField];
       const valueB = b[this.sortField];
 
