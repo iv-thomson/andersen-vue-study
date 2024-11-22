@@ -1,6 +1,8 @@
 <template>
   <div>
-    <ProgressSpinner v-if="loading"/>
+    <div class="spinner-wrapper">
+      <ProgressSpinner v-if="loading" />
+    </div>
     <div class="data-usage">
       <div class="overview-header">
         <h1 class="overview-header__title">
@@ -22,15 +24,10 @@
         @update:value="updateSelectedValue"
       />
       <DataTable 
-        :nodes="nodes" 
-        :filters="filters" 
-        :rows="rows" 
-        :loading="loading" 
+        :data="nodes"
+        :headers="tableHeaders" 
+        :rows-per-page="rows" 
         :total-records="totalRecords" 
-        :first="first" 
-        :last="last" 
-        @update:page="handlePageChange"
-        @update:filters="updateFilters" 
       />
    </div>
  </div>
@@ -54,12 +51,10 @@ export default {
       options: ["All", "Domestic", "Roaming"],
       figures: [],
       nodes: {},
-      filters: {},
+      tableHeaders: [],
       rows: 10,
       loading: false,
       totalRecords: 0,
-      first: 0,
-      last: 0,
     };
   },
   watch: {
@@ -70,27 +65,6 @@ export default {
     this.loadFiguresData()
   },
   methods: {
-    formatNodes(data) {
-      return data.map((item, index) => ({
-        key: index.toString(),
-        data: {
-          name: item.name || '-', 
-          number: item.number || '-',
-          status: item.status || '-',
-          costCenter: item.costCenter || '-',
-        },
-        leaf: true,
-      }));
-    },
-    handlePageChange(event) {
-      this.first = event.first;
-      this.last = event.first + event.rows;
-      this.loading = true;
-      this.loadPageData();
-    },
-    updateFilters(event) {
-      this.filters = { ...this.filters, global: event.target.value };
-    },
     updateSelectedValue(newValue) {
       this.value = newValue;
     },
@@ -98,7 +72,8 @@ export default {
       this.loading = true;
       fetchDataUsage()
         .then((data) => {
-          this.nodes = this.formatNodes(data);
+          this.nodes = data;
+          this.tableHeaders = Object.keys(data[0]);
           this.totalRecords = data.length; 
           this.loading = false;
         })
@@ -120,15 +95,14 @@ export default {
         });
     },
     handleExportToCSV() {
-      const headers = ['Name', 'Employee Number', 'Status', 'Cost Center'];
       const data = this.nodes.map(node => [
-        node.data.name,
-        node.data.number,
-        node.data.status,
-        node.data.costCenter
+        node.name,
+        node.number,
+        node.status,
+        node.costCenter
       ]);
 
-      fileDowload(data, headers, 'data-usage.csv');
+      fileDowload(data, this.tableHeaders, 'data-usage.csv');
     },
   },
   }
@@ -160,6 +134,10 @@ export default {
 </style>
 
 <style scoped lang="scss">
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+}
 .data-usage {
   display: flex;
   flex-direction: column;
