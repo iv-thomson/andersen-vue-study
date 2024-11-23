@@ -1,4 +1,22 @@
 <template>
+  <DataTable
+    v-model:selection="selectedRows"
+    :value="itemsData"
+    removable-sort
+    class="base-table"
+  >
+    <Column selection-mode="multiple" :header-style="{ width: '50px' }" />
+    <Column
+      v-for="(key, index) in tableHeaderNames"
+      :key="`${key}-${index}`"
+      :field="key"
+      :header="preparedKey(key)"
+      sortable
+    ></Column>
+  </DataTable>
+</template>
+
+<!-- <template>
   <div class="base-table">
     <ul class="base-table__header">
       <div class="base-table__checkbox-cell">
@@ -64,16 +82,17 @@
       </div>
     </div>
   </div>
-</template>
+</template> -->
 
 <script>
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
 import BaseTableRow from '@/components/BaseTable/BaseTableRow.vue'
 import BaseTableCheckbox from '@/components/BaseTable/BaseTableCheckbox.vue'
-import sortIcon from '@/assets/icons/sort-alt.svg'
 
 export default {
   name: 'BaseTable',
-  components: { BaseTableCheckbox, BaseTableRow },
+  components: { DataTable, Column /*BaseTableCheckbox, BaseTableRow*/ },
   props: {
     itemsData: {
       type: Array,
@@ -83,8 +102,7 @@ export default {
   data() {
     return {
       itemsTableData: [],
-      rotatedIndex: null,
-      sortIcon,
+      selectedRows: [],
       sortDirections: {},
       itemsPerPage: 10,
       pageNumber: 1,
@@ -94,30 +112,6 @@ export default {
   computed: {
     tableHeaderNames() {
       return Object.keys(this.itemsTableData[0] || {})
-    },
-
-    sortedItems() {
-      const key = this.tableHeaderNames[this.rotatedIndex]
-      const isNumeric = this.itemsTableData.every(
-        item => !isNaN(parseFloat(item[key])),
-      )
-
-      const sortDirection = this.sortDirections[key] || 'asc'
-
-      return this.itemsTableData.toSorted((a, b) => {
-        const aValue = a[key]
-        const bValue = b[key]
-
-        if (isNumeric) {
-          return sortDirection === 'asc'
-            ? parseFloat(aValue) - parseFloat(bValue)
-            : parseFloat(bValue) - parseFloat(aValue)
-        } else {
-          return sortDirection === 'asc'
-            ? String(aValue).localeCompare(String(bValue))
-            : String(bValue).localeCompare(String(aValue))
-        }
-      })
     },
 
     pages() {
@@ -157,28 +151,8 @@ export default {
       return formattedString.charAt(0).toUpperCase() + formattedString.slice(1)
     },
 
-    rotateIcon(index) {
-      if (this.rotatedIndex === index) {
-        this.rotatedIndex = null
-      } else {
-        this.rotatedIndex = index
-      }
-    },
-
     pageClick(page) {
       this.pageNumber = page
-    },
-
-    handleButtonClick(index) {
-      const key = this.tableHeaderNames[index]
-
-      if (this.rotatedIndex === index) {
-        this.sortDirections[key] =
-          this.sortDirections[key] === 'asc' ? 'desc' : 'asc'
-      } else {
-        this.sortDirections = { [key]: 'asc' }
-        this.rotatedIndex = index
-      }
     },
 
     navigateLeft() {
@@ -191,16 +165,6 @@ export default {
       if (this.pageNumber < this.pages) {
         this.pageNumber += 1
       }
-    },
-
-    toggleCheckbox(isChecked) {
-      this.isChecked = isChecked
-      this.$refs.tableRows.forEach(row => {
-        const checkbox = row.$refs.checkbox
-        if (row.isChecked !== isChecked) {
-          checkbox.handleClick()
-        }
-      })
     },
   },
 }
