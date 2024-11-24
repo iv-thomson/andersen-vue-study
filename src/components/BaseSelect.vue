@@ -82,6 +82,7 @@ export default {
     border-radius: 16px;
     background-color: #fff;
     position: absolute;
+    z-index: 5;
   }
 
   &__option {
