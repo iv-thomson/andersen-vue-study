@@ -36,35 +36,22 @@
       </tr>
     </tbody>
   </table>
-
-  <div class="pagination">
-    <div class="pagination__info">
-      Showing {{ startIndex }} To {{ endIndex }} Of {{ totalEntries }} Entries
-    </div>
-    <div class="pagination__buttons">
-      <button @click="prevPage" :disabled="currentPage === 1">
-        <img src="@/assets/icons/angle-left.svg" alt="go-left-icon" />
-      </button>
-      <button
-        v-for="page in visiblePages"
-        :key="page"
-        @click="goToPage(page)"
-        :class="{ active: page === currentPage }"
-      >
-        {{ page }}
-      </button>
-      <button @click="nextPage" :disabled="currentPage === totalPages">
-        <img src="@/assets/icons/angle-right.svg" alt="go-right-icon" />
-      </button>
-    </div>
-  </div>
+  <Pagination
+    :currentPage="currentPage"
+    :itemsPerPage="itemsPerPage"
+    :totalEntries="totalEntries"
+    :sortedData="sortedData"
+    @update:currentPage="currentPage = $event"
+  />
 </template>
 
 <script>
 import { fetchActivityLog } from '@/api/activity-log.api.js'
+import Pagination from '@/components/EventsTable/Pagination.vue'
 
 export default {
   name: 'EventTable',
+  components: { Pagination },
   data() {
     return {
       activityLogs: [],
@@ -100,32 +87,8 @@ export default {
       const start = (this.currentPage - 1) * this.itemsPerPage
       return this.sortedData.slice(start, start + this.itemsPerPage)
     },
-    totalPages() {
-      return Math.ceil(this.sortedData.length / this.itemsPerPage)
-    },
-    startIndex() {
-      return (this.currentPage - 1) * this.itemsPerPage + 1
-    },
-    endIndex() {
-      return Math.min(this.currentPage * this.itemsPerPage, this.totalEntries)
-    },
     totalEntries() {
       return this.activityLogs.length
-    },
-    visiblePages() {
-      const maxVisible = 5
-      const totalPages = this.totalPages
-      const halfVisible = Math.floor(maxVisible / 2)
-
-      let start = Math.max(1, this.currentPage - halfVisible)
-      let end = Math.min(totalPages, this.currentPage + halfVisible)
-
-      if (this.currentPage <= halfVisible) {
-        end = Math.min(maxVisible, totalPages)
-      } else if (this.currentPage + halfVisible > totalPages) {
-        start = Math.max(1, totalPages - maxVisible + 1)
-      }
-      return Array.from({ length: end - start + 1 }, (_, i) => start + i)
     },
   },
   methods: {
@@ -157,18 +120,6 @@ export default {
         return `${content} Email Sent To <a href="${message.url}" target="_blank">${message.url}</a> From <b>${name}</b>`
       }
       return message.details
-    },
-    prevPage() {
-      this.currentPage--
-    },
-    nextPage() {
-      this.currentPage++
-    },
-    viewDetails(ticket) {
-      console.log('Viewing details for:', ticket)
-    },
-    goToPage(page) {
-      this.currentPage = page
     },
   },
 }
@@ -229,37 +180,5 @@ export default {
 
 .strong {
   font-weight: bold;
-}
-
-.pagination__info {
-  margin-top: 10px;
-}
-
-.pagination {
-  display: flex;
-  justify-content: space-between;
-  margin: 18px auto;
-  font-weight: 600;
-}
-.pagination__buttons button {
-  margin: 0 5px;
-  background-color: transparent;
-  color: $color-light-gray;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    color 0.3s;
-}
-
-.pagination__buttons button:hover:not(.active) {
-  background-color: $color-off-white;
-}
-
-.pagination__buttons button.active {
-  background-color: $color-blue;
-  color: white;
 }
 </style>
