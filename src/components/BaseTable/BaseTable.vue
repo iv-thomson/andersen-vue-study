@@ -17,7 +17,11 @@
         {{ itemsTableData.length }} entries
       </p>
     </template>
-    <Column selection-mode="multiple" />
+    <Column
+      v-if="withCheckbox"
+      selection-mode="multiple"
+      class="base-table__checkbox"
+    />
     <Column
       v-for="(key, index) in tableHeaderNames"
       :key="`${key}-${index}`"
@@ -39,6 +43,10 @@ export default {
     itemsData: {
       type: Array,
       default: () => [],
+    },
+    withCheckbox: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -143,11 +151,6 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
-// ::v-deep(.p-paginator-content) {
-//   width: 30px !important;
-//   height: 30px;
-// }
 
 ::v-deep(button.p-paginator-page-selected) {
   width: 30px;

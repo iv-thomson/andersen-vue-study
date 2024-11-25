@@ -1,9 +1,14 @@
 <template>
   <header class="app-header">
+    <RouterLink to="/activity/background-jobs"
+      >Activity Background jobs</RouterLink
+    >
     <RouterLink to="/data-usage">Data usage</RouterLink>
     <RouterLink to="/activity-log">Asset management</RouterLink>
     <RouterLink to="/asset-management">Activity log</RouterLink>
-    <RouterLink to="/service-ticket-reporting">Service ticket reporting</RouterLink>
+    <RouterLink to="/service-ticket-reporting"
+      >Service ticket reporting</RouterLink
+    >
   </header>
 </template>
 

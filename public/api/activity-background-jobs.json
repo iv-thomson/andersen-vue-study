@@ -1,0 +1,242 @@
+[
+  {
+    "status": "completed",
+    "createdAt": "Oct 21, 2024 12.30",
+    "user": "John Doe",
+    "name": "HR Import",
+    "statistics": {
+      "updated_devices_count": 0,
+      "created_contacts_count": 1,
+      "updated_contacts_count": 0
+    },
+    "id": 100
+  },
+  {
+    "status": "completed",
+    "createdAt": "Oct 22, 2024 09.45",
+    "user": "Jane Smith",
+    "name": "Sales Import",
+    "statistics": {
+      "updated_devices_count": 2,
+      "created_contacts_count": 3,
+      "updated_contacts_count": 1
+    },
+    "id": 101
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Oct 23, 2024 14.20",
+    "user": "Alice Johnson",
+    "name": "Marketing Import",
+    "statistics": {
+      "updated_devices_count": 0,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 0
+    },
+    "id": 102
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Oct 24, 2024 08.15",
+    "user": "Bob Brown",
+    "name": "IT Import",
+    "statistics": {
+      "updated_devices_count": 5,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 2
+    },
+    "id": 103
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Oct 25, 2024 11.50",
+    "user": "Charlie Wilson",
+    "name": "Finance Import",
+    "statistics": {
+      "updated_devices_count": 1,
+      "created_contacts_count": 2,
+      "updated_contacts_count": 0
+    },
+    "id": 104
+  },
+  {
+    "status": "completed",
+    "createdAt": "Oct 26, 2024 10.30",
+    "user": "David Green",
+    "name": "Operations Import",
+    "statistics": {
+      "updated_devices_count": 3,
+      "created_contacts_count": 1,
+      "updated_contacts_count": 1
+    },
+    "id": 105
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Oct 27, 2024 15.00",
+    "user": "Eve Black",
+    "name": "Support Import",
+    "statistics": {
+      "updated_devices_count": 0,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 0
+    },
+    "id": 106
+  },
+  {
+    "status": "completed",
+    "createdAt": "Oct 28, 2024 07.45",
+    "user": "Frank White",
+    "name": "Engineering Import",
+    "statistics": {
+      "updated_devices_count": 7,
+      "created_contacts_count": 4,
+      "updated_contacts_count": 3
+    },
+    "id": 107
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Oct 29, 2024 13.10",
+    "user": "Grace Lewis",
+    "name": "R&D Import",
+    "statistics": {
+      "updated_devices_count": 2,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 1
+    },
+    "id": 108
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Oct 30, 2024 09.50",
+    "user": "Hank Hall",
+    "name": "Logistics Import",
+    "statistics": {
+      "updated_devices_count": 0,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 0
+    },
+    "id": 109
+  },
+  {
+    "status": "completed",
+    "createdAt": "Oct 31, 2024 16.45",
+    "user": "Ivy King",
+    "name": "Legal Import",
+    "statistics": {
+      "updated_devices_count": 4,
+      "created_contacts_count": 3,
+      "updated_contacts_count": 2
+    },
+    "id": 110
+  },
+  {
+    "status": "completed",
+    "createdAt": "Nov 01, 2024 10.20",
+    "user": "Jack Turner",
+    "name": "Security Import",
+    "statistics": {
+      "updated_devices_count": 6,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 1
+    },
+    "id": 111
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Nov 02, 2024 12.10",
+    "user": "Karen Scott",
+    "name": "Facilities Import",
+    "statistics": {
+      "updated_devices_count": 1,
+      "created_contacts_count": 1,
+      "updated_contacts_count": 0
+    },
+    "id": 112
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Nov 03, 2024 14.00",
+    "user": "Liam Taylor",
+    "name": "Manufacturing Import",
+    "statistics": {
+      "updated_devices_count": 0,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 0
+    },
+    "id": 113
+  },
+  {
+    "status": "completed",
+    "createdAt": "Nov 04, 2024 09.30",
+    "user": "Mia Anderson",
+    "name": "HR Import",
+    "statistics": {
+      "updated_devices_count": 2,
+      "created_contacts_count": 1,
+      "updated_contacts_count": 3
+    },
+    "id": 114
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Nov 05, 2024 15.10",
+    "user": "Noah Lee",
+    "name": "Sales Import",
+    "statistics": {
+      "updated_devices_count": 1,
+      "created_contacts_count": 2,
+      "updated_contacts_count": 1
+    },
+    "id": 115
+  },
+  {
+    "status": "incompleted",
+    "createdAt": "Nov 06, 2024 11.45",
+    "user": "Olivia Martinez",
+    "name": "Marketing Import",
+    "statistics": {
+      "updated_devices_count": 0,
+      "created_contacts_count": 0,
+      "updated_contacts_count": 0
+    },
+    "id": 116
+  },
+  {
+    "status": "completed",
+    "createdAt": "Nov 07, 2024 08.25",
+    "user": "Paul Young",
+    "name": "IT Import",
+    "statistics": {
+      "updated_devices_count": 5,
+      "created_contacts_count": 2,
+      "updated_contacts_count": 4
+    },
+    "id": 117
+  },
+  {
+    "status": "completed",
+    "createdAt": "Nov 08, 2024 14.40",
+    "user": "Quinn Lopez",
+    "name": "Finance Import",
+    "statistics": {
+      "updated_devices_count": 3,
+      "created_contacts_count": 1,
+      "updated_contacts_count": 2
+    },
+    "id": 118
+  },
+  {
+    "status": "completed",
+    "createdAt": "Nov 09, 2024 10.50",
+    "user": "Rachel Adams",
+    "name": "Operations Import",
+    "statistics": {
+      "updated_devices_count": 2,
+      "created_contacts_count": 3,
+      "updated_contacts_count": 1
+    },
+    "id": 119
+  }
+]
