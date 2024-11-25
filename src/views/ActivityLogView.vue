@@ -19,7 +19,7 @@
           <BaseSelect
             :options="selectModelOptions"
             :selected-value="selectModelValue"
-            @select="handleSelectOption"
+            @select="handleSelectModelOption"
           />
           <BaseSelect
             :options="selectConditionOptions"
@@ -27,13 +27,13 @@
             @select="handleSelectConditionOption"
           />
           <div class="input-filters">
-            <input placeholder="Location" />
+            <input v-model="location" placeholder="Location" />
             <input type="date" v-model="date" />
           </div>
         </div>
         <div class="action-buttons">
           <button @click="resetFilters">Clear Filters</button>
-          <button class="action-buttons__filter-btn">
+          <button @click="applyFilters" class="action-buttons__filter-btn">
             <img src="@/assets/icons/filter.svg" alt="filter-icon" /> Filter
           </button>
         </div>
@@ -44,7 +44,11 @@
         <h2 class="title">Events</h2>
         <BaseSearch v-model="searchTerm" placeholder="Search..." />
       </div>
-      <EventsTable :searchTerm="searchTerm" />
+      <EventsTable
+        ref="eventsTable"
+        :searchTerm="searchTerm"
+        :filters="activeFilters"
+      />
     </div>
   </div>
 </template>
@@ -63,12 +67,14 @@ export default {
   data() {
     return {
       selectModelOptions: [
+        { name: 'Model', value: 'Model' },
         { name: 'Success', value: 0 },
         { name: 'Update', value: 1 },
         { name: 'Carrier notification', value: 2 },
       ],
-      selectModelValue: 'Success',
+      selectModelValue: 'Model',
       selectConditionOptions: [
+        { name: 'Condition', value: 'Condition' },
         { name: 'Question', value: 0 },
         { name: 'Action', value: 1 },
         { name: 'Information', value: 2 },
@@ -83,6 +89,7 @@ export default {
       angleUpImage: '@assets/icons/angle-up.svg',
       showFilters: false,
       searchTerm: '',
+      activeFilters: {},
     }
   },
   computed: {
@@ -94,23 +101,29 @@ export default {
     toggleFilters() {
       this.showFilters = !this.showFilters
     },
-    handleSelectOption(option) {
+    handleSelectModelOption(option) {
       this.selectModelValue = option.name
-      this.searchValue = ''
+      this.searchTerm = ''
     },
     handleSelectConditionOption(option) {
       this.selectConditionValue = option.name
-      this.searchValue = ''
+      this.searchTerm = ''
     },
     resetFilters() {
       this.selectModelValue = 'Model'
       this.selectConditionValue = 'Condition'
       this.location = ''
-      this.location2 = ''
       this.date = ''
+      this.applyFilters()
     },
-    updateSearchTerm(value) {
-      this.searchTerm = value
+    applyFilters() {
+      this.activeFilters = {
+        model: this.selectModelValue,
+        condition: this.selectConditionValue,
+        location: this.location,
+        date: this.date,
+      }
+      this.$refs.eventsTable.applyFilters(this.activeFilters)
     },
   },
 }
@@ -129,7 +142,10 @@ export default {
 }
 
 .activity-log {
-  padding: 36px 36px 0 36px;
+  padding: 36px 36px 0;
+  &__title {
+    display: flex;
+  }
 
   button {
     height: 36px;
@@ -141,10 +157,6 @@ export default {
     align-items: center;
     justify-content: space-around;
     cursor: pointer;
-  }
-
-  &__title {
-    display: flex;
   }
 
   .filters {
@@ -181,7 +193,6 @@ export default {
             color: $color-dark-gray;
             height: 36px;
             padding: 0 20px;
-
             &:not(:last-child) {
               margin-bottom: 18px;
             }
@@ -199,7 +210,6 @@ export default {
           background-color: $color-dark-blue;
           padding: 15px;
           width: 91px;
-
           &:hover {
             background-color: #004477;
           }
@@ -211,7 +221,6 @@ export default {
       background-color: inherit;
       width: 121px;
       padding: 0 10px;
-
       &:hover {
         background-color: #f8f8f8;
       }

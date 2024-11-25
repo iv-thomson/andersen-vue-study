@@ -57,6 +57,10 @@ export default {
       type: String,
       default: '',
     },
+    filters: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -77,24 +81,15 @@ export default {
   },
   computed: {
     filteredData() {
-      if (!this.searchTerm) {
-        return this.activityLogs
-      }
-      return this.activityLogs.filter(
-        item =>
-          Object.values(item).some(field =>
-            String(field).toLowerCase().includes(this.searchTerm.toLowerCase()),
-          ) || item.model.toLowerCase().includes(this.searchTerm.toLowerCase()),
-      ) // Filtered with names and models (just type: "success" or "Charlie")
+      return this.computedFilteredData()
     },
+
     sortedData() {
       return this.filteredData.slice().sort((a, b) => {
         const modifier = this.sortOrder === 'asc' ? 1 : -1
         const dateA = new Date(a.date + ' ' + a.time)
         const dateB = new Date(b.date + ' ' + b.time)
-        if (dateA < dateB) return -1 * modifier
-        if (dateA > dateB) return 1 * modifier
-        return 0
+        return (dateA - dateB) * modifier
       })
     },
     paginatedData() {
@@ -106,6 +101,9 @@ export default {
     },
   },
   methods: {
+    applyFilters() {
+      this.filteredData
+    },
     sort(key) {
       this.sortKey = key
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc'
@@ -118,13 +116,9 @@ export default {
     formatTime(timeString) {
       const [time, modifier] = timeString.split(' ')
       let [hour, minute] = time.split(':')
-
-      if (modifier === 'PM' && hour !== '12') {
-        hour = parseInt(hour) + 12
-      } else if (modifier === 'AM' && hour === '12') {
-        hour = '00'
-      }
-      return hour + ':' + minute
+      if (modifier === 'PM' && hour !== '12') hour = String(parseInt(hour) + 12)
+      if (modifier === 'AM' && hour === '12') hour = '00'
+      return `${hour}:${minute}`
     },
     formatDetails(message) {
       const match = message.details.match(/\[([^\]]+)\]: (.+)/)
@@ -135,8 +129,48 @@ export default {
       return message.details
     },
     viewDetails(message) {
-      const details = `Date: ${this.formatDate(message.date)}\nTime: ${this.formatTime(message.time)}\nDetails: ${message.details}\nURL: ${message.url}\nLocation: ${message.location}\nModel: ${message.model}\nCondition: ${message.condition}`
+      const details = `
+        Date: ${this.formatDate(message.date)}
+        Details: ${message.details}
+        Location: ${message.location}
+        Model: ${message.model}
+      `
       alert(details)
+    },
+    computedFilteredData() {
+      let data = this.activityLogs
+
+      if (this.searchTerm) {
+        data = data.filter(item =>
+          Object.values(item).some(field =>
+            String(field).toLowerCase().includes(this.searchTerm.toLowerCase()),
+          ),
+        )
+      }
+
+      if (this.filters.model && this.filters.model !== 'Model') {
+        data = data.filter(item => item.model === this.filters.model)
+      }
+
+      if (this.filters.condition && this.filters.condition !== 'Condition') {
+        data = data.filter(item => item.condition === this.filters.condition)
+      }
+
+      if (this.filters.location) {
+        data = data.filter(
+          item =>
+            item.location && item.location.includes(this.filters.location),
+        )
+      }
+
+      if (this.filters.date) {
+        data = data.filter(item => {
+          const itemDate = new Date(item.date)
+          const filterDate = new Date(this.filters.date)
+          return itemDate.toDateString() === filterDate.toDateString()
+        })
+      }
+      return data
     },
   },
 }
@@ -149,56 +183,59 @@ export default {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
-}
 
-.responsive-table th {
-  background-color: $color-light-green;
-  color: $color-dark-gray;
-  padding: 10px;
-  text-align: left;
-}
-
-.responsive-table td {
-  border-bottom: 1px solid $color-light-gray;
-}
-
-.table-header {
-  cursor: pointer;
-  position: relative;
-
-  &__icon {
-    position: absolute;
-    left: 75px;
+  th {
+    background-color: $color-light-green;
+    color: $color-dark-gray;
+    padding: 10px;
+    text-align: left;
   }
-}
 
-.date-cell {
-  width: 138px;
-}
-
-.details-cell {
-  padding: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.details-button {
-  background-color: inherit;
-  border: 1px solid $color-light-gray;
-  border-radius: 12px;
-  height: 36px;
-  width: 78px;
-  color: $color-dark-blue;
-  font-weight: 600;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f5f5f5;
+  .responsive-table td {
+    border-bottom: 1px solid $color-light-gray;
   }
-}
 
-.strong {
-  font-weight: bold;
+  .table-header {
+    cursor: pointer;
+    position: relative;
+
+    &__icon {
+      position: absolute;
+      left: 75px;
+    }
+  }
+
+  td {
+    border-bottom: 1px solid $color-light-gray;
+
+    &.date-cell {
+      width: 138px;
+      strong {
+        font-weight: bold;
+      }
+    }
+
+    &.details-cell {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .details-button {
+        background-color: inherit;
+        border: 1px solid $color-light-gray;
+        border-radius: 12px;
+        height: 36px;
+        width: 78px;
+        color: $color-dark-blue;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+  }
 }
 </style>
