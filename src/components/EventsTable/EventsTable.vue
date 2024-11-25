@@ -1,5 +1,6 @@
 <template>
-  <table class="responsive-table">
+  <div v-if="loading" class="loading-indicator">Loading...</div>
+  <table v-else class="responsive-table">
     <thead>
       <tr>
         <th @click="sort('date')" class="table-header">
@@ -37,6 +38,7 @@
     </tbody>
   </table>
   <Pagination
+    v-if="!loading"
     :currentPage="currentPage"
     :itemsPerPage="itemsPerPage"
     :totalEntries="totalEntries"
@@ -69,14 +71,15 @@ export default {
       sortOrder: 'asc',
       currentPage: 1,
       itemsPerPage: 10,
+      loading: true,
     }
   },
   async mounted() {
     try {
+      this.loading = true
       this.activityLogs = await fetchActivityLog()
-    } catch (error) {
-      this.error = error.message
-      console.error('Error in component:', error)
+    } finally {
+      this.loading = false
     }
   },
   computed: {
@@ -101,9 +104,6 @@ export default {
     },
   },
   methods: {
-    applyFilters() {
-      this.filteredData
-    },
     sort(key) {
       this.sortKey = key
       this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc'

@@ -27,7 +27,12 @@
             @select="handleSelectConditionOption"
           />
           <div class="input-filters">
-            <input v-model="location" placeholder="Location" />
+            <input
+              v-model="location"
+              @input="validateLocation"
+              placeholder="Location"
+            />
+            <span v-if="locationError" class="error">{{ locationError }}</span>
             <input type="date" v-model="date" />
           </div>
         </div>
@@ -83,13 +88,13 @@ export default {
       ],
       selectConditionValue: 'Condition',
       location: '',
-      location2: '',
       date: '',
       angleDownImage: '@assets/icons/angle-down.svg',
       angleUpImage: '@assets/icons/angle-up.svg',
       showFilters: false,
       searchTerm: '',
       activeFilters: {},
+      locationError: '',
     }
   },
   computed: {
@@ -124,6 +129,15 @@ export default {
         date: this.date,
       }
       this.$refs.eventsTable.applyFilters(this.activeFilters)
+    },
+    validateLocation() {
+      const regex = /^[A-Za-z\s]*$/
+      if (!regex.test(this.location)) {
+        this.locationError =
+          'Location must contain only English letters and spaces.'
+      } else {
+        this.locationError = ''
+      }
     },
   },
 }
@@ -193,8 +207,8 @@ export default {
             color: $color-dark-gray;
             height: 36px;
             padding: 0 20px;
-            &:not(:last-child) {
-              margin-bottom: 18px;
+            &:last-child {
+              margin-top: 18px;
             }
           }
         }
@@ -240,6 +254,11 @@ export default {
         color: black;
       }
     }
+  }
+  .error {
+    margin: 2px;
+    font-size: 12px;
+    color: darkred;
   }
 }
 </style>
