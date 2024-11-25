@@ -52,6 +52,12 @@ import Pagination from '@/components/EventsTable/Pagination.vue'
 export default {
   name: 'EventTable',
   components: { Pagination },
+  props: {
+    searchTerm: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       activityLogs: [],
@@ -71,7 +77,15 @@ export default {
   },
   computed: {
     filteredData() {
-      return this.activityLogs
+      if (!this.searchTerm) {
+        return this.activityLogs
+      }
+      return this.activityLogs.filter(
+        item =>
+          Object.values(item).some(field =>
+            String(field).toLowerCase().includes(this.searchTerm.toLowerCase()),
+          ) || item.model.toLowerCase().includes(this.searchTerm.toLowerCase()),
+      ) // Filtered with names and models (just type: "success" or "Charlie")
     },
     sortedData() {
       return this.filteredData.slice().sort((a, b) => {
@@ -88,7 +102,7 @@ export default {
       return this.sortedData.slice(start, start + this.itemsPerPage)
     },
     totalEntries() {
-      return this.activityLogs.length
+      return this.sortedData.length
     },
   },
   methods: {
@@ -116,10 +130,13 @@ export default {
       const match = message.details.match(/\[([^\]]+)\]: (.+)/)
       if (match) {
         const name = match[1]
-        const content = match[2]
-        return `${content} Email Sent To <a href="${message.url}" target="_blank">${message.url}</a> From <b>${name}</b>`
+        return `<b>[${message.model}]</b> Email Sent To <a href="${message.url}" target="_blank">${message.url}</a> From <b>${name}</b>`
       }
       return message.details
+    },
+    viewDetails(message) {
+      const details = `Date: ${this.formatDate(message.date)}\nTime: ${this.formatTime(message.time)}\nDetails: ${message.details}\nURL: ${message.url}\nLocation: ${message.location}\nModel: ${message.model}\nCondition: ${message.condition}`
+      alert(details)
     },
   },
 }
@@ -144,9 +161,11 @@ export default {
 .responsive-table td {
   border-bottom: 1px solid $color-light-gray;
 }
+
 .table-header {
   cursor: pointer;
   position: relative;
+
   &__icon {
     position: absolute;
     left: 75px;
@@ -173,6 +192,7 @@ export default {
   color: $color-dark-blue;
   font-weight: 600;
   cursor: pointer;
+
   &:hover {
     background-color: #f5f5f5;
   }

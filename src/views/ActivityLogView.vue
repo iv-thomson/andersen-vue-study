@@ -27,13 +27,12 @@
             @select="handleSelectConditionOption"
           />
           <div class="input-filters">
-            <input placeholder="Location" v-model="location" />
-            <input placeholder="Location" v-model="location2" />
+            <input placeholder="Location" />
             <input type="date" v-model="date" />
           </div>
         </div>
         <div class="action-buttons">
-          <button @click="resetFilters">Reset Filters</button>
+          <button @click="resetFilters">Clear Filters</button>
           <button class="action-buttons__filter-btn">
             <img src="@/assets/icons/filter.svg" alt="filter-icon" /> Filter
           </button>
@@ -43,9 +42,9 @@
     <div class="events">
       <div class="events__header">
         <h2 class="title">Events</h2>
-        <BaseSearch />
+        <BaseSearch v-model="searchTerm" placeholder="Search..." />
       </div>
-      <EventsTable />
+      <EventsTable :searchTerm="searchTerm" />
     </div>
   </div>
 </template>
@@ -64,13 +63,17 @@ export default {
   data() {
     return {
       selectModelOptions: [
-        { name: 'Model', value: 0 },
-        { name: 'Active', value: 1 },
+        { name: 'Success', value: 0 },
+        { name: 'Update', value: 1 },
+        { name: 'Carrier notification', value: 2 },
       ],
-      selectModelValue: 'Model',
+      selectModelValue: 'Success',
       selectConditionOptions: [
-        { name: 'Condition', value: 0 },
-        { name: 'Active', value: 1 },
+        { name: 'Question', value: 0 },
+        { name: 'Action', value: 1 },
+        { name: 'Information', value: 2 },
+        { name: 'Suggestion', value: 3 },
+        { name: 'Agreement', value: 4 },
       ],
       selectConditionValue: 'Condition',
       location: '',
@@ -79,6 +82,7 @@ export default {
       angleDownImage: '@assets/icons/angle-down.svg',
       angleUpImage: '@assets/icons/angle-up.svg',
       showFilters: false,
+      searchTerm: '',
     }
   },
   computed: {
@@ -104,6 +108,9 @@ export default {
       this.location = ''
       this.location2 = ''
       this.date = ''
+    },
+    updateSearchTerm(value) {
+      this.searchTerm = value
     },
   },
 }

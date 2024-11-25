@@ -1,241 +1,362 @@
 [
     {
-        "date": "2024-11-01",
-        "time": "10:15 AM",
-        "details": "[Alice]: Hey, are you coming to the meeting?",
-        "url": "https://switter@dminc.com/1"
-    },
-    {
-        "date": "2024-11-01",
-        "time": "10:30 AM",
-        "details": "[Bob]: Yes, I'll be there in 5 minutes.",
-        "url": "https://switter@dminc.com/2"
-    },
-    {
-        "date": "2024-11-01",
-        "time": "11:00 AM",
-        "details": "[Charlie]: The presentation went well!",
-        "url": "https://switter@dminc.com/3"
-    },
-    {
-        "date": "2024-11-02",
-        "time": "9:00 AM",
-        "details": "[Alice]: Good morning! Ready for another day?",
-        "url": "https://switter@dminc.com/4"
-    },
-    {
-        "date": "2024-11-02",
-        "time": "9:05 AM",
-        "details": "[Dave]: Morning! Let’s get started.",
-        "url": "https://switter@dminc.com/5"
-    },
-    {
-        "date": "2024-11-02",
-        "time": "2:30 PM",
-        "details": "[Eve]: Are we meeting for lunch tomorrow?",
-        "url": "https://switter@dminc.com/6"
-    },
-    {
-        "date": "2024-11-03",
-        "time": "12:00 PM",
-        "details": "[Alice]: Happy to help with that report!",
-        "url": "https://switter@dminc.com/7"
-    },
-    {
-        "date": "2024-11-03",
-        "time": "12:15 PM",
-        "details": "[Frank]: Thanks, Alice!",
-        "url": "https://switter@dminc.com/8"
-    },
-    {
-        "date": "2024-11-03",
-        "time": "3:45 PM",
-        "details": "[Gina]: Can we discuss the project timeline?",
-        "url": "https://switter@dminc.com/9"
-    },
-    {
-        "date": "2024-11-04",
-        "time": "8:10 AM",
-        "details": "[Henry]: Morning all! Let’s have a productive day.",
-        "url": "https://switter@dminc.com/10"
-    },
-    {
-        "date": "2024-11-04",
-        "time": "8:20 AM",
-        "details": "[Alice]: Absolutely, Henry!",
-        "url": "https://switter@dminc.com/11"
-    },
-    {
-        "date": "2024-11-04",
-        "time": "10:00 AM",
-        "details": "[Bob]: Any updates on the budget?",
-        "url": "https://switter@dminc.com/12"
-    },
-    {
-        "date": "2024-11-04",
-        "time": "10:15 AM",
-        "details": "[Charlie]: Reviewing it now, Bob.",
-        "url": "https://switter@dminc.com/13"
-    },
-    {
-        "date": "2024-11-05",
-        "time": "1:00 PM",
-        "details": "[Dave]: Lunch in the cafeteria?",
-        "url": "https://switter@dminc.com/14"
-    },
-    {
-        "date": "2024-11-05",
-        "time": "1:10 PM",
-        "details": "[Eve]: Sure, see you there!",
-        "url": "https://switter@dminc.com/15"
-    },
-    {
-        "date": "2024-11-05",
-        "time": "4:30 PM",
-        "details": "[Frank]: Meeting recap email sent.",
-        "url": "https://switter@dminc.com/16"
-    },
-    {
-        "date": "2024-11-06",
-        "time": "9:00 AM",
-        "details": "[Gina]: Project update by EOD, please.",
-        "url": "https://switter@dminc.com/17"
-    },
-    {
-        "date": "2024-11-06",
-        "time": "11:20 AM",
-        "details": "[Henry]: Got it, Gina!",
-        "url": "https://switter@dminc.com/18"
-    },
-    {
-        "date": "2024-11-06",
-        "time": "3:45 PM",
-        "details": "[Alice]: Files are uploaded.",
-        "url": "https://switter@dminc.com/19"
-    },
-    {
-        "date": "2024-11-07",
-        "time": "8:30 AM",
-        "details": "[Bob]: Quick team check-in?",
-        "url": "https://switter@dminc.com/20"
-    },
-    {
-        "date": "2024-11-07",
-        "time": "9:00 AM",
-        "details": "[Charlie]: I’ll join in 10 mins.",
-        "url": "https://switter@dminc.com/21"
-    },
-    {
-        "date": "2024-11-07",
-        "time": "2:15 PM",
-        "details": "[Dave]: Presentation feedback?",
-        "url": "https://switter@dminc.com/22"
-    },
-    {
-        "date": "2024-11-08",
-        "time": "10:00 AM",
-        "details": "[Eve]: I think it went great!",
-        "url": "https://switter@dminc.com/23"
-    },
-    {
-        "date": "2024-11-08",
-        "time": "10:05 AM",
-        "details": "[Frank]: Agreed, nice job.",
-        "url": "https://switter@dminc.com/24"
-    },
-    {
-        "date": "2024-11-08",
-        "time": "4:45 PM",
-        "details": "[Gina]: Updating the project doc.",
-        "url": "https://switter@dminc.com/25"
-    },
-    {
-        "date": "2024-11-09",
-        "time": "11:10 AM",
-        "details": "[Henry]: Good progress on milestones!",
-        "url": "https://switter@dminc.com/26"
-    },
-    {
-        "date": "2024-11-09",
-        "time": "1:45 PM",
-        "details": "[Alice]: Shall we meet next week?",
-        "url": "https://switter@dminc.com/27"
-    },
-    {
-        "date": "2024-11-09",
-        "time": "2:00 PM",
-        "details": "[Bob]: Sure, I’m available.",
-        "url": "https://switter@dminc.com/28"
-    },
-    {
-        "date": "2024-11-10",
-        "time": "10:20 AM",
-        "details": "[Charlie]: Finalizing the proposal.",
-        "url": "https://switter@dminc.com/29"
-    },
-    {
-        "date": "2024-11-10",
-        "time": "11:30 AM",
-        "details": "[Dave]: Let me review it.",
-        "url": "https://switter@dminc.com/30"
-    },
-    {
-        "date": "2024-11-10",
-        "time": "4:10 PM",
-        "details": "[Eve]: Project status updated.",
-        "url": "https://switter@dminc.com/31"
-    },
-    {
-        "date": "2024-11-11",
-        "time": "9:30 AM",
-        "details": "[Frank]: Meeting in 30 minutes.",
-        "url": "https://switter@dminc.com/32"
-    },
-    {
-        "date": "2024-11-11",
-        "time": "9:35 AM",
-        "details": "[Gina]: On my way!",
-        "url": "https://switter@dminc.com/33"
-    },
-    {
-        "date": "2024-11-11",
-        "time": "1:00 PM",
-        "details": "[Henry]: Wrapping up for the day.",
-        "url": "https://switter@dminc.com/34"
-    },
-    {
-        "date": "2024-11-12",
-        "time": "8:15 AM",
-        "details": "[Alice]: Early start today!",
-        "url": "https://switter@dminc.com/35"
-    },
-    {
-        "date": "2024-11-12",
-        "time": "10:45 AM",
-        "details": "[Bob]: Sent the files to you.",
-        "url": "https://switter@dminc.com/36"
-    },
-    {
-        "date": "2024-11-12",
-        "time": "2:00 PM",
-        "details": "[Charlie]: Received, thanks!",
-        "url": "https://switter@dminc.com/37"
-    },
-    {
-        "date": "2024-11-12",
-        "time": "4:15 PM",
-        "details": "[Dave]: Review meeting notes.",
-        "url": "https://switter@dminc.com/38"
-    },
-    {
-        "date": "2024-11-13",
+        "date": "2024-11-14",
         "time": "9:45 AM",
-        "details": "[Eve]: Great work this week.",
-        "url": "https://switter@dminc.com/39"
+        "details": "[Charlie]: Next steps?",
+        "url": "https://switter@dminc.com/29",
+        "location": "London",
+        "model": "Update",
+        "condition": "Question"
     },
     {
-        "date": "2024-11-13",
+        "date": "2024-11-14",
+        "time": "9:50 AM",
+        "details": "[Dave]: Implement changes.",
+        "url": "https://switter@dminc.com/30",
+        "location": "New York",
+        "model": "Success",
+        "condition": "Action"
+    },
+    {
+        "date": "2024-11-15",
         "time": "10:30 AM",
-        "details": "[Frank]: Agreed, well done everyone!"
+        "details": "[Eve]: Final deadline?",
+        "url": "https://switter@dminc.com/31",
+        "location": "Paris",
+        "model": "Carrier notification",
+        "condition": "Question"
+    },
+    {
+        "date": "2024-11-15",
+        "time": "10:35 AM",
+        "details": "[Alice]: End of next week.",
+        "url": "https://switter@dminc.com/32",
+        "location": "Minsk",
+        "model": "Update",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-16",
+        "time": "1:15 PM",
+        "details": "[Bob]: Team meeting on Monday?",
+        "url": "https://switter@dminc.com/33",
+        "location": "Minsk",
+        "model": "Success",
+        "condition": "Suggestion"
+    },
+    {
+        "date": "2024-11-16",
+        "time": "1:20 PM",
+        "details": "[Charlie]: Sounds good.",
+        "url": "https://switter@dminc.com/34",
+        "location": "London",
+        "model": "Carrier notification",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-11-17",
+        "time": "2:00 PM",
+        "details": "[Dave]: Report progress.",
+        "url": "https://switter@dminc.com/35",
+        "location": "New York",
+        "model": "Update",
+        "condition": "Request"
+    },
+    {
+        "date": "2024-11-17",
+        "time": "2:15 PM",
+        "details": "[Alice]: Almost finished.",
+        "url": "https://switter@dminc.com/36",
+        "location": "Minsk",
+        "model": "Success",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-18",
+        "time": "10:00 AM",
+        "details": "[Eve]: Need your input.",
+        "url": "https://switter@dminc.com/37",
+        "location": "Paris",
+        "model": "Carrier notification",
+        "condition": "Request"
+    },
+    {
+        "date": "2024-11-18",
+        "time": "10:15 AM",
+        "details": "[Bob]: Sent it.",
+        "url": "https://switter@dminc.com/38",
+        "location": "Minsk",
+        "model": "Success",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-19",
+        "time": "1:00 PM",
+        "details": "[Charlie]: Meeting tomorrow?",
+        "url": "https://switter@dminc.com/39",
+        "location": "London",
+        "model": "Update",
+        "condition": "Question"
+    },
+    {
+        "date": "2024-11-19",
+        "time": "1:05 PM",
+        "details": "[Dave]: Yes, at 10 AM.",
+        "url": "https://switter@dminc.com/40",
+        "location": "New York",
+        "model": "Success",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-11-20",
+        "time": "9:30 AM",
+        "details": "[Alice]: Any updates?",
+        "url": "https://switter@dminc.com/41",
+        "location": "Minsk",
+        "model": "Carrier notification",
+        "condition": "Question"
+    },
+    {
+        "date": "2024-11-20",
+        "time": "9:40 AM",
+        "details": "[Eve]: All on track.",
+        "url": "https://switter@dminc.com/42",
+        "location": "Paris",
+        "model": "Update",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-21",
+        "time": "12:00 PM",
+        "details": "[Bob]: Need help with report.",
+        "url": "https://switter@dminc.com/43",
+        "location": "Minsk",
+        "model": "Success",
+        "condition": "Request"
+    },
+    {
+        "date": "2024-11-21",
+        "time": "12:10 PM",
+        "details": "[Charlie]: Sure, let's discuss.",
+        "url": "https://switter@dminc.com/44",
+        "location": "London",
+        "model": "Carrier notification",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-11-22",
+        "time": "3:00 PM",
+        "details": "[Dave]: Final version ready.",
+        "url": "https://switter@dminc.com/45",
+        "location": "New York",
+        "model": "Update",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-22",
+        "time": "3:10 PM",
+        "details": "[Alice]: Great job!",
+        "url": "https://switter@dminc.com/46",
+        "location": "Minsk",
+        "model": "Success",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-11-23",
+        "time": "10:00 AM",
+        "details": "[Eve]: Lunch tomorrow?",
+        "url": "https://switter@dminc.com/47",
+        "location": "Paris",
+        "model": "Carrier notification",
+        "condition": "Suggestion"
+    },
+    {
+        "date": "2024-11-23",
+        "time": "10:05 AM",
+        "details": "[Bob]: Sounds good!",
+        "url": "https://switter@dminc.com/48",
+        "location": "Minsk",
+        "model": "Update",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-11-24",
+        "time": "1:00 PM",
+        "details": "[Charlie]: Coffee break?",
+        "url": "https://switter@dminc.com/49",
+        "location": "London",
+        "model": "Success",
+        "condition": "Suggestion"
+    },
+    {
+        "date": "2024-11-24",
+        "time": "1:05 PM",
+        "details": "[Dave]: Yes, in 10 min.",
+        "url": "https://switter@dminc.com/50",
+        "location": "New York",
+        "model": "Carrier notification",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-11-25",
+        "time": "9:00 AM",
+        "details": "[Alice]: Project A progress?",
+        "url": "https://switter@dminc.com/51",
+        "location": "Minsk",
+        "model": "Update",
+        "condition": "Question"
+    },
+    {
+        "date": "2024-11-25",
+        "time": "9:10 AM",
+        "details": "[Eve]: On schedule.",
+        "url": "https://switter@dminc.com/52",
+        "location": "Paris",
+        "model": "Success",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-26",
+        "time": "11:00 AM",
+        "details": "[Bob]: Need decision on X.",
+        "url": "https://switter@dminc.com/53",
+        "location": "Minsk",
+        "model": "Carrier notification",
+        "condition": "Request"
+    },
+    {
+        "date": "2024-11-26",
+        "time": "11:15 AM",
+        "details": "[Charlie]: Will decide by 5 PM.",
+        "url": "https://switter@dminc.com/54",
+        "location": "London",
+        "model": "Update",
+        "condition": "Action"
+    },
+    {
+        "date": "2024-11-27",
+        "time": "2:00 PM",
+        "details": "[Dave]: Updated docs.",
+        "url": "https://switter@dminc.com/55",
+        "location": "New York",
+        "model": "Success",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-27",
+        "time": "2:10 PM",
+        "details": "[Alice]: Excellent!",
+        "url": "https://switter@dminc.com/56",
+        "location": "Minsk",
+        "model": "Carrier notification",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-11-28",
+        "time": "10:30 AM",
+        "details": "[Eve]: Meeting agenda?",
+        "url": "https://switter@dminc.com/57",
+        "location": "Paris",
+        "model": "Update",
+        "condition": "Question"
+    },
+    {
+        "date": "2024-11-28",
+        "time": "10:40 AM",
+        "details": "[Bob]: Sent it to you.",
+        "url": "https://switter@dminc.com/58",
+        "location": "Minsk",
+        "model": "Success",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-11-29",
+        "time": "1:15 PM",
+        "details": "[Charlie]: Feedback on design?",
+        "url": "https://switter@dminc.com/59",
+        "location": "London",
+        "model": "Carrier notification",
+        "condition": "Question"
+    },
+    {
+        "date": "2024-11-29",
+        "time": "1:25 PM",
+        "details": "[Dave]: Will send by EOD.",
+        "url": "https://switter@dminc.com/60",
+        "location": "New York",
+        "model": "Update",
+        "condition": "Action"
+    },
+    {
+        "date": "2024-11-30",
+        "time": "9:45 AM",
+        "details": "[Alice]: Project B kickoff?",
+        "url": "https://switter@dminc.com/61",
+        "location": "Minsk",
+        "model": "Success",
+        "condition": "Suggestion"
+    },
+    {
+        "date": "2024-11-30",
+        "time": "10:00 AM",
+        "details": "[Eve]: Good idea, next week?",
+        "url": "https://switter@dminc.com/62",
+        "location": "Paris",
+        "model": "Carrier notification",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-12-01",
+        "time": "1:00 PM",
+        "details": "[Bob]: Status update required.",
+        "url": "https://switter@dminc.com/63",
+        "location": "Minsk",
+        "model": "Update",
+        "condition": "Request"
+    },
+    {
+        "date": "2024-12-01",
+        "time": "1:10 PM",
+        "details": "[Charlie]: Will send by Monday.",
+        "url": "https://switter@dminc.com/64",
+        "location": "London",
+        "model": "Success",
+        "condition": "Action"
+    },
+    {
+        "date": "2024-12-02",
+        "time": "10:00 AM",
+        "details": "[Dave]: Client meeting feedback.",
+        "url": "https://switter@dminc.com/65",
+        "location": "New York",
+        "model": "Carrier notification",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-12-02",
+        "time": "10:15 AM",
+        "details": "[Alice]: Received, thanks!",
+        "url": "https://switter@dminc.com/66",
+        "location": "Minsk",
+        "model": "Update",
+        "condition": "Agreement"
+    },
+    {
+        "date": "2024-12-03",
+        "time": "1:30 PM",
+        "details": "[Eve]: New task assigned.",
+        "url": "https://switter@dminc.com/67",
+        "location": "Paris",
+        "model": "Success",
+        "condition": "Information"
+    },
+    {
+        "date": "2024-12-03",
+        "time": "1:40 PM",
+        "details": "[Bob]: Understood.",
+        "url": "https://switter@dminc.com/68",
+        "location": "Minsk",
+        "model": "Carrier notification",
+        "condition": "Agreement"
     }
 ]
