@@ -1,7 +1,7 @@
 [
   {
     "status": "completed",
-    "createdAt": "Oct 21, 2024 12.30",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 21</span>, <span style=\"font-weight: 600\">2024</span> 12.30",
     "user": "John Doe",
     "name": "HR Import",
     "statistics": {
@@ -13,7 +13,7 @@
   },
   {
     "status": "completed",
-    "createdAt": "Oct 22, 2024 09.45",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 22</span>, <span style=\"font-weight: 600\">2024</span> 09.45",
     "user": "Jane Smith",
     "name": "Sales Import",
     "statistics": {
@@ -25,7 +25,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Oct 23, 2024 14.20",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 23</span>, <span style=\"font-weight: 600\">2024</span> 14.20",
     "user": "Alice Johnson",
     "name": "Marketing Import",
     "statistics": {
@@ -37,7 +37,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Oct 24, 2024 08.15",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 24</span>, <span style=\"font-weight: 600\">2024</span> 08.15",
     "user": "Bob Brown",
     "name": "IT Import",
     "statistics": {
@@ -49,7 +49,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Oct 25, 2024 11.50",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 25</span>, <span style=\"font-weight: 600\">2024</span> 11.50",
     "user": "Charlie Wilson",
     "name": "Finance Import",
     "statistics": {
@@ -61,7 +61,7 @@
   },
   {
     "status": "completed",
-    "createdAt": "Oct 26, 2024 10.30",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 26</span>, <span style=\"font-weight: 600\">2024</span> 10.30",
     "user": "David Green",
     "name": "Operations Import",
     "statistics": {
@@ -73,7 +73,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Oct 27, 2024 15.00",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 27</span>, <span style=\"font-weight: 600\">2024</span> 15.00",
     "user": "Eve Black",
     "name": "Support Import",
     "statistics": {
@@ -85,7 +85,7 @@
   },
   {
     "status": "completed",
-    "createdAt": "Oct 28, 2024 07.45",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 28</span>, <span style=\"font-weight: 600\">2024</span> 07.45",
     "user": "Frank White",
     "name": "Engineering Import",
     "statistics": {
@@ -97,7 +97,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Oct 29, 2024 13.10",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 29</span>, <span style=\"font-weight: 600\">2024</span> 13.10",
     "user": "Grace Lewis",
     "name": "R&D Import",
     "statistics": {
@@ -109,7 +109,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Oct 30, 2024 09.50",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 30</span>, <span style=\"font-weight: 600\">2024</span> 09.50",
     "user": "Hank Hall",
     "name": "Logistics Import",
     "statistics": {
@@ -121,7 +121,7 @@
   },
   {
     "status": "completed",
-    "createdAt": "Oct 31, 2024 16.45",
+    "createdAt": "<span style=\"font-weight: 600\">Oct 31</span>, <span style=\"font-weight: 600\">2024</span> 16.45",
     "user": "Ivy King",
     "name": "Legal Import",
     "statistics": {
@@ -133,7 +133,7 @@
   },
   {
     "status": "completed",
-    "createdAt": "Nov 01, 2024 10.20",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 01</span>, <span style=\"font-weight: 600\">2024</span> 10.20",
     "user": "Jack Turner",
     "name": "Security Import",
     "statistics": {
@@ -145,7 +145,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Nov 02, 2024 12.10",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 02</span>, <span style=\"font-weight: 600\">2024</span> 12.10",
     "user": "Karen Scott",
     "name": "Facilities Import",
     "statistics": {
@@ -157,7 +157,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Nov 03, 2024 14.00",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 03</span>, <span style=\"font-weight: 600\">2024</span> 14.00",
     "user": "Liam Taylor",
     "name": "Manufacturing Import",
     "statistics": {
@@ -169,7 +169,7 @@
   },
   {
     "status": "completed",
-    "createdAt": "Nov 04, 2024 09.30",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 04</span>, <span style=\"font-weight: 600\">2024</span> 09.30",
     "user": "Mia Anderson",
     "name": "HR Import",
     "statistics": {
@@ -181,7 +181,7 @@
   },
   {
     "status": "incompleted",
-    "createdAt": "Nov 05, 2024 15.10",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 05</span>, <span style=\"font-weight: 600\">2024</span> 15.10",
     "user": "Noah Lee",
     "name": "Sales Import",
     "statistics": {
@@ -192,8 +192,8 @@
     "id": 115
   },
   {
-    "status": "incompleted",
-    "createdAt": "Nov 06, 2024 11.45",
+    "status": "completed",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 06</span>, <span style=\"font-weight: 600\">2024</span> 11.45",
     "user": "Olivia Martinez",
     "name": "Marketing Import",
     "statistics": {
@@ -205,7 +205,7 @@
   },
   {
     "status": "completed",
-    "createdAt": "Nov 07, 2024 08.25",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 07</span>, <span style=\"font-weight: 600\">2024</span> 08.25",
     "user": "Paul Young",
     "name": "IT Import",
     "statistics": {
@@ -217,25 +217,25 @@
   },
   {
     "status": "completed",
-    "createdAt": "Nov 08, 2024 14.40",
-    "user": "Quinn Lopez",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 08</span>, <span style=\"font-weight: 600\">2024</span> 07.55",
+    "user": "Quinn Walker",
     "name": "Finance Import",
     "statistics": {
-      "updated_devices_count": 3,
+      "updated_devices_count": 0,
       "created_contacts_count": 1,
-      "updated_contacts_count": 2
+      "updated_contacts_count": 1
     },
     "id": 118
   },
   {
     "status": "completed",
-    "createdAt": "Nov 09, 2024 10.50",
-    "user": "Rachel Adams",
+    "createdAt": "<span style=\"font-weight: 600\">Nov 09</span>, <span style=\"font-weight: 600\">2024</span> 13.30",
+    "user": "Ryan Hall",
     "name": "Operations Import",
     "statistics": {
-      "updated_devices_count": 2,
-      "created_contacts_count": 3,
-      "updated_contacts_count": 1
+      "updated_devices_count": 3,
+      "created_contacts_count": 4,
+      "updated_contacts_count": 2
     },
     "id": 119
   }

@@ -20,25 +20,71 @@
     <Column
       v-if="withCheckbox"
       selection-mode="multiple"
-      class="base-table__checkbox"
+      :style="{
+        width: '50px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }"
     />
+    <Column
+      v-if="showColumnBadge"
+      :header="capitalize(badgeField)"
+      :field="badgeField"
+      sortable
+    >
+      <template #body="slotProps">
+        <span
+          :class="{
+            'base-table__badge base-table__badge_green':
+              slotProps.data[badgeField] === greenBadgeValue,
+            'base-table__badge base-table__badge_red':
+              slotProps.data[badgeField] === redBadgeValue,
+          }"
+        >
+          {{ slotProps.data[badgeField] }}
+        </span>
+      </template>
+    </Column>
     <Column
       v-for="(key, index) in tableHeaderNames"
       :key="`${key}-${index}`"
       :field="key"
       :header="preparedKey(key)"
       sortable
-    ></Column>
+    >
+      <template #body="slotProps">
+        <span
+          v-if="key === vhtmlField"
+          v-html="safeHtml(slotProps.data[key])"
+        ></span>
+        <span v-else>{{ slotProps.data[key] }}</span>
+      </template></Column
+    >
+    <Column v-if="withTableButton" :style="{ textAlign: 'end' }">
+      <template #body="slotProps">
+        <BaseButton
+          label="Info"
+          variant="outlined"
+          class="base-table__button"
+          @click="handleButtonClick(slotProps.data)"
+        >
+          Details
+        </BaseButton>
+      </template>
+    </Column>
   </DataTable>
 </template>
 
 <script>
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import BaseButton from 'primevue/button'
+import DOMPurify from 'dompurify'
 
 export default {
   name: 'BaseTable',
-  components: { DataTable, Column },
+  components: { BaseButton, Column, DataTable },
   props: {
     itemsData: {
       type: Array,
@@ -48,7 +94,32 @@ export default {
       type: Boolean,
       default: true,
     },
+    withTableButton: {
+      type: Boolean,
+      default: false,
+    },
+    showColumnBadge: {
+      type: Boolean,
+      default: false,
+    },
+    badgeField: {
+      type: String,
+      default: '',
+    },
+    redBadgeValue: {
+      type: String,
+      default: '',
+    },
+    greenBadgeValue: {
+      type: String,
+      default: '',
+    },
+    vhtmlField: {
+      type: String,
+      default: '',
+    },
   },
+  emits: ['rowButtonClick'],
   data() {
     return {
       itemsTableData: [],
@@ -59,7 +130,9 @@ export default {
   },
   computed: {
     tableHeaderNames() {
-      return Object.keys(this.itemsTableData[0] || {})
+      return Object.keys(this.itemsTableData[0] || {}).filter(
+        key => key !== this.badgeField,
+      )
     },
 
     firstPage() {
@@ -96,28 +169,37 @@ export default {
     handlePageChange(event) {
       this.pageNumber = event.page + 1
     },
+
+    handleButtonClick(rowData) {
+      this.$emit('rowButtonClick', rowData)
+    },
+
+    capitalize(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
+
+    safeHtml(content) {
+      return DOMPurify.sanitize(content)
+    },
   },
 }
 </script>
 
 <style lang="scss" scoped>
+::v-deep(.p-datatable .p-datatable-tbody) {
+  background: rgba(164, 20, 193, 0) !important;
+}
+
 ::v-deep(.p-datatable-header-cell) {
   background-color: #e9f0f4;
   border-top: 1px solid #bdbfc1;
   border-bottom: 1px solid #bdbfc1;
-  height: 40px;
-}
-
-::v-deep(.p-datatable-header-cell:not(:first-child)) {
   width: 148px;
+  height: 40px;
   padding: 10px;
 }
 
 ::v-deep(.p-datatable-header-cell:first-child) {
-  width: 50px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
   border-left: 1px solid #bdbfc1;
   border-radius: 14px 0 0 14px;
 }
@@ -145,13 +227,6 @@ export default {
   padding: 10px;
 }
 
-::v-deep(.p-row-odd > td:first-child),
-::v-deep(.p-row-even > td:first-child) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 ::v-deep(button.p-paginator-page-selected) {
   width: 30px;
   background-color: #007bff;
@@ -162,12 +237,41 @@ export default {
   max-width: 30px !important;
 }
 
-.base-table__info {
-  color: #485066;
-  font-size: 0.8rem;
-  font-weight: 600;
-  & > span {
-    text-decoration: underline;
+.base-table {
+  &__button {
+    border-radius: 12px;
+    border: 1px solid #bdbfc1;
+    color: #004b85;
+    width: 78px;
+    height: 36px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-align: end;
+  }
+
+  &__badge {
+    border: 1px solid;
+    border-radius: 32px;
+    padding: 4px 8px;
+    &_green {
+      border-color: #11cc6e;
+      color: #11cc6e;
+      background-color: #edfbf4;
+    }
+    &_red {
+      border-color: #cc1111;
+      color: #cc1111;
+      background-color: #fbeded;
+    }
+  }
+
+  &__info {
+    color: #485066;
+    font-size: 0.8rem;
+    font-weight: 600;
+    & > span {
+      text-decoration: underline;
+    }
   }
 }
 </style>

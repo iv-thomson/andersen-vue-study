@@ -24,7 +24,17 @@
         </label>
         <BaseSearch v-model="searchValue" placeholder="Search Device List..." />
       </div>
-      <BaseTable :items-data="filteredData" :with-checkbox="false" />
+      <BaseTable
+        :items-data="filteredData"
+        :with-checkbox="false"
+        :with-table-button="true"
+        :show-column-badge="true"
+        badge-field="status"
+        red-badge-value="incompleted"
+        green-badge-value="completed"
+        vhtml-field="createdAt"
+        @row-button-click="handleRowButtonClick"
+      />
     </div>
   </div>
 </template>
@@ -44,7 +54,7 @@ export default {
   },
   data() {
     return {
-      ticketsData: [],
+      jobsData: [],
       selectOptions: [
         { name: 'all', value: 0 },
         { name: 'completed', value: 1 },
@@ -56,7 +66,7 @@ export default {
   },
   computed: {
     filteredData() {
-      let result = [...this.ticketsData]
+      let result = [...this.jobsData]
 
       if (this.selectedValue !== 'all') {
         result = result.filter(item => item.status === this.selectedValue)
@@ -72,13 +82,22 @@ export default {
         )
       }
 
+      result = result.map(item => {
+        return Object.keys(item)
+          .filter(key => key !== 'id' && key !== 'statistics')
+          .reduce((newItem, key) => {
+            newItem[key] = item[key]
+            return newItem
+          }, {})
+      })
+
       return result
     },
   },
   async created() {
     try {
       const data = await getHttpRequest('/activity-background-jobs.json')
-      this.ticketsData = data
+      this.jobsData = data
     } catch (error) {
       console.error('Data fetching error:', error)
     }
@@ -87,6 +106,10 @@ export default {
     handleSelectOption(option) {
       this.selectedValue = option.name
       this.searchValue = ''
+    },
+
+    handleRowButtonClick(rowData) {
+      console.log('Данные строки:', rowData)
     },
   },
 }
