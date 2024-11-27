@@ -2,7 +2,11 @@
   <div class="background-jobs">
     <div class="background-jobs__header">
       <h1 class="background-jobs__page-title">Background Jobs</h1>
-      <p>Activity > Background Jobs</p>
+      <div class="background-jobs__bread-crumbs">
+        <span class="background-jobs__bread-crumb">Activity</span>
+        <img src="@/assets/icons/chevron-right.svg" alt="chevron" />
+        <span class="background-jobs__bread-crumb">Background Jobs</span>
+      </div>
     </div>
     <div class="background-jobs__table-wrapper">
       <div class="background-jobs__table-filters">
@@ -109,7 +113,17 @@ export default {
     },
 
     handleRowButtonClick(rowData) {
-      console.log('Данные строки:', rowData)
+      const matchedJob = this.jobsData.find(
+        job =>
+          job.status === rowData.status &&
+          job.createdAt === rowData.createdAt &&
+          job.user === rowData.user &&
+          job.name === rowData.name,
+      )
+      this.$router.push({
+        name: 'job',
+        params: { jobId: matchedJob.id },
+      })
     },
   },
 }
@@ -140,6 +154,20 @@ export default {
     width: 32px;
     height: 32px;
     background: url('../assets/icons/bolt.svg') no-repeat center/contain;
+  }
+
+  &__bread-crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__bread-crumb {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: underline;
+    color: #007bff;
+    cursor: pointer;
   }
 
   &__input {
@@ -173,10 +201,6 @@ export default {
     border-radius: 28px;
     box-shadow: 0px 10px 10px -5px #0000000a;
     box-shadow: 0px 20px 25px -5px #0000001a;
-  }
-
-  &__table-title {
-    margin: 0;
   }
 
   &__table-filters {
