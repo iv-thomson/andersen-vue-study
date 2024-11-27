@@ -18,7 +18,7 @@
           class="asset-management__route-item"
         >
           <span class="asset-management__route-item-name">
-            <a href="#">{{ route.name }}</a>
+            {{ route.name }}
           </span>
 
           <img
@@ -30,16 +30,46 @@
         </li>
       </ul>
     </div>
+    <div class="asset-management-container">
+      <div class="asset-management-container-categories">
+        <CategorySwitch
+          :categories="categoryOptions"
+          :defaultCategory="selectedCategory"
+          @selectCategory="handleSelectedCategory"
+        >
+        </CategorySwitch>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import CategorySwitch from '@/components/CategorySwitch.vue'
 export default {
   name: 'AssetManagementView',
+  components: { CategorySwitch },
   data() {
     return {
       routes: [{ name: 'inventory' }, { name: 'asset management' }],
+      categoryOptions: [
+        {
+          name: 'items',
+        },
+        {
+          name: 'models',
+        },
+        {
+          name: 'categories',
+        },
+      ],
+      defaultCategory: 'items',
     }
+  },
+  methods: {
+    handleSelectedCategory(category) {
+      // logic, triggered by category select, will be implemented here
+      console.log(category)
+    },
   },
 }
 </script>
