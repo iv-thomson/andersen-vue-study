@@ -1,72 +1,72 @@
 [
-    {
-        "serialNumber": "SN001",
-        "refurbishmentDate": "2024-01-15",
-        "model": "Model A1",
-        "employee": "Alice Johnson",
-        "departmentResponsible": "Quality Control"
-    },
-    {
-        "serialNumber": "SN002",
-        "refurbishmentDate": "2024-02-03",
-        "model": "Model B2",
-        "employee": "Bob Smith",
-        "departmentResponsible": "Maintenance"
-    },
-    {
-        "serialNumber": "SN003",
-        "refurbishmentDate": "2024-03-12",
-        "model": "Model C3",
-        "employee": "Charlie Brown",
-        "departmentResponsible": "Engineering"
-    },
-    {
-        "serialNumber": "SN004",
-        "refurbishmentDate": "2024-04-21",
-        "model": "Model D4",
-        "employee": "David Lee",
-        "departmentResponsible": "Production"
-    },
-    {
-        "serialNumber": "SN005",
-        "refurbishmentDate": "2024-05-18",
-        "model": "Model E5",
-        "employee": "Eve Torres",
-        "departmentResponsible": "Logistics"
-    },
-    {
-        "serialNumber": "SN006",
-        "refurbishmentDate": "2024-06-30",
-        "model": "Model F6",
-        "employee": "Frank Wright",
-        "departmentResponsible": "Quality Control"
-    },
-    {
-        "serialNumber": "SN007",
-        "refurbishmentDate": "2024-07-22",
-        "model": "Model G7",
-        "employee": "Grace Kim",
-        "departmentResponsible": "Engineering"
-    },
-    {
-        "serialNumber": "SN008",
-        "refurbishmentDate": "2024-08-10",
-        "model": "Model H8",
-        "employee": "Hank Green",
-        "departmentResponsible": "Production"
-    },
-    {
-        "serialNumber": "SN009",
-        "refurbishmentDate": "2024-09-05",
-        "model": "Model I9",
-        "employee": "Ivy Larson",
-        "departmentResponsible": "Logistics"
-    },
-    {
-        "serialNumber": "SN010",
-        "refurbishmentDate": "2024-10-14",
-        "model": "Model J10",
-        "employee": "Jack Taylor",
-        "departmentResponsible": "Maintenance"
-    }
+  {
+    "serialNumber": "SN001",
+    "refurbishmentDate": "2024-01-15",
+    "model": "Model A1",
+    "employee": "Alice Johnson",
+    "departmentResponsible": "Quality Control"
+  },
+  {
+    "serialNumber": "SN002",
+    "refurbishmentDate": "2024-02-03",
+    "model": "Model B2",
+    "employee": "Bob Smith",
+    "departmentResponsible": "Maintenance"
+  },
+  {
+    "serialNumber": "SN003",
+    "refurbishmentDate": "2024-03-12",
+    "model": "Model C3",
+    "employee": "Charlie Brown",
+    "departmentResponsible": "Engineering"
+  },
+  {
+    "serialNumber": "SN004",
+    "refurbishmentDate": "2024-04-21",
+    "model": "Model D4",
+    "employee": "David Lee",
+    "departmentResponsible": "Production"
+  },
+  {
+    "serialNumber": "SN005",
+    "refurbishmentDate": "2024-05-18",
+    "model": "Model E5",
+    "employee": "Eve Torres",
+    "departmentResponsible": "Logistics"
+  },
+  {
+    "serialNumber": "SN006",
+    "refurbishmentDate": "2024-06-30",
+    "model": "Model F6",
+    "employee": "Frank Wright",
+    "departmentResponsible": "Quality Control"
+  },
+  {
+    "serialNumber": "SN007",
+    "refurbishmentDate": "2024-07-22",
+    "model": "Model G7",
+    "employee": "Grace Kim",
+    "departmentResponsible": "Engineering"
+  },
+  {
+    "serialNumber": "SN008",
+    "refurbishmentDate": "2024-08-10",
+    "model": "Model H8",
+    "employee": "Hank Green",
+    "departmentResponsible": "Production"
+  },
+  {
+    "serialNumber": "SN009",
+    "refurbishmentDate": "2024-09-05",
+    "model": "Model I9",
+    "employee": "Ivy Larson",
+    "departmentResponsible": "Logistics"
+  },
+  {
+    "serialNumber": "SN010",
+    "refurbishmentDate": "2024-10-14",
+    "model": "Model J10",
+    "employee": "Jack Taylor",
+    "departmentResponsible": "Maintenance"
+  }
 ]

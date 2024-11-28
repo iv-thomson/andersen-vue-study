@@ -39,15 +39,18 @@
         >
         </CategorySwitch>
       </div>
+      <AssetsTable :defaultCategory="selectedCategory" />
     </div>
   </div>
 </template>
 
 <script>
-import CategorySwitch from '@/components/CategorySwitch.vue'
+import CategorySwitch from '@/components/AssetsTable/CategorySwitch.vue'
+import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
+
 export default {
   name: 'AssetManagementView',
-  components: { CategorySwitch },
+  components: { CategorySwitch, AssetsTable },
   data() {
     return {
       routes: [{ name: 'inventory' }, { name: 'asset management' }],
@@ -62,13 +65,13 @@ export default {
           name: 'categories',
         },
       ],
-      defaultCategory: 'items',
+      selectedCategory: 'items',
+      assetsData: [],
     }
   },
   methods: {
     handleSelectedCategory(category) {
-      // logic, triggered by category select, will be implemented here
-      console.log(category)
+      this.selectedCategory = category
     },
   },
 }

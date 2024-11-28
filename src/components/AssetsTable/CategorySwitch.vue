@@ -17,8 +17,11 @@
 </template>
 
 <script>
+import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
+
 export default {
   name: 'CategorySwitch',
+  components: { AssetsTable },
   props: {
     categories: {
       type: Array,
