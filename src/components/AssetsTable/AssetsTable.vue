@@ -93,6 +93,7 @@ export default {
   watch: {
     async defaultCategory(newCategory, oldCategory) {
       if (newCategory !== oldCategory) {
+        this.currentPage = 1
         this.getDataByCategory(this.defaultCategory)
       }
     },
