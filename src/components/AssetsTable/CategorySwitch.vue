@@ -32,7 +32,9 @@ export default {
       default: 'items',
     },
   },
+
   emits: ['selectCategory'],
+
   data() {
     return {
       activeCategory: this.defaultCategory,
@@ -60,7 +62,6 @@ export default {
     justify-content: center;
     align-items: center;
     padding: 0;
-    margin-left: 36px;
     max-height: 44px;
     list-style: none;
     border: 1px solid #bdbfc1;

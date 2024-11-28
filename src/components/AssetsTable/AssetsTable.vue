@@ -9,12 +9,8 @@
           @click="sortTable(column.label)"
           :class="{
             sortable: column.sortable !== false,
-            asc:
-              sortConfig.column === column.label &&
-              sortConfig.direction === 'asc',
-            desc:
-              sortConfig.column === column.label &&
-              sortConfig.direction === 'desc',
+            asc: this.setSortType('asc', column),
+            desc: this.setSortType('desc', column),
             'sort-active': sortConfig.column === column.label,
           }"
         >
@@ -26,7 +22,7 @@
     <tbody class="assets-tbody">
       <tr
         class="assets-tbody__row"
-        v-for="(row, rowIndex) in sortedRows"
+        v-for="(row, rowIndex) in paginationRows"
         :key="rowIndex"
       >
         <td
@@ -39,6 +35,42 @@
       </tr>
     </tbody>
   </table>
+  <div class="pagination">
+    <div class="pagination-total-items">
+      Showing 1 to 10 Of {{ totalItems }} Entries
+    </div>
+    <div class="pagination-pages">
+      <button
+        @click="goToPage(currentPage - 1)"
+        :disabled="currentPage === firstPage"
+        class="pagination-pages__arrow"
+      >
+        {{ '<' }}
+      </button>
+      <button
+        @click="goToPage(1)"
+        :disabled="currentPage === firstPage"
+        class="pagination-pages__number"
+      >
+        {{ firstPage }}
+      </button>
+      <button
+        @click="goToPage(totalPages)"
+        :disabled="currentPage === totalPages"
+        v-show="totalPages !== 1"
+        class="pagination-pages__number"
+      >
+        {{ totalPages }}
+      </button>
+      <button
+        @click="goToPage(currentPage + 1)"
+        :disabled="currentPage === totalPages"
+        class="pagination-pages__arrow"
+      >
+        {{ '>' }}
+      </button>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -48,14 +80,6 @@ import { getColumnNames } from '@/utils/getColumnNames'
 export default {
   components: 'AssetsTable',
   props: {
-    columnsList: {
-      type: Array,
-      required: false,
-    },
-    rowsList: {
-      type: Array,
-      required: false,
-    },
     defaultCategory: {
       type: String,
       required: true,
@@ -87,8 +111,10 @@ export default {
 
         this.columns = getColumnNames(categoryData[0])
         this.rows = categoryData
+        this.totalItems = categoryData.length
+        this.updatePagination()
       } catch (err) {
-        console.error('Error during fetching the data', err)
+        throw new Error('Error during fetching the data', err)
       }
     },
 
@@ -101,6 +127,7 @@ export default {
         this.sortConfig.column = columnLabel
         this.sortConfig.direction = 'asc'
       }
+      this.updatePagination()
     },
 
     getSortIcon(label) {
@@ -111,6 +138,51 @@ export default {
       }
 
       return 'pi pi-sort-alt'
+    },
+
+    goToPage(pageNumber) {
+      if (pageNumber >= 1 && pageNumber <= this.totalPages) {
+        this.currentPage = pageNumber
+        this.updatePagination()
+      }
+    },
+
+    updatePagination() {
+      const sortedRows = this.sortRows(this.rows)
+      this.totalPages = (this.rows.length % this.rowsPerPage) + 1
+      this.paginationRows = this.getPaginatedRows(sortedRows)
+    },
+
+    getPaginatedRows(sortedRows) {
+      const startIndex = (this.currentPage - 1) * this.rowsPerPage
+      const endIndex = startIndex + this.rowsPerPage
+      return sortedRows.slice(startIndex, endIndex)
+    },
+
+    sortRows(rows) {
+      if (!this.sortConfig.column) return rows
+
+      const { column, direction } = this.sortConfig
+      const sortedList = [...rows].sort((a, b) => {
+        const currValue = a[column]
+        const followingValue = b[column]
+
+        const comparison =
+          typeof currValue === 'string'
+            ? currValue.localeCompare(followingValue)
+            : currValue - nextValue
+
+        return direction === 'asc' ? comparison : -comparison
+      })
+
+      return sortedList
+    },
+
+    setSortType(type, column) {
+      return (
+        this.sortConfig.column === column.label &&
+        this.sortConfig.direction === type
+      )
     },
   },
 
@@ -142,6 +214,13 @@ export default {
         column: null,
         direction: null,
       },
+      currentPage: 1,
+      rowsPerPage: 10,
+      totalPages: 1,
+      paginationRows: [],
+      firstPage: 1,
+      lastPage: 4,
+      totalItems: 0,
     }
   },
 }
@@ -150,7 +229,6 @@ export default {
 <style lang="scss">
 .assets-table {
   width: 100%;
-  margin-left: 40px;
   font-size: 13px;
   line-height: 16px;
   color: #485066;
@@ -195,5 +273,44 @@ export default {
 .assets-tbody__row-data {
   padding: 20px 18px;
   border-bottom: 1px solid #bdbfc1;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &-pages {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+
+    &__arrow {
+      width: 4px;
+      height: 7px;
+      background: none;
+      color: #485066;
+      border: none;
+      cursor: pointer;
+    }
+
+    &__number {
+      width: 30px;
+      height: 30px;
+      color: #bdbfc1;
+      background-color: #ffffff;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+
+      &:disabled {
+        color: #ffffff;
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        border-radius: 50%;
+      }
+    }
+  }
 }
 </style>

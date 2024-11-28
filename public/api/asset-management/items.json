@@ -68,5 +68,12 @@
     "model": "Model J10",
     "employee": "Jack Taylor",
     "departmentResponsible": "Maintenance"
+  },
+  {
+    "serialNumber": "SN010",
+    "refurbishmentDate": "2024-10-14",
+    "model": "Model J10",
+    "employee": "Jack Taylor",
+    "departmentResponsible": "Maintenance"
   }
 ]

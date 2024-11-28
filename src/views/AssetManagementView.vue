@@ -31,14 +31,16 @@
       </ul>
     </div>
     <div class="asset-management-container">
-      <div class="asset-management-container-categories">
-        <CategorySwitch
-          :categories="categoryOptions"
-          :defaultCategory="selectedCategory"
-          @selectCategory="handleSelectedCategory"
-        >
-        </CategorySwitch>
-      </div>
+      <CategorySwitch
+        :categories="categoryOptions"
+        :defaultCategory="selectedCategory"
+        @selectCategory="handleSelectedCategory"
+      >
+      </CategorySwitch>
+      <button class="button-add-item">
+        <i class="pi pi-plus"></i
+        ><span class="button-add-item-text">Add item</span>
+      </button>
       <AssetsTable :defaultCategory="selectedCategory" />
     </div>
   </div>
@@ -126,6 +128,43 @@ export default {
         &-separator {
           height: 11px;
         }
+      }
+    }
+  }
+
+  .asset-management-container {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 36px;
+    margin: 36px;
+    border: 1px solid #bdbfc1;
+    border-radius: 28px;
+    box-shadow: 8px 12px 18px 2px rgba(0, 0, 0, 0.2);
+    overflow: scroll;
+
+    .button-add-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      align-self: flex-end;
+      padding: 10px 18px;
+      max-width: 118px;
+      max-height: 36px;
+      border: 1px solid #004b85;
+      border-radius: 16px;
+      background: #004b85;
+      color: #ffff;
+      font-weight: 600;
+      cursor: pointer;
+
+      .pi.pi-plus {
+        font-size: 10px;
+      }
+
+      &-text {
+        font-size: 13px;
+        line-height: 16px;
       }
     }
   }
