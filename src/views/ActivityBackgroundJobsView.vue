@@ -88,7 +88,7 @@ export default {
 
       result = result.map(item => {
         return Object.keys(item)
-          .filter(key => key !== 'id' && key !== 'statistics')
+          .filter(key => key !== 'statistics')
           .reduce((newItem, key) => {
             newItem[key] = item[key]
             return newItem
@@ -112,17 +112,10 @@ export default {
       this.searchValue = ''
     },
 
-    handleRowButtonClick(rowData) {
-      const matchedJob = this.jobsData.find(
-        job =>
-          job.status === rowData.status &&
-          job.createdAt === rowData.createdAt &&
-          job.user === rowData.user &&
-          job.name === rowData.name,
-      )
+    handleRowButtonClick(rowDataId) {
       this.$router.push({
         name: 'job',
-        params: { jobId: matchedJob.id },
+        params: { jobId: rowDataId },
       })
     },
   },

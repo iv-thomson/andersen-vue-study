@@ -131,7 +131,7 @@ export default {
   computed: {
     tableHeaderNames() {
       return Object.keys(this.itemsTableData[0] || {}).filter(
-        key => key !== this.badgeField,
+        key => key !== 'id' && key !== this.badgeField,
       )
     },
 
@@ -171,7 +171,7 @@ export default {
     },
 
     handleButtonClick(rowData) {
-      this.$emit('rowButtonClick', rowData)
+      this.$emit('rowButtonClick', rowData.id)
     },
 
     capitalize(string) {
