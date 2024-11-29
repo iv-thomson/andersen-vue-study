@@ -42,6 +42,19 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ServiceTicketReportingView.vue'),
     },
+    {
+      path: '/activity/background-jobs',
+      name: 'activity-background-jobs',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/ActivityBackgroundJobsView.vue'),
+    },
+    {
+      path: '/activity/background-jobs/:jobId',
+      name: 'job',
+      component: () => import('../views/BackgroundJobView.vue'),
+    },
   ],
 })
 

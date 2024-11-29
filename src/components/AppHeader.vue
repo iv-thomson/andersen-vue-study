@@ -1,5 +1,8 @@
 <template>
   <header class="app-header">
+    <RouterLink to="/activity/background-jobs"
+      >Activity Background jobs</RouterLink
+    >
     <RouterLink to="/data-usage">Data usage</RouterLink>
     <RouterLink to="/asset-management">Asset management</RouterLink>
     <RouterLink to="/activity-log">Activity log</RouterLink>
