@@ -4,6 +4,7 @@
     <RouterLink to="/activity-log">Asset management</RouterLink>
     <RouterLink to="/asset-management">Activity log</RouterLink>
     <RouterLink to="/service-ticket-reporting">Service ticket reporting</RouterLink>
+    <RouterLink to="/spare-hardware">New Spare Hardware</RouterLink>
   </header>
 </template>
 
