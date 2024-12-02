@@ -220,7 +220,7 @@ import FormDetailsDialog from '@/components/FormDetailsDialog.vue';
 import FormSelect from "@/components/FormSelect.vue";
 
 export default {
-  name: "SpareHardware",
+  name: "SpareHardwareView",
   components: { PrimeButton, FormDetailsDialog, FormSelect },
   data() {
     return {
@@ -322,7 +322,7 @@ export default {
 .spare-hardware {
   display: flex;
   flex-direction: column;
-  margin-top: 41px;
+  margin-top: 36px;
   padding: 0 36px;
   gap: 36px;
 
