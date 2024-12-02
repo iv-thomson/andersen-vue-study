@@ -1,34 +1,23 @@
 <template>
-  <div class="spinner-wrapper">
-    <ProgressSpinner v-if="loading" />
-  </div>
   <form class="spare-hardware" @submit.prevent="handleSubmit">
     <div class="overview-header">
       <h1 class="overview-header__title">
         <i class="pi pi-mobile title-icon"></i>
-        <b>New Spare Hardware</b>
+        <b> New Spare Hardware</b>
       </h1>
     </div>
     <section class="card">
       <h1 class="card__title">New Spare Hardware</h1>
-      <div class="form-group">
-        <label for="device" class="form-label">Device Make and Model</label>
-        <select
-          id="device"
-          v-model="formData.device"
-          :class="{ 'input-error': errors.device }"
-          class="custom-select"
-          @blur="validateField('device')"
-          @input="clearError('device')"
-        >
-          <option disabled value="">Input</option>
-          <option v-for="device in devices" :key="device" :value="device">
-            {{ device }}
-          </option>
-        </select>
-        <i class="pi pi-angle-down select-icon"></i>
-        <span v-if="errors.device" class="error-message">{{ errors.device }}</span>
-      </div>
+      <FormSelect
+        id="device"
+        label="Device Make and Model"
+        :model-value="formData.device"
+        :options="devices"
+        :error="errors.device"
+        @validate="validateField('device')"
+        @update:model-value="updateSelectedValue"
+        @clear="clearError('device')"
+      />
       <div class="form-group">
         <label for="imei" class="form-label">IMEI</label>
         <div class="wrapper">
@@ -82,80 +71,48 @@
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label for="carrier" class="form-label">Carrier</label>
-          <select
-            id="carrier"
-            v-model="formData.carrier"
-            :class="{ 'input-error': errors.carrier }"
-            class="custom-select"
-            @blur="validateField('carrier')"
-            @input="clearError('carrier')"
-          >
-            <option disabled value="">Input</option>
-            <option v-for="carrier in carriers" :key="carrier" :value="carrier">
-              {{ carrier }}
-            </option>
-          </select>
-          <i class="pi pi-angle-down select-icon"></i>
-          <span v-if="errors.carrier" class="error-message">{{ errors.carrier }}</span>
-        </div>
-        <div class="form-group">
-          <label for="status" class="form-label">Status</label>
-          <select
-            id="status"
-            v-model="formData.status"
-            :class="{ 'input-error': errors.status }"
-            class="custom-select"
-            @blur="validateField('status')"
-            @input="clearError('status')"
-          >
-            <option disabled value="">Input</option>
-            <option v-for="status in statuses" :key="status" :value="status">
-              {{ status }}
-            </option>
-          </select>
-          <i class="pi pi-angle-down select-icon"></i>
-          <span v-if="errors.status" class="error-message">{{ errors.status }}</span>
-        </div>
+        <FormSelect
+          id="carrier"
+          label="Carrier"
+          :model-value="formData.carrier"
+          :options="carriers"
+          :error="errors.carrier"
+          @validate="validateField('carrier')"
+          @update:model-value="updateSelectedValue"
+          @clear="clearError('carrier')"
+        />
+        <FormSelect
+          id="status"
+          label="Status"
+          :model-value="formData.status"
+          :options="statuses"
+          :error="errors.status"
+          @validate="validateField('status')"
+          @update:model-value="updateSelectedValue"
+          @clear="clearError('status')"
+        />
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label for="condition" class="form-label">Condition</label>
-          <select
-            id="condition"
-            v-model="formData.condition"
-            :class="{ 'input-error': errors.condition }"
-            class="custom-select"
-            @blur="validateField('condition')"
-            @input="clearError('condition')"
-          >
-          <option disabled value="">Input</option>
-          <option v-for="condition in conditions" :key="condition" :value="condition">
-            {{ condition }}
-          </option>
-        </select>
-          <i class="pi pi-angle-down select-icon"></i>
-          <span v-if="errors.condition" class="error-message">{{ errors.condition }}</span>
-        </div>
-        <div class="form-group">
-          <label for="location" class="form-label">Location</label>
-          <select
-            id="location"
-            v-model="formData.location"
-            :class="{ 'input-error': errors.location }"
-            class="custom-select"
-            @blur="validateField('location')"
-            @input="clearError('location')"
-          >
-            <option disabled value="">Input</option>
-            <option v-for="location in locations" :key="location" :value="location">
-              {{ location }}
-            </option>
-          </select>
-          <i class="pi pi-angle-down select-icon"></i>
-          <span v-if="errors.location" class="error-message">{{ errors.location }}</span>
-        </div>
+        <FormSelect
+          id="condition"
+          label="Condition"
+          :model-value="formData.condition"
+          :options="conditions"
+          :error="errors.condition"
+          @validate="validateField('condition')"
+          @update:model-value="updateSelectedValue"
+          @clear="clearError('condition')"
+        />
+        <FormSelect
+          id="location"
+          label="Location"
+          :model-value="formData.location"
+          :options="locations"
+          :error="errors.location"
+          @validate="validateField('location')"
+          @update:model-value="updateSelectedValue"
+          @clear="clearError('location')"
+        />
       </div>
       <div>
         <p class="form-label">Options</p>
@@ -258,13 +215,13 @@
 </template>
 
 <script>
-import ProgressSpinner from "primevue/progressspinner";
 import PrimeButton from "primevue/button";
 import FormDetailsDialog from '@/components/FormDetailsDialog.vue';
+import FormSelect from "@/components/FormSelect.vue";
 
 export default {
   name: "SpareHardware",
-  components: { ProgressSpinner, PrimeButton, FormDetailsDialog},
+  components: { PrimeButton, FormDetailsDialog, FormSelect },
   data() {
     return {
       loading: false,
@@ -349,6 +306,9 @@ export default {
       }
       this.dialogVisible = true;
     },
+    updateSelectedValue(newValue, type) {
+      this.formData[type] = newValue;
+    },
 }
 };
 </script>
@@ -358,10 +318,6 @@ export default {
   color: red;
   font-size: 12px;
   margin-top: -5px;
-}
-.spinner-wrapper {
-  display: flex;
-  justify-content: center;
 }
 .spare-hardware {
   display: flex;
@@ -382,12 +338,10 @@ export default {
       color: #0e1629;
     }
   }
-
   .title-icon {
     font-size: 32px;
     color: #007bff;
   }
-
   .card {
     display: flex;
     flex-direction: column;
@@ -405,19 +359,16 @@ export default {
       padding: 0;
       font-size: 25px;
     }
-
     .form-label {
       color: #0E1629;
       font-weight: 600;
       font-size: 13px;
     }
-
     .imei-checkbox {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
     .options-group {
       display: flex;
       align-items: center;
@@ -430,7 +381,6 @@ export default {
         color: #6D6E70;
       }
     }
-
     .rounded-checkbox {
       appearance: none;
       width: 16px;
@@ -458,7 +408,6 @@ export default {
           transform: translate(-50%, -50%);
         }
     }
-
     .form-row {
       display: flex;
       gap: 18px;
@@ -474,7 +423,6 @@ export default {
         }
       }
     }
-
     .form-group {
       position: relative;
       display: flex;
@@ -484,12 +432,8 @@ export default {
       .input-error {
         border: 1px solid red;
       }
-
-      .custom-select {
-        appearance: none;
-      }
     }
-    .custom-input, .custom-select {
+    .custom-input {
       padding: 12px 20px 12px 20px;
       border: 1px solid #bdbfc1;
       background: transparent;
@@ -497,34 +441,19 @@ export default {
       color: #485066;
       font-size: 13px;
     }
-
-    .pi.select-icon {
-      position: absolute;
-      top: 48px;
-      right: 10px;
-      transform: translateY(-50%);
-      width: 20px;
-      height: 20px;
-      color: #6D6E70;
-      pointer-events: none;
-    }
-
-     .notes-field {
+    .notes-field {
       height: 176px;
-     }
-
+    }
     .button-group {
       display: flex;
       justify-content: flex-end;
       gap: 10px;
     }
-    
     .wrapper {
       display: flex; 
       gap: 18px;
     }
   }
-
   .prime-button {
     &.p-button {
       color: #004b85;
@@ -538,7 +467,6 @@ export default {
       }
     }
   }
-
   .submit-button {
     &.p-button {
       background: #004b85;
