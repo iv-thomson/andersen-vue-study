@@ -98,8 +98,6 @@ export default {
     async getDataByCategory(defaultCategory) {
       try {
         const categoryData = await fetchItemsByCategory(defaultCategory)
-        console.log(defaultCategory)
-        console.log(categoryData)
         if (categoryData[0] && typeof categoryData[0] === 'string') {
           this.columns = categoryData.map(item => ({ name: item, label: item }))
           this.rows = []
@@ -111,7 +109,6 @@ export default {
         this.totalItems = categoryData.length
         this.updatePagination()
       } catch (err) {
-        console.log(err)
         throw new Error('Error during fetching the data', err)
       }
     },
