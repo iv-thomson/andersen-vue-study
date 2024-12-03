@@ -45,7 +45,7 @@ export default {
     document.addEventListener('click', this.hideSelect, true)
   },
   beforeUnmount() {
-    document.removeEventListener('click', this.hideSelect)
+    document.removeEventListener('click', this.hideSelect, true)
   },
   methods: {
     toggleVisibility() {
@@ -82,6 +82,7 @@ export default {
     border-radius: 16px;
     background-color: #fff;
     position: absolute;
+    z-index: 5;
   }
 
   &__option {
