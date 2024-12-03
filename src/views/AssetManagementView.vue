@@ -31,11 +31,7 @@
       </ul>
     </div>
     <div class="asset-management-container">
-      <CategorySwitch
-        :categories="categoryOptions"
-        :defaultCategory="selectedCategory"
-        @selectCategory="handleSelectedCategory"
-      >
+      <CategorySwitch :categories="categoryOptions" v-model="selectedCategory">
       </CategorySwitch>
       <button class="button-add-item">
         <i class="pi pi-plus"></i
@@ -70,11 +66,6 @@ export default {
       selectedCategory: 'items',
       assetsData: [],
     }
-  },
-  methods: {
-    handleSelectedCategory(category) {
-      this.selectedCategory = category
-    },
   },
 }
 </script>

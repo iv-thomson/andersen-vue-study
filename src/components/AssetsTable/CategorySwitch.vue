@@ -7,7 +7,7 @@
         @click="handleCategorySelect(name)"
         :class="{
           'category-switch__options-option': true,
-          active: name === activeCategory,
+          active: name === modelValue,
         }"
       >
         {{ name }}
@@ -27,24 +27,17 @@ export default {
       type: Array,
       default: () => [],
     },
-    defaultCategory: {
+    modelValue: {
       type: String,
       default: 'items',
     },
   },
 
-  emits: ['selectCategory'],
-
-  data() {
-    return {
-      activeCategory: this.defaultCategory,
-    }
-  },
+  emits: ['update:modelValue'],
 
   methods: {
     handleCategorySelect(category) {
-      this.$emit('selectCategory', category)
-      this.activeCategory = category
+      this.$emit('update:modelValue', category)
     },
   },
 }

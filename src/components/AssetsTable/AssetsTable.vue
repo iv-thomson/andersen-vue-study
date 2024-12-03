@@ -7,12 +7,7 @@
           :key="index"
           class="assets-table__header-item"
           @click="sortTable(column.label)"
-          :class="{
-            sortable: column.sortable !== false,
-            asc: this.setSortType('asc', column),
-            desc: this.setSortType('desc', column),
-            'sort-active': sortConfig.column === column.label,
-          }"
+          :class="getColumnClass(column)"
         >
           {{ column.name }}
           <i :class="getSortIcon(column.label)"></i>
@@ -103,7 +98,8 @@ export default {
     async getDataByCategory(defaultCategory) {
       try {
         const categoryData = await fetchItemsByCategory(defaultCategory)
-
+        console.log(defaultCategory)
+        console.log(categoryData)
         if (categoryData[0] && typeof categoryData[0] === 'string') {
           this.columns = categoryData.map(item => ({ name: item, label: item }))
           this.rows = []
@@ -115,7 +111,21 @@ export default {
         this.totalItems = categoryData.length
         this.updatePagination()
       } catch (err) {
+        console.log(err)
         throw new Error('Error during fetching the data', err)
+      }
+    },
+
+    getColumnClass(column) {
+      return {
+        sortable: column.sortable !== false,
+        asc:
+          this.sortConfig.column === column.label &&
+          this.sortConfig.direction === 'asc',
+        desc:
+          this.sortConfig.column === column.label &&
+          this.sortConfig.direction === 'desc',
+        'sort-active': this.sortConfig.column === column.label,
       }
     },
 
@@ -164,46 +174,31 @@ export default {
       if (!this.sortConfig.column) return rows
 
       const { column, direction } = this.sortConfig
-      const sortedList = [...rows].sort((a, b) => {
+
+      return [...rows].sort((a, b) => {
         const currValue = a[column]
         const followingValue = b[column]
 
         const comparison =
           typeof currValue === 'string'
             ? currValue.localeCompare(followingValue)
-            : currValue - nextValue
-
+            : currValue - followingValue
         return direction === 'asc' ? comparison : -comparison
       })
 
-      return sortedList
-    },
+      // const sortedList = [...rows].sort((a, b) => {
+      //   const currValue = a[column]
+      //   const followingValue = b[column]
 
-    setSortType(type, column) {
-      return (
-        this.sortConfig.column === column.label &&
-        this.sortConfig.direction === type
-      )
-    },
-  },
+      //   const comparison =
+      //     typeof currValue === 'string'
+      //       ? currValue.localeCompare(followingValue)
+      //       : currValue - nextValue
 
-  computed: {
-    sortedRows() {
-      if (!this.sortConfig.column) {
-        return this.rows
-      }
+      //   return direction === 'asc' ? comparison : -comparison
+      // })
 
-      return [...this.rows].sort((a, b) => {
-        const column = this.sortConfig.column
-        const direction = this.sortConfig.direction === 'asc' ? 1 : -1
-
-        if (typeof a[column] === 'string') {
-          return direction * a[column].localeCompare(b[column])
-        } else if (typeof a[column] === 'number') {
-          return direction * (a[column] - b[column])
-        }
-        return 0
-      })
+      // return sortedList
     },
   },
 
