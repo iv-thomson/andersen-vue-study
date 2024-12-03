@@ -1,5 +1,6 @@
 <template>
   <header class="app-header">
+    <RouterLink to="/integrations">Integrations</RouterLink>
     <RouterLink to="/activity/background-jobs"
       >Activity Background jobs</RouterLink
     >
