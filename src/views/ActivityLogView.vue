@@ -49,11 +49,7 @@
         <h2 class="title">Events</h2>
         <BaseSearch v-model="searchTerm" placeholder="Search..." />
       </div>
-      <EventsTable
-        ref="eventsTable"
-        :searchTerm="searchTerm"
-        :filters="activeFilters"
-      />
+      <EventsTable :searchTerm="searchTerm" :filters="activeFilters" />
     </div>
   </div>
 </template>
@@ -128,7 +124,6 @@ export default {
         location: this.location,
         date: this.date,
       }
-      this.$refs.eventsTable.applyFilters(this.activeFilters)
     },
     validateLocation() {
       const regex = /^[A-Za-z\s]*$/
