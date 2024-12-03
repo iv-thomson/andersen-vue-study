@@ -175,7 +175,7 @@ export default {
 
       const { column, direction } = this.sortConfig
 
-      return [...rows].sort((a, b) => {
+      return [...rows].toSorted((a, b) => {
         const currValue = a[column]
         const followingValue = b[column]
 
@@ -183,22 +183,9 @@ export default {
           typeof currValue === 'string'
             ? currValue.localeCompare(followingValue)
             : currValue - followingValue
+
         return direction === 'asc' ? comparison : -comparison
       })
-
-      // const sortedList = [...rows].sort((a, b) => {
-      //   const currValue = a[column]
-      //   const followingValue = b[column]
-
-      //   const comparison =
-      //     typeof currValue === 'string'
-      //       ? currValue.localeCompare(followingValue)
-      //       : currValue - nextValue
-
-      //   return direction === 'asc' ? comparison : -comparison
-      // })
-
-      // return sortedList
     },
   },
 
