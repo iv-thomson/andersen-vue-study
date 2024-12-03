@@ -6,8 +6,8 @@
           v-for="(column, index) of columns"
           :key="index"
           class="assets-table__header-item"
-          @click="sortTable(column.label)"
           :class="getColumnClass(column)"
+          @click="sortTable(column.label)"
         >
           {{ column.name }}
           <i :class="getSortIcon(column.label)"></i>
@@ -16,14 +16,14 @@
     </thead>
     <tbody class="assets-tbody">
       <tr
-        class="assets-tbody__row"
         v-for="(row, rowIndex) in paginationRows"
         :key="rowIndex"
+        class="assets-tbody__row"
       >
         <td
-          class="assets-tbody__row-data"
           v-for="(column, colIndex) in columns"
           :key="colIndex"
+          class="assets-tbody__row-data"
         >
           {{ row[column.label] }}
         </td>
@@ -36,31 +36,31 @@
     </div>
     <div class="pagination-pages">
       <button
-        @click="goToPage(currentPage - 1)"
         :disabled="currentPage === firstPage"
         class="pagination-pages__arrow"
+        @click="goToPage(currentPage - 1)"
       >
         {{ '<' }}
       </button>
       <button
-        @click="goToPage(1)"
         :disabled="currentPage === firstPage"
         class="pagination-pages__number"
+        @click="goToPage(1)"
       >
         {{ firstPage }}
       </button>
       <button
-        @click="goToPage(totalPages)"
-        :disabled="currentPage === totalPages"
         v-show="totalPages !== 1"
+        :disabled="currentPage === totalPages"
         class="pagination-pages__number"
+        @click="goToPage(totalPages)"
       >
         {{ totalPages }}
       </button>
       <button
-        @click="goToPage(currentPage + 1)"
         :disabled="currentPage === totalPages"
         class="pagination-pages__arrow"
+        @click="goToPage(currentPage + 1)"
       >
         {{ '>' }}
       </button>
@@ -81,8 +81,22 @@ export default {
     },
   },
 
-  created() {
-    this.getDataByCategory(this.defaultCategory)
+  data() {
+    return {
+      rows: [],
+      columns: [],
+      sortConfig: {
+        column: null,
+        direction: null,
+      },
+      currentPage: 1,
+      rowsPerPage: 10,
+      totalPages: 1,
+      paginationRows: [],
+      firstPage: 1,
+      lastPage: 4,
+      totalItems: 0,
+    }
   },
 
   watch: {
@@ -92,6 +106,10 @@ export default {
         this.getDataByCategory(this.defaultCategory)
       }
     },
+  },
+
+  created() {
+    this.getDataByCategory(this.defaultCategory)
   },
 
   methods: {
@@ -184,24 +202,6 @@ export default {
         return direction === 'asc' ? comparison : -comparison
       })
     },
-  },
-
-  data() {
-    return {
-      rows: [],
-      columns: [],
-      sortConfig: {
-        column: null,
-        direction: null,
-      },
-      currentPage: 1,
-      rowsPerPage: 10,
-      totalPages: 1,
-      paginationRows: [],
-      firstPage: 1,
-      lastPage: 4,
-      totalItems: 0,
-    }
   },
 }
 </script>

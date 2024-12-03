@@ -1,6 +1,6 @@
 export const getColumnNames = asset => {
   const parsedColumnFields = []
-  Object.entries(asset).map((a, i) => {
+  Object.entries(asset).map(a => {
     parsedColumnFields.push({
       name: parseColumnFields(a[0]),
 

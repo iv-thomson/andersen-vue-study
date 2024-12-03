@@ -4,11 +4,11 @@
       <li
         v-for="{ name } in categories"
         :key="name"
-        @click="handleCategorySelect(name)"
         :class="{
           'category-switch__options-option': true,
           active: name === modelValue,
         }"
+        @click="handleCategorySelect(name)"
       >
         {{ name }}
       </li>
@@ -17,11 +17,8 @@
 </template>
 
 <script>
-import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
-
 export default {
   name: 'CategorySwitch',
-  components: { AssetsTable },
   props: {
     categories: {
       type: Array,

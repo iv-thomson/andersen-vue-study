@@ -31,13 +31,13 @@
       </ul>
     </div>
     <div class="asset-management-container">
-      <CategorySwitch :categories="categoryOptions" v-model="selectedCategory">
+      <CategorySwitch v-model="selectedCategory" :categories="categoryOptions">
       </CategorySwitch>
       <button class="button-add-item">
         <i class="pi pi-plus"></i
         ><span class="button-add-item-text">Add item</span>
       </button>
-      <AssetsTable :defaultCategory="selectedCategory" />
+      <AssetsTable :default-category="selectedCategory" />
     </div>
   </div>
 </template>
