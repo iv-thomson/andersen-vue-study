@@ -32,7 +32,7 @@
 import BaseTable from '@/components/BaseTable/BaseTable.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
 import BaseSearch from '@/components/BaseSearch.vue'
-import { getHttpRequest } from '@/services/httpService'
+import { fetchServiceTicketReporting } from '@/api/service-ticket-reporting.api'
 
 export default {
   name: 'ServiceTicketReporting',
@@ -76,12 +76,7 @@ export default {
     },
   },
   async created() {
-    try {
-      const data = await getHttpRequest('/service-ticket-reporting.json')
-      this.ticketsData = data
-    } catch (error) {
-      console.error('Data fetching error:', error)
-    }
+    this.ticketsData = await fetchServiceTicketReporting()
   },
   methods: {
     handleSelectOption(option) {

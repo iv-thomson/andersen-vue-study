@@ -47,7 +47,7 @@
 import BaseTable from '@/components/BaseTable/BaseTable.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
 import BaseSearch from '@/components/BaseSearch.vue'
-import { getHttpRequest } from '@/services/httpService'
+import { fetchBackgroundJobs } from '@/api/background-jobs.api'
 
 export default {
   name: 'ActivityBacgroundJobs',
@@ -99,12 +99,7 @@ export default {
     },
   },
   async created() {
-    try {
-      const data = await getHttpRequest('/activity-background-jobs.json')
-      this.jobsData = data
-    } catch (error) {
-      console.error('Data fetching error:', error)
-    }
+    this.jobsData = await fetchBackgroundJobs()
   },
   methods: {
     handleSelectOption(option) {
