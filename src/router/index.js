@@ -56,12 +56,21 @@ const router = createRouter({
       component: () => import('../views/BackgroundJobView.vue'),
     },
     {
+
       path: '/integrations',
       name: 'integrations',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/ApiTokenChangesTimelineView.vue'),
+
+      path: '/spare-hardware',
+      name: 'spare-hardware',
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import('../views/SpareHardwareView.vue'),
+
     },
   ],
 })

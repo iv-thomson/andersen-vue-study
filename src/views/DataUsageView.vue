@@ -141,7 +141,7 @@ export default {
 .data-usage {
   display: flex;
   flex-direction: column;
-  margin-top: 41px;
+  margin-top: 36px;
   padding: 0 36px;
   gap: 36px;
 
@@ -151,6 +151,7 @@ export default {
     align-items: center;
 
     &__title {
+      margin: 0;
       font-weight: 400;
       font-size: 31px;
     }
