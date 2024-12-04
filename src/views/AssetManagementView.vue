@@ -33,10 +33,17 @@
     <div class="asset-management-container">
       <CategorySwitch v-model="selectedCategory" :categories="categoryOptions">
       </CategorySwitch>
-      <button class="button-add-item">
+      <Button label="Show" @click="controlDialog" class="button-add-item">
         <i class="pi pi-plus"></i
         ><span class="button-add-item-text">Add item</span>
       </button>
+
+
+ <AddItemModal
+v-model:visible="visible"
+:category="selectedCategory"
+ header="Edit Profile"
+ />
       <AssetsTable :default-category="selectedCategory" />
     </div>
   </div>
@@ -45,10 +52,14 @@
 <script>
 import CategorySwitch from '@/components/AssetsTable/CategorySwitch.vue'
 import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
+import Button from 'primevue/button'
+import Dialog from 'primevue/dialog';
+import InputText from 'primevue/inputtext'
+import AddItemModal from '@/components/AssetsTable/AddItemModal.vue'
 
 export default {
   name: 'AssetManagementView',
-  components: { CategorySwitch, AssetsTable },
+  components: { CategorySwitch, AssetsTable, Button, InputText, Dialog, AddItemModal },
   data() {
     return {
       routes: [{ name: 'inventory' }, { name: 'asset management' }],
@@ -65,8 +76,15 @@ export default {
       ],
       selectedCategory: 'items',
       assetsData: [],
+      visible: false,
     }
   },
+  methods: {
+    controlDialog() {
+      this.visible = true;
+    },
+
+  }
 }
 </script>
 

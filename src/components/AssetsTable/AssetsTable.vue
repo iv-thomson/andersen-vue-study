@@ -6,8 +6,13 @@
           v-for="(column, index) of columns"
           :key="index"
           class="assets-table__header-item"
-          :class="getColumnClass(column)"
           @click="sortTable(column.label)"
+          :class="{
+            sortable: column.sortable !== false,
+            asc: this.setSortType('asc', column),
+            desc: this.setSortType('desc', column),
+            'sort-active': sortConfig.column === column.label,
+          }"
         >
           {{ column.name }}
           <i :class="getSortIcon(column.label)"></i>
@@ -16,14 +21,14 @@
     </thead>
     <tbody class="assets-tbody">
       <tr
+        class="assets-tbody__row"
         v-for="(row, rowIndex) in paginationRows"
         :key="rowIndex"
-        class="assets-tbody__row"
       >
         <td
+          class="assets-tbody__row-data"
           v-for="(column, colIndex) in columns"
           :key="colIndex"
-          class="assets-tbody__row-data"
         >
           {{ row[column.label] }}
         </td>
@@ -36,31 +41,31 @@
     </div>
     <div class="pagination-pages">
       <button
+        @click="goToPage(currentPage - 1)"
         :disabled="currentPage === firstPage"
         class="pagination-pages__arrow"
-        @click="goToPage(currentPage - 1)"
       >
         {{ '<' }}
       </button>
       <button
+        @click="goToPage(1)"
         :disabled="currentPage === firstPage"
         class="pagination-pages__number"
-        @click="goToPage(1)"
       >
         {{ firstPage }}
       </button>
       <button
-        v-show="totalPages !== 1"
-        :disabled="currentPage === totalPages"
-        class="pagination-pages__number"
         @click="goToPage(totalPages)"
+        :disabled="currentPage === totalPages"
+        v-show="totalPages !== 1"
+        class="pagination-pages__number"
       >
         {{ totalPages }}
       </button>
       <button
+        @click="goToPage(currentPage + 1)"
         :disabled="currentPage === totalPages"
         class="pagination-pages__arrow"
-        @click="goToPage(currentPage + 1)"
       >
         {{ '>' }}
       </button>
@@ -81,22 +86,8 @@ export default {
     },
   },
 
-  data() {
-    return {
-      rows: [],
-      columns: [],
-      sortConfig: {
-        column: null,
-        direction: null,
-      },
-      currentPage: 1,
-      rowsPerPage: 10,
-      totalPages: 1,
-      paginationRows: [],
-      firstPage: 1,
-      lastPage: 4,
-      totalItems: 0,
-    }
+  created() {
+    this.getDataByCategory(this.defaultCategory)
   },
 
   watch: {
@@ -108,14 +99,11 @@ export default {
     },
   },
 
-  created() {
-    this.getDataByCategory(this.defaultCategory)
-  },
-
   methods: {
     async getDataByCategory(defaultCategory) {
       try {
         const categoryData = await fetchItemsByCategory(defaultCategory)
+
         if (categoryData[0] && typeof categoryData[0] === 'string') {
           this.columns = categoryData.map(item => ({ name: item, label: item }))
           this.rows = []
@@ -128,19 +116,6 @@ export default {
         this.updatePagination()
       } catch (err) {
         throw new Error('Error during fetching the data', err)
-      }
-    },
-
-    getColumnClass(column) {
-      return {
-        sortable: column.sortable !== false,
-        asc:
-          this.sortConfig.column === column.label &&
-          this.sortConfig.direction === 'asc',
-        desc:
-          this.sortConfig.column === column.label &&
-          this.sortConfig.direction === 'desc',
-        'sort-active': this.sortConfig.column === column.label,
       }
     },
 
@@ -189,19 +164,65 @@ export default {
       if (!this.sortConfig.column) return rows
 
       const { column, direction } = this.sortConfig
-
-      return [...rows].toSorted((a, b) => {
+      const sortedList = [...rows].sort((a, b) => {
         const currValue = a[column]
         const followingValue = b[column]
 
         const comparison =
           typeof currValue === 'string'
             ? currValue.localeCompare(followingValue)
-            : currValue - followingValue
+            : currValue - nextValue
 
         return direction === 'asc' ? comparison : -comparison
       })
+
+      return sortedList
     },
+
+    setSortType(type, column) {
+      return (
+        this.sortConfig.column === column.label &&
+        this.sortConfig.direction === type
+      )
+    },
+  },
+
+  computed: {
+    sortedRows() {
+      if (!this.sortConfig.column) {
+        return this.rows
+      }
+
+      return [...this.rows].sort((a, b) => {
+        const column = this.sortConfig.column
+        const direction = this.sortConfig.direction === 'asc' ? 1 : -1
+
+        if (typeof a[column] === 'string') {
+          return direction * a[column].localeCompare(b[column])
+        } else if (typeof a[column] === 'number') {
+          return direction * (a[column] - b[column])
+        }
+        return 0
+      })
+    },
+  },
+
+  data() {
+    return {
+      rows: [],
+      columns: [],
+      sortConfig: {
+        column: null,
+        direction: null,
+      },
+      currentPage: 1,
+      rowsPerPage: 10,
+      totalPages: 1,
+      paginationRows: [],
+      firstPage: 1,
+      lastPage: 4,
+      totalItems: 0,
+    }
   },
 }
 </script>
