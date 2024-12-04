@@ -76,6 +76,8 @@ import BaseTable from '@/components/BaseTable/BaseTable.vue'
 import BaseModal from '@/components/BaseModal.vue'
 import { fetchTokenChangesTimeline } from '@/api/token-changes-timeline.api.js'
 
+const LOCAL_STORAGE_KEY = 'apiTokenData'
+
 export default {
   name: 'ApiTokenChangesTimeline',
   components: {
@@ -105,9 +107,20 @@ export default {
     },
   },
   async created() {
-    this.tokenData = await fetchTokenChangesTimeline()
+    const localData = localStorage.getItem(LOCAL_STORAGE_KEY)
+    if (localData) {
+      this.tokenData = JSON.parse(localData)
+    } else {
+      const fetchedData = await fetchTokenChangesTimeline()
+      this.tokenData = fetchedData
+      this.saveToLocalStorage()
+    }
   },
   methods: {
+    saveToLocalStorage() {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(this.tokenData))
+    },
+
     handleEditClick(rowDataId) {
       const item = this.tokenData.find(item => item.id === rowDataId)
       this.selectedItem = item
@@ -136,10 +149,12 @@ export default {
         }
         this.tokenData.push(newItem)
       }
+      this.saveToLocalStorage()
     },
 
     handleDeleteClick(rowDataId) {
       this.tokenData = this.tokenData.filter(item => item.id !== rowDataId)
+      this.saveToLocalStorage()
     },
   },
 }

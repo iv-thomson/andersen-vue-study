@@ -2,48 +2,71 @@
   <teleport to="body">
     <div v-if="visible" class="modal">
       <div class="modal__content">
-        <h2>{{ isEdit ? 'Edit API Token' : 'Add API Token' }}</h2>
-        <form @submit.prevent="handleSubmit">
-          <label for="userName">Name</label>
-          <input
-            id="userName"
-            v-model="formData.userName"
-            type="text"
-            required
-          />
-          <label for="userEmail">Email</label>
-          <input
-            id="userEmail"
-            v-model="formData.userEmail"
-            type="text"
-            required
-          />
-          <label for="description">Description</label>
-          <textarea id="description" v-model="formData.description"></textarea>
-          <label for="tokenValue">Token value</label>
-          <input
-            id="tokenValue"
-            v-model="formData.tokenValue"
-            type="text"
-            required
-          />
-          <label
+        <div class="modal__header">
+          <h2 class="modal__header-title">
+            {{ isEdit ? 'Edit API Token' : 'Add API Token' }}
+          </h2>
+          <button
+            type="button"
+            class="modal__button modal__button_close"
+            @click="closeModal"
+          >
+            <img src="@/assets/icons/close-out.svg" alt="close" />
+          </button>
+        </div>
+        <form class="modal__form" @submit.prevent="handleSubmit">
+          <label for="userName" class="modal__label"
+            >Name
+            <input
+              id="userName"
+              v-model="formData.userName"
+              type="text"
+              required
+          /></label>
+          <label for="userEmail" class="modal__label"
+            >Email
+            <input
+              id="userEmail"
+              v-model="formData.userEmail"
+              type="text"
+              required
+          /></label>
+          <label class="modal__label" for="description"
+            >Description
+            <textarea
+              id="description"
+              v-model="formData.description"
+            ></textarea>
+          </label>
+          <label class="modal__label" for="tokenValue"
+            >Token value
+            <input
+              id="tokenValue"
+              v-model="formData.tokenValue"
+              type="text"
+              required
+          /></label>
+          <label class="modal__label-checkbox"
             >IP Restricted
             <BaseTableCheckbox
               :value="isChecked"
               @update:value="toggleCheckbox"
             />
           </label>
-          <label for="AllowIPs">Allow IPs</label>
-          <input
-            id="AllowIPs"
-            v-model="formData.AllowIPs"
-            type="text"
-            required
-          />
-          <div class="modal__actions">
-            <button type="submit">{{ isEdit ? 'Save' : 'Add' }}</button>
-            <button type="button" @click="closeModal">Cancel</button>
+          <label class="modal__label" for="AllowIPs"
+            >Allow IPs
+            <input
+              id="AllowIPs"
+              v-model="formData.AllowIPs"
+              type="text"
+              required
+          /></label>
+          <div class="modal__bottom-actions">
+            <button type="submit" class="modal__button modal__button_info">
+              <img src="@/assets/icons/check-circle.svg" alt="check-circle" />{{
+                isEdit ? 'Save' : 'Add'
+              }}
+            </button>
           </div>
         </form>
       </div>
@@ -129,7 +152,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .modal {
   position: fixed;
   top: 0;
@@ -140,16 +163,79 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.modal__content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  width: 400px;
-}
-.modal__actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #bdbfc1;
+  }
+
+  &__header-title {
+    margin-top: 0;
+  }
+
+  &__content {
+    min-width: 626px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 28px;
+    width: 400px;
+  }
+
+  &__form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    & > input {
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid #bdbfc1;
+    }
+  }
+
+  &__label-checkbox {
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  &__bottom-actions {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+  }
+
+  &__button {
+    width: fit-content;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &_info {
+      padding: 10px 16px;
+      background-color: #004b85;
+      border: 1px solid #bdbfc1;
+      border-radius: 12px;
+      color: #fff;
+    }
+    &_close {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background-color: transparent;
+      padding: 0;
+    }
+  }
 }
 </style>
