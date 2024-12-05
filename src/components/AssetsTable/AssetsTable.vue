@@ -1,4 +1,13 @@
 <template>
+  <button @click="controlDialog" class="button-add-item">
+    <i class="pi pi-plus"></i><span class="button-add-item-text">Add item</span>
+  </button>
+  <AddItemModal
+    v-model:visible="visible"
+    :activeCategory="defaultCategory"
+    @submitFormData="handleFormData"
+    header="Edit Profile"
+  />
   <table class="assets-table">
     <thead class="assets-table__header">
       <tr>
@@ -30,7 +39,7 @@
           v-for="(column, colIndex) in columns"
           :key="colIndex"
         >
-          {{ row[column.label] }}
+          {{ formatRowData(row[column.label]) }}
         </td>
       </tr>
     </tbody>
@@ -76,9 +85,17 @@
 <script>
 import { fetchItemsByCategory } from '@/api/asset-management.api'
 import { getColumnNames } from '@/utils/getColumnNames'
+import AddItemModal from './AddItemModal.vue'
+import Dialog from 'primevue/dialog'
+import InputText from 'primevue/inputtext'
 
 export default {
-  components: 'AssetsTable',
+  name: 'AssetsTable',
+  components: {
+    AddItemModal,
+    InputText,
+    Dialog,
+  },
   props: {
     defaultCategory: {
       type: String,
@@ -103,13 +120,11 @@ export default {
     async getDataByCategory(defaultCategory) {
       try {
         const categoryData = await fetchItemsByCategory(defaultCategory)
-
         if (categoryData[0] && typeof categoryData[0] === 'string') {
           this.columns = categoryData.map(item => ({ name: item, label: item }))
           this.rows = []
           return
         }
-
         this.columns = getColumnNames(categoryData[0])
         this.rows = categoryData
         this.totalItems = categoryData.length
@@ -137,7 +152,6 @@ export default {
           ? 'pi pi-sort-amount-up'
           : 'pi pi-sort-amount-down'
       }
-
       return 'pi pi-sort-alt'
     },
 
@@ -150,7 +164,7 @@ export default {
 
     updatePagination() {
       const sortedRows = this.sortRows(this.rows)
-      this.totalPages = (this.rows.length % this.rowsPerPage) + 1
+      this.totalPages = Math.ceil(this.rows.length / this.rowsPerPage)
       this.paginationRows = this.getPaginatedRows(sortedRows)
     },
 
@@ -164,19 +178,17 @@ export default {
       if (!this.sortConfig.column) return rows
 
       const { column, direction } = this.sortConfig
-      const sortedList = [...rows].sort((a, b) => {
+
+      return (sortedList = [...rows].sort((a, b) => {
         const currValue = a[column]
         const followingValue = b[column]
-
         const comparison =
           typeof currValue === 'string'
             ? currValue.localeCompare(followingValue)
             : currValue - nextValue
 
         return direction === 'asc' ? comparison : -comparison
-      })
-
-      return sortedList
+      }))
     },
 
     setSortType(type, column) {
@@ -184,6 +196,33 @@ export default {
         this.sortConfig.column === column.label &&
         this.sortConfig.direction === type
       )
+    },
+
+    controlDialog() {
+      this.visible = true
+    },
+
+    handleFormData(formData) {
+      this.rows.push(formData)
+      this.updatePagination()
+      this.totalItems++
+    },
+
+    formatRowData(rowInput) {
+      if (typeof rowInput === 'string') {
+        return rowInput
+      } else {
+        return this.formatDate(rowInput)
+      }
+    },
+
+    formatDate(rowInput) {
+      const date = new Date(rowInput)
+      return `${date.getFullYear()}-${this.formatNumber(date.getMonth() + 1)}-${this.formatNumber(date.getDate())}`
+    },
+
+    formatNumber(num) {
+      return num < 10 ? '0' + num : num
     },
   },
 
@@ -222,12 +261,37 @@ export default {
       firstPage: 1,
       lastPage: 4,
       totalItems: 0,
+      visible: false,
     }
   },
 }
 </script>
 
 <style lang="scss">
+.button-add-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-end;
+  padding: 10px 18px;
+  max-width: 118px;
+  max-height: 36px;
+  border: 1px solid #004b85;
+  border-radius: 16px;
+  background: #004b85;
+  color: #ffff;
+  font-weight: 600;
+  cursor: pointer;
+
+  .pi.pi-plus {
+    font-size: 10px;
+  }
+
+  &-text {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
 .assets-table {
   width: 100%;
   font-size: 13px;

@@ -33,17 +33,7 @@
     <div class="asset-management-container">
       <CategorySwitch v-model="selectedCategory" :categories="categoryOptions">
       </CategorySwitch>
-      <Button label="Show" @click="controlDialog" class="button-add-item">
-        <i class="pi pi-plus"></i
-        ><span class="button-add-item-text">Add item</span>
-      </button>
 
-
- <AddItemModal
-v-model:visible="visible"
-:category="selectedCategory"
- header="Edit Profile"
- />
       <AssetsTable :default-category="selectedCategory" />
     </div>
   </div>
@@ -53,13 +43,14 @@ v-model:visible="visible"
 import CategorySwitch from '@/components/AssetsTable/CategorySwitch.vue'
 import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
 import Button from 'primevue/button'
-import Dialog from 'primevue/dialog';
-import InputText from 'primevue/inputtext'
-import AddItemModal from '@/components/AssetsTable/AddItemModal.vue'
 
 export default {
   name: 'AssetManagementView',
-  components: { CategorySwitch, AssetsTable, Button, InputText, Dialog, AddItemModal },
+  components: {
+    CategorySwitch,
+    AssetsTable,
+    Button,
+  },
   data() {
     return {
       routes: [{ name: 'inventory' }, { name: 'asset management' }],
@@ -76,15 +67,9 @@ export default {
       ],
       selectedCategory: 'items',
       assetsData: [],
-      visible: false,
     }
   },
-  methods: {
-    controlDialog() {
-      this.visible = true;
-    },
-
-  }
+  methods: {},
 }
 </script>
 
@@ -151,31 +136,6 @@ export default {
     border-radius: 28px;
     box-shadow: 8px 12px 18px 2px rgba(0, 0, 0, 0.2);
     overflow: scroll;
-
-    .button-add-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      align-self: flex-end;
-      padding: 10px 18px;
-      max-width: 118px;
-      max-height: 36px;
-      border: 1px solid #004b85;
-      border-radius: 16px;
-      background: #004b85;
-      color: #ffff;
-      font-weight: 600;
-      cursor: pointer;
-
-      .pi.pi-plus {
-        font-size: 10px;
-      }
-
-      &-text {
-        font-size: 13px;
-        line-height: 16px;
-      }
-    }
   }
 }
 </style>
