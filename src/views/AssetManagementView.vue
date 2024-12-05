@@ -33,10 +33,7 @@
     <div class="asset-management-container">
       <CategorySwitch v-model="selectedCategory" :categories="categoryOptions">
       </CategorySwitch>
-      <button class="button-add-item">
-        <i class="pi pi-plus"></i
-        ><span class="button-add-item-text">Add item</span>
-      </button>
+
       <AssetsTable :default-category="selectedCategory" />
     </div>
   </div>
@@ -48,7 +45,10 @@ import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
 
 export default {
   name: 'AssetManagementView',
-  components: { CategorySwitch, AssetsTable },
+  components: {
+    CategorySwitch,
+    AssetsTable,
+  },
   data() {
     return {
       routes: [{ name: 'inventory' }, { name: 'asset management' }],
@@ -67,6 +67,7 @@ export default {
       assetsData: [],
     }
   },
+  methods: {},
 }
 </script>
 
@@ -133,31 +134,6 @@ export default {
     border-radius: 28px;
     box-shadow: 8px 12px 18px 2px rgba(0, 0, 0, 0.2);
     overflow: scroll;
-
-    .button-add-item {
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      align-self: flex-end;
-      padding: 10px 18px;
-      max-width: 118px;
-      max-height: 36px;
-      border: 1px solid #004b85;
-      border-radius: 16px;
-      background: #004b85;
-      color: #ffff;
-      font-weight: 600;
-      cursor: pointer;
-
-      .pi.pi-plus {
-        font-size: 10px;
-      }
-
-      &-text {
-        font-size: 13px;
-        line-height: 16px;
-      }
-    }
   }
 }
 </style>

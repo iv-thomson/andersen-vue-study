@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { fetchBackgroundJobs } from '@/api/background-jobs.api'
+import { getHttpRequest } from '@/services/httpService'
 import DOMPurify from 'dompurify'
 
 export default {
@@ -83,7 +83,12 @@ export default {
     },
   },
   async created() {
-    this.jobsData = await fetchBackgroundJobs()
+    try {
+      const data = await getHttpRequest('/activity-background-jobs.json')
+      this.jobsData = data
+    } catch (error) {
+      console.error('Data fetching error:', error)
+    }
   },
   methods: {
     capitalize(string) {
