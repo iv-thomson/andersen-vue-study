@@ -112,7 +112,7 @@ export default {
       totalPages: 1,
       paginationRows: [],
       firstPage: 1,
-      lastPage: 4,
+      lastPage: 0,
       totalItems: 0,
       visible: false,
       sortedList: [],
@@ -248,9 +248,8 @@ export default {
     formatRowData(rowInput) {
       if (typeof rowInput === 'string') {
         return rowInput
-      } else {
-        return this.formatDate(rowInput)
       }
+      return this.formatDate(rowInput)
     },
 
     formatDate(rowInput) {
