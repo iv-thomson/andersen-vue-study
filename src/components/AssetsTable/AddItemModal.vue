@@ -6,40 +6,66 @@
           v-for="(category, index) in assetsCategories[this.activeCategory]"
           :key="index"
         >
-          <IftaLabel v-if="category.type === 'text'">
+          <IftaLabel
+            class="assets-dialog-form__input"
+            v-if="category.type === 'text'"
+          >
             <InputText
               v-model="formData[index]"
               :name="category.name"
               :placeholder="category.placeholder"
+              required="category.required"
+              @blur="markFieldTouched(index)"
               size="large"
             />
             <label for="category.name">{{ category.name }}</label>
+
+            <small
+              v-if="!isValidText(index) && touched[index]"
+              class="input-error"
+            >
+              {{ 'This field is required' }}
+            </small>
           </IftaLabel>
-          <IftaLabel v-if="category.type === 'date'">
+
+          <IftaLabel
+            class="assets-dialog-form__input"
+            v-if="category.type === 'date'"
+          >
             <DatePicker
               v-model="formData[index]"
               :name="category.name"
               :placeholder="category.placeholder"
+              required="category.required"
               dateFormat="dd/mm/yy"
               size="large"
+              @blur="markFieldTouched(index)"
             />
             <label for="category.name">{{ category.name }}</label>
+
+            <small
+              v-if="!isValidDate(index) && touched[index]"
+              class="input-error"
+            >
+              {{ 'Please select a valid date' }}
+            </small>
           </IftaLabel>
         </div>
         <div class="assets-dialog-buttons">
+          <Button label="Close" @click="closeDialog" text></Button>
           <Button
-            label="Cancel"
-            @click="closeDialog"
-            text
-            class="!p-4 w-full !text-primary-50 !border !border-white/30 hover:!bg-white/10"
-          ></Button>
-          <Button type="submit" severity="secondary" label="Submit" />
+            type="submit"
+            severity="secondary"
+            label="Submit"
+            :disabled="isFormInvalid"
+          />
         </div>
       </form>
     </div>
     <div></div>
   </Dialog>
 </template>
+
 <script>
 import Dialog from 'primevue/dialog'
 import Button from 'primevue/button'
@@ -58,14 +84,40 @@ export default {
     visible: { type: Boolean, required: true },
     activeCategory: { type: String, required: true },
   },
-
+  computed: {
+    isFormInvalid() {
+      return Object.values(this.errors).some(error => error !== null)
+    },
+  },
   methods: {
     closeDialog() {
       this.$emit('update:visible', false)
     },
 
-    fetchData() {
-      console.log(assetsCategories[this.activeCategory])
+    markFieldTouched(index) {
+      this.touched[index] = true
+    },
+
+    isValidText(index) {
+      const value = this.formData[index]
+      const touched = this.touched[index]
+      return touched && value && value.trim() !== ''
+    },
+
+    isValidDate(index) {
+      const date = this.formData[index]
+      const touched = this.touched[index]
+      return touched && date && !isNaN(new Date(date).getTime())
+    },
+
+    getErrorMessage(index) {
+      const category = this.assetsCategories[this.activeCategory][index]
+      if (category.type === 'text') {
+        return this.errors[index]
+      } else if (category.type === 'date') {
+        return this.errors[index]
+      }
+      return ''
     },
 
     submitForm() {
@@ -100,6 +152,8 @@ export default {
       formData: {},
       loading: false,
       tableData: [],
+      errors: {},
+      touched: {},
     }
   },
 }
@@ -114,6 +168,17 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 20px;
+
+    .assets-dialog-form__input {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+
+      .input-error {
+        color: red;
+      }
+    }
   }
 
   &-buttons {
