@@ -1,22 +1,22 @@
 <template>
-  <Dialog :visible="visible">
+  <DialogWindow :visible="visible">
     <div class="assets-dialog">
       <form class="assets-dialog-form" @submit.prevent="submitForm">
         <div
-          v-for="(category, index) in assetsCategories[this.activeCategory]"
+          v-for="(category, index) in assetsCategories[activeCategory]"
           :key="index"
         >
           <IftaLabel
-            class="assets-dialog-form__input"
             v-if="category.type === 'text'"
+            class="assets-dialog-form__input"
           >
             <InputText
               v-model="formData[index]"
               :name="category.name"
               :placeholder="category.placeholder"
               required="category.required"
-              @blur="markFieldTouched(index)"
               size="large"
+              @blur="markFieldTouched(index)"
             />
             <label for="category.name">{{ category.name }}</label>
 
@@ -29,15 +29,15 @@
           </IftaLabel>
 
           <IftaLabel
-            class="assets-dialog-form__input"
             v-if="category.type === 'date'"
+            class="assets-dialog-form__input"
           >
             <DatePicker
               v-model="formData[index]"
               :name="category.name"
               :placeholder="category.placeholder"
               required="category.required"
-              dateFormat="dd/mm/yy"
+              date-format="dd/mm/yy"
               size="large"
               @blur="markFieldTouched(index)"
             />
@@ -52,8 +52,8 @@
           </IftaLabel>
         </div>
         <div class="assets-dialog-buttons">
-          <Button label="Close" @click="closeDialog" text></Button>
-          <Button
+          <PrimeButton label="Close" text @click="closeDialog" />
+          <PrimeButton
             type="submit"
             severity="secondary"
             label="Submit"
@@ -63,12 +63,12 @@
       </form>
     </div>
     <div></div>
-  </Dialog>
+  </DialogWindow>
 </template>
 
 <script>
-import Dialog from 'primevue/dialog'
-import Button from 'primevue/button'
+import DialogWindow from 'primevue/dialog'
+import PrimeButton from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import IftaLabel from 'primevue/IftaLabel'
 import DatePicker from 'primevue/datepicker'
@@ -76,13 +76,24 @@ import { assetsCategories } from '@/utils/variables/assetsCategories'
 import { postItemsByCategory } from '@/api/asset-management.api'
 
 export default {
-  components: { Dialog, Button, InputText, IftaLabel, DatePicker },
   name: 'AddItemModal',
-  emits: ['update:visible', 'submitFormData'],
+  components: { DialogWindow, PrimeButton, InputText, IftaLabel, DatePicker },
   props: {
     header: { type: String, required: true },
     visible: { type: Boolean, required: true },
     activeCategory: { type: String, required: true },
+  },
+  emits: ['update:visible', 'submitFormData'],
+
+  data() {
+    return {
+      assetsCategories,
+      formData: {},
+      loading: false,
+      tableData: [],
+      errors: {},
+      touched: {},
+    }
   },
   computed: {
     isFormInvalid() {
@@ -144,17 +155,6 @@ export default {
         this.closeDialog()
       }, 1000)
     },
-  },
-
-  data() {
-    return {
-      assetsCategories,
-      formData: {},
-      loading: false,
-      tableData: [],
-      errors: {},
-      touched: {},
-    }
   },
 }
 </script>

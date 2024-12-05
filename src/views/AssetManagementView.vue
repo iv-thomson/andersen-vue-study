@@ -42,14 +42,12 @@
 <script>
 import CategorySwitch from '@/components/AssetsTable/CategorySwitch.vue'
 import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
-import Button from 'primevue/button'
 
 export default {
   name: 'AssetManagementView',
   components: {
     CategorySwitch,
     AssetsTable,
-    Button,
   },
   data() {
     return {
