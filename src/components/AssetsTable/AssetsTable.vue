@@ -1,4 +1,13 @@
 <template>
+  <button class="button-add-item" @click="controlDialog">
+    <i class="pi pi-plus"></i><span class="button-add-item-text">Add item</span>
+  </button>
+  <AddItemModal
+    v-model:visible="visible"
+    :active-category="defaultCategory"
+    header="Edit Profile"
+    @submit-form-data="handleFormData"
+  />
   <table class="assets-table">
     <thead class="assets-table__header">
       <tr>
@@ -6,7 +15,12 @@
           v-for="(column, index) of columns"
           :key="index"
           class="assets-table__header-item"
-          :class="getColumnClass(column)"
+          :class="{
+            sortable: column.sortable !== false,
+            asc: setSortType('asc', column),
+            desc: setSortType('desc', column),
+            'sort-active': sortConfig.column === column.label,
+          }"
           @click="sortTable(column.label)"
         >
           {{ column.name }}
@@ -25,7 +39,7 @@
           :key="colIndex"
           class="assets-tbody__row-data"
         >
-          {{ row[column.label] }}
+          {{ formatRowData(row[column.label]) }}
         </td>
       </tr>
     </tbody>
@@ -71,9 +85,13 @@
 <script>
 import { fetchItemsByCategory } from '@/api/asset-management.api'
 import { getColumnNames } from '@/utils/getColumnNames'
+import AddItemModal from './AddItemModal.vue'
 
 export default {
-  components: 'AssetsTable',
+  name: 'AssetsTable',
+  components: {
+    AddItemModal,
+  },
   props: {
     defaultCategory: {
       type: String,
@@ -94,9 +112,31 @@ export default {
       totalPages: 1,
       paginationRows: [],
       firstPage: 1,
-      lastPage: 4,
+      lastPage: 0,
       totalItems: 0,
+      visible: false,
+      sortedList: [],
     }
+  },
+
+  computed: {
+    sortedRows() {
+      if (!this.sortConfig.column) {
+        return this.rows
+      }
+
+      return [...this.rows].sort((a, b) => {
+        const column = this.sortConfig.column
+        const direction = this.sortConfig.direction === 'asc' ? 1 : -1
+
+        if (typeof a[column] === 'string') {
+          return direction * a[column].localeCompare(b[column])
+        } else if (typeof a[column] === 'number') {
+          return direction * (a[column] - b[column])
+        }
+        return 0
+      })
+    },
   },
 
   watch: {
@@ -121,26 +161,12 @@ export default {
           this.rows = []
           return
         }
-
         this.columns = getColumnNames(categoryData[0])
         this.rows = categoryData
         this.totalItems = categoryData.length
         this.updatePagination()
       } catch (err) {
         throw new Error('Error during fetching the data', err)
-      }
-    },
-
-    getColumnClass(column) {
-      return {
-        sortable: column.sortable !== false,
-        asc:
-          this.sortConfig.column === column.label &&
-          this.sortConfig.direction === 'asc',
-        desc:
-          this.sortConfig.column === column.label &&
-          this.sortConfig.direction === 'desc',
-        'sort-active': this.sortConfig.column === column.label,
       }
     },
 
@@ -162,7 +188,6 @@ export default {
           ? 'pi pi-sort-amount-up'
           : 'pi pi-sort-amount-down'
       }
-
       return 'pi pi-sort-alt'
     },
 
@@ -175,7 +200,7 @@ export default {
 
     updatePagination() {
       const sortedRows = this.sortRows(this.rows)
-      this.totalPages = (this.rows.length % this.rowsPerPage) + 1
+      this.totalPages = Math.ceil(this.rows.length / this.rowsPerPage)
       this.paginationRows = this.getPaginatedRows(sortedRows)
     },
 
@@ -202,11 +227,68 @@ export default {
         return direction === 'asc' ? comparison : -comparison
       })
     },
+
+    setSortType(type, column) {
+      return (
+        this.sortConfig.column === column.label &&
+        this.sortConfig.direction === type
+      )
+    },
+
+    controlDialog() {
+      this.visible = true
+    },
+
+    handleFormData(formData) {
+      this.rows.push(formData)
+      this.updatePagination()
+      this.totalItems++
+    },
+
+    formatRowData(rowInput) {
+      if (typeof rowInput === 'string') {
+        return rowInput
+      }
+      return this.formatDate(rowInput)
+    },
+
+    formatDate(rowInput) {
+      const date = new Date(rowInput)
+      return `${date.getFullYear()}-${this.formatNumber(date.getMonth() + 1)}-${this.formatNumber(date.getDate())}`
+    },
+
+    formatNumber(num) {
+      return num < 10 ? '0' + num : num
+    },
   },
 }
 </script>
 
 <style lang="scss">
+.button-add-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  align-self: flex-end;
+  padding: 10px 18px;
+  max-width: 118px;
+  max-height: 36px;
+  border: 1px solid #004b85;
+  border-radius: 16px;
+  background: #004b85;
+  color: #ffff;
+  font-weight: 600;
+  cursor: pointer;
+
+  .pi.pi-plus {
+    font-size: 10px;
+  }
+
+  &-text {
+    font-size: 13px;
+    line-height: 16px;
+  }
+}
 .assets-table {
   width: 100%;
   font-size: 13px;

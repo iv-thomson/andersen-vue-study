@@ -5,3 +5,15 @@ export const getHttpRequest = async endpoint => {
 
   return response.json()
 }
+
+export const sendHttpRequest = async (endpoint, data) => {
+  const response = await fetch(baseUrl + endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+
+  return response.json()
+}

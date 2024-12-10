@@ -1,5 +1,5 @@
 <template>
-  <div
+  <button
     class="base-table__checkbox"
     :class="{ checked: value }"
     aria-label="Select Row"
@@ -19,7 +19,6 @@ export default {
   emits: ['update:value'],
   methods: {
     handleClick() {
-      console.log('Checkbox clicked, current value:', this.value)
       this.$emit('update:value', !this.value)
     },
   },
