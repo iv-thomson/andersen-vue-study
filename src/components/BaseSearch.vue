@@ -54,12 +54,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/assets/variables';
 .base-search {
   position: relative;
   display: flex;
   align-items: center;
 
   &__input {
+    color: $color-light-gray;
     width: 220px;
     font-size: 0.8rem;
     padding: 10px 18px 10px 40px;
