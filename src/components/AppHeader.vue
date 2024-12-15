@@ -1,5 +1,6 @@
 <template>
   <header class="app-header">
+    <RouterLink to="/monthly-billing">Monthly billing</RouterLink>
     <RouterLink to="/accounting-codes">Accounting codes</RouterLink>
     <RouterLink to="/activity/background-jobs"
       >Activity Background jobs</RouterLink

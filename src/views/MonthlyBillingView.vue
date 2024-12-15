@@ -1,61 +1,36 @@
 <template>
-  <div class="background-jobs">
-    <div class="background-jobs__header">
-      <h1 class="background-jobs__page-title">Background Jobs</h1>
-      <div class="background-jobs__bread-crumbs">
-        <span class="background-jobs__bread-crumb">Activity</span>
+  <div class="monthly-billing">
+    <div class="monthly-billing__header">
+      <h1 class="monthly-billing__page-title">
+        Monthly Billing - <span>September 2024</span>
+      </h1>
+      <div class="monthly-billing__bread-crumbs">
+        <span class="monthly-billing__bread-crumb">Carrier Reports</span>
         <img src="@/assets/icons/chevron-right.svg" alt="chevron" />
-        <span class="background-jobs__bread-crumb">Background Jobs</span>
+        <span class="monthly-billing__bread-crumb">Monthly Billing</span>
       </div>
     </div>
-    <div class="background-jobs__table-wrapper">
-      <div class="background-jobs__table-filters">
-        <label class="background-jobs__label"
-          >Name
-          <input
-            type="text"
-            placeholder="input"
-            class="background-jobs__input"
-          />
-        </label>
-        <label class="background-jobs__label"
-          >Status
-          <BaseSelect
-            :options="selectOptions"
-            :selected-value="selectedValue"
-            @select="handleSelectOption"
-          />
-        </label>
-        <BaseSearch v-model="searchValue" placeholder="Search Device List..." />
+    <div class="monthly-billing__wrapper">
+      <div class="asset-management-container">
+        <CategorySwitch
+          v-model="selectedCategory"
+          :categories="categoryOptions"
+        >
+        </CategorySwitch>
+        <AssetsTable :default-category="selectedCategory" />
       </div>
-      <BaseTable
-        :items-data="filteredData"
-        :with-checkbox="false"
-        :with-table-button="true"
-        :show-column-badge="true"
-        badge-field="status"
-        red-badge-value="incompleted"
-        green-badge-value="completed"
-        vhtml-field="createdAt"
-        @row-button-click="handleRowButtonClick"
-      />
     </div>
   </div>
 </template>
 
 <script>
-import { fetchBackgroundJobs } from '@/api/background-jobs.api'
-import BaseTable from '@/components/BaseTable/BaseTable.vue'
-import BaseSelect from '@/components/BaseSelect.vue'
-import BaseSearch from '@/components/BaseSearch.vue'
+import CategorySwitch from '@/components/AssetsTable/CategorySwitch.vue'
+import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
+import { getHttpRequest } from '@/services/httpService'
 
 export default {
-  name: 'ActivityBacgroundJobs',
-  components: {
-    BaseTable,
-    BaseSelect,
-    BaseSearch,
-  },
+  name: 'MonthlyBilling',
+  components: {},
   data() {
     return {
       jobsData: [],
@@ -100,7 +75,7 @@ export default {
   },
   async created() {
     try {
-      const data = await fetchBackgroundJobs()
+      const data = await getHttpRequest('/activity-background-jobs.json')
       this.jobsData = data
     } catch (error) {
       console.error('Data fetching error:', error)
@@ -123,7 +98,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.background-jobs {
+.monthly-billing {
   position: relative;
   padding: 0 80px 30px;
 
@@ -146,7 +121,7 @@ export default {
     left: 0;
     width: 32px;
     height: 32px;
-    background: url('../assets/icons/bolt.svg') no-repeat center/contain;
+    background: url('../assets/icons/chart-bar.svg') no-repeat center/contain;
   }
 
   &__bread-crumbs {
@@ -184,7 +159,7 @@ export default {
     }
   }
 
-  &__table-wrapper {
+  &__wrapper {
     max-width: 1308px;
     display: flex;
     flex-direction: column;
