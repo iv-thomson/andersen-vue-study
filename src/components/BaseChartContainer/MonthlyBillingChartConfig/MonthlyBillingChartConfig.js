@@ -5,7 +5,7 @@ export default function initXYChart(chart, chartData) {
   chart.data = chartData
 
   const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis())
-  categoryAxis.dataFields.category = 'country'
+  categoryAxis.dataFields.category = 'month'
   categoryAxis.renderer.grid.template.disabled = true
   categoryAxis.renderer.baseGrid.disabled = true
   categoryAxis.renderer.line.strokeWidth = 1
@@ -19,41 +19,44 @@ export default function initXYChart(chart, chartData) {
   valueAxis.renderer.line.strokeOpacity = 1
   valueAxis.renderer.line.stroke = am4core.color('#000000')
   valueAxis.min = 0
+  valueAxis.renderer.labels.template.adapter.add('dy', dy => dy - 10)
+  valueAxis.renderer.labels.template.adapter.add('text', text => {
+    return '$' + text
+  })
 
   const series1 = chart.series.push(new am4charts.ColumnSeries())
-  series1.dataFields.valueY = 'litres1'
-  series1.dataFields.categoryX = 'country'
-  series1.name = 'Sales A'
+  series1.dataFields.valueY = 't-mobile'
+  series1.dataFields.categoryX = 'month'
+  series1.name = 'T-Mobile'
   series1.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]'
-  series1.columns.template.fill = am4core.color('#67b7dc')
+  const series1Color = am4core.color('#67b7dc')
+  series1.columns.template.fill = series1Color
   series1.columns.template.strokeWidth = 0
+  series1.columns.template.adapter.add('y', y => y - 10)
 
   const series2 = chart.series.push(new am4charts.ColumnSeries())
-  series2.dataFields.valueY = 'litres2'
-  series2.dataFields.categoryX = 'country'
-  series2.name = 'Sales B'
+  series2.dataFields.valueY = 'bell'
+  series2.dataFields.categoryX = 'month'
+  series2.name = 'Bell'
   series2.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]'
-  series2.columns.template.fill = am4core.color('#6794dc')
+  const series2Color = am4core.color('#6794dc')
+  series2.columns.template.fill = series2Color
   series2.columns.template.strokeWidth = 0
-  series2.stacked = false
+  series2.stacked = true
+  series2.columns.template.adapter.add('y', y => y - 10)
 
   const series3 = chart.series.push(new am4charts.ColumnSeries())
-  series3.dataFields.valueY = 'litres3'
-  series3.dataFields.categoryX = 'country'
-  series3.name = 'Sales C'
+  series3.dataFields.valueY = 'AT&T'
+  series3.dataFields.categoryX = 'month'
+  series3.name = 'AT&T'
   series3.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]'
-  series3.columns.template.fill = am4core.color('#6771dc')
+  const series3Color = am4core.color('#6771dc')
+  series3.columns.template.fill = series3Color
   series3.columns.template.strokeWidth = 0
   series3.columns.template.column.cornerRadiusTopLeft = 8
   series3.columns.template.column.cornerRadiusTopRight = 8
-  series3.stacked = false
-
-  // Сдвиг столбцов
-  series1.columns.template.adapter.add('y', y => y - 10)
-  series2.columns.template.adapter.add('y', y => y - 10)
+  series3.stacked = true
   series3.columns.template.adapter.add('y', y => y - 10)
-
-  valueAxis.renderer.labels.template.adapter.add('dy', dy => dy - 10)
 
   chart.paddingTop = 20
   chart.legend = new am4charts.Legend()
