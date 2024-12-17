@@ -10,67 +10,53 @@
         <span class="monthly-billing__bread-crumb">Monthly Billing</span>
       </div>
     </div>
-    <div class="monthly-billing__wrapper">
-      <div class="asset-management-container">
-        <CategorySwitch
-          v-model="selectedCategory"
-          :categories="categoryOptions"
-        >
-        </CategorySwitch>
-        <AssetsTable :default-category="selectedCategory" />
-      </div>
+    <div class="monthly-billing__wrapper monthly-billing__wrapper_small">
+      <CategorySwitch v-model="selectedCategory" :categories="categoryOptions">
+      </CategorySwitch>
+    </div>
+    <div class="monthly-billing__wrapper monthly-billing__wrapper_medium">
+      <BaseChartContainer
+        :chart-data="chartDataCopy"
+        @chart-created="onChartCreated"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import CategorySwitch from '@/components/AssetsTable/CategorySwitch.vue'
-import AssetsTable from '@/components/AssetsTable/AssetsTable.vue'
+import BaseChartContainer from '@/components/BaseChartContainer/BaseChartContainer.vue'
+import initXYChart from '@/components/BaseChartContainer/MonthlyBillingChartConfig/MonthlyBillingChartConfig'
 import { getHttpRequest } from '@/services/httpService'
 
 export default {
   name: 'MonthlyBilling',
-  components: {},
+  components: { CategorySwitch, BaseChartContainer },
   data() {
     return {
       jobsData: [],
-      selectOptions: [
-        { name: 'all', value: 0 },
-        { name: 'completed', value: 1 },
-        { name: 'incompleted', value: 2 },
+      categoryOptions: [
+        {
+          name: 'July 2024',
+        },
+        {
+          name: 'August 2024',
+        },
+        {
+          name: 'September 2024',
+        },
       ],
-      selectedValue: 'all',
-      searchValue: '',
+      selectedCategory: 'September 2024',
+      chartData: [
+        { country: 'USA', litres1: 20, litres2: 15, litres3: 15 },
+        { country: 'Germany', litres1: 35, litres2: 25, litres3: 15 },
+        { country: 'France', litres1: 30, litres2: 20, litres3: 15 },
+      ],
     }
   },
   computed: {
-    filteredData() {
-      let result = [...this.jobsData]
-
-      if (this.selectedValue !== 'all') {
-        result = result.filter(item => item.status === this.selectedValue)
-      }
-
-      if (this.searchValue) {
-        result = result.filter(item =>
-          Object.values(item).some(field =>
-            String(field)
-              .toLowerCase()
-              .includes(this.searchValue.toLowerCase()),
-          ),
-        )
-      }
-
-      result = result.map(item => {
-        return Object.keys(item)
-          .filter(key => key !== 'statistics')
-          .reduce((newItem, key) => {
-            newItem[key] = item[key]
-            return newItem
-          }, {})
-      })
-
-      return result
+    chartDataCopy() {
+      return JSON.parse(JSON.stringify(this.chartData))
     },
   },
   async created() {
@@ -82,16 +68,9 @@ export default {
     }
   },
   methods: {
-    handleSelectOption(option) {
-      this.selectedValue = option.name
-      this.searchValue = ''
-    },
-
-    handleRowButtonClick(rowDataId) {
-      this.$router.push({
-        name: 'job',
-        params: { jobId: rowDataId },
-      })
+    onChartCreated(chart, chartData) {
+      // Настраиваем график
+      initXYChart(chart, chartData)
     },
   },
 }
@@ -101,17 +80,22 @@ export default {
 .monthly-billing {
   position: relative;
   padding: 0 80px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
 
   &__header {
     max-width: 1308px;
     position: relative;
     display: flex;
+    margin-top: 10px;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
   }
 
   &__page-title {
     padding-left: 40px;
+    margin-bottom: 0;
   }
 
   &__page-title::before {
@@ -138,37 +122,21 @@ export default {
     cursor: pointer;
   }
 
-  &__input {
-    width: 220px;
-    font-size: 0.8rem;
-    position: relative;
-    padding: 10px 18px;
-    border: solid 1px #bdbfc1;
-    border-radius: 16px;
-    cursor: pointer;
-  }
-
-  &__label {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    &:last-of-type {
-      flex: 1;
-    }
-  }
-
   &__wrapper {
     max-width: 1308px;
     display: flex;
     flex-direction: column;
     gap: 25px;
-    padding: 36px;
     border: 1px solid #bdbfc1;
     border-radius: 28px;
     box-shadow: 0px 10px 10px -5px #0000000a;
     box-shadow: 0px 20px 25px -5px #0000001a;
+    &_small {
+      padding: 0 18px;
+    }
+    &_medium {
+      padding: 24px;
+    }
   }
 
   &__table-filters {
