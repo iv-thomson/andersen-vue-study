@@ -62,15 +62,18 @@
       </template></Column
     >
     <Column v-if="withTableButton" :style="{ textAlign: 'end' }">
+      <template #header><slot name="header"></slot></template>
       <template #body="slotProps">
-        <BaseButton
-          label="Info"
-          variant="outlined"
-          class="base-table__button"
-          @click="handleButtonClick(slotProps.data)"
-        >
-          Details
-        </BaseButton>
+        <slot name="table-button" :data="slotProps.data">
+          <BaseButton
+            label="Info"
+            variant="outlined"
+            class="base-table__button"
+            @click="handleButtonClick(slotProps.data)"
+          >
+            Details
+          </BaseButton>
+        </slot>
       </template>
     </Column>
   </DataTable>
