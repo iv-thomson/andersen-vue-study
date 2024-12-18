@@ -2,7 +2,7 @@
   <div class="monthly-billing">
     <div class="monthly-billing__header">
       <h1 class="monthly-billing__page-title">
-        Monthly Billing - <span>{{ firstInfoChartKey }}</span>
+        Monthly Billing - <span>{{ selectedCategory }}</span>
       </h1>
       <div class="monthly-billing__bread-crumbs">
         <span class="monthly-billing__bread-crumb">Carrier Reports</span>
@@ -14,16 +14,16 @@
       <CategorySwitch v-model="selectedCategory" :categories="categoryOptions">
       </CategorySwitch>
     </div>
-    <div class="monthly-billing__wrapper monthly-billing__wrapper_medium">
+    <div class="monthly-billing__wrapper monthly-billing__wrapper_large">
       <keep-alive>
         <BaseChartContainer
-          v-if="chartDataCopy && chartDataCopy.length > 0"
-          :chart-data="chartDataCopy"
+          v-if="chartDataSelected && chartDataSelected.length > 0"
+          :chart-data="chartDataSelected"
           @chart-created="onChartCreated"
         >
           <template #info-block>
             <div
-              v-for="(value, key) in infoChartData"
+              v-for="(value, key) in infoChartData(0, 3)"
               :key="value + key"
               class="info-block info-block_chart"
             >
@@ -36,10 +36,10 @@
       </keep-alive>
     </div>
     <div
-      class="monthly-billing__wrapper monthly-billing__wrapper_medium monthly-billing__wrapper_dashboard"
+      class="monthly-billing__wrapper monthly-billing__wrapper_large monthly-billing__wrapper_dashboard"
     >
       <div
-        v-for="(value, key) in dashboardData"
+        v-for="(value, key) in infoChartData(3)"
         :key="value + key"
         class="info-block info-block_dashboard"
       >
@@ -49,6 +49,25 @@
         <div class="info-block__title">{{ key }}</div>
       </div>
     </div>
+    <div class="monthly-billing__wrapper monthly-billing__wrapper_medium">
+      <CategorySwitch
+        v-model="selectedSmartCategory"
+        :categories="smartphonesOptions"
+      >
+      </CategorySwitch>
+      <keep-alive>
+        <BaseChartContainer
+          v-if="
+            smartphonesChartDataSelected &&
+            smartphonesChartDataSelected.length > 0
+          "
+          :chart-data="smartphonesChartDataSelected"
+          @chart-created="onSmartphonesChartCreated"
+        >
+        </BaseChartContainer>
+        <ProgressSpinner v-else />
+      </keep-alive>
+    </div>
   </div>
 </template>
 
@@ -56,11 +75,19 @@
 import {
   fetchMonthlyBilling,
   fetchInfoPanelsData,
+  fetchSmartphonesData,
 } from '@/api/montly-billing.api'
 import ProgressSpinner from 'primevue/progressspinner'
 import CategorySwitch from '@/components/AssetsTable/CategorySwitch.vue'
 import BaseChartContainer from '@/components/BaseChartContainer/BaseChartContainer.vue'
 import initXYChart from '@/components/BaseChartContainer/MonthlyBillingChartConfig/MonthlyBillingChartConfig'
+import initXYSmartphonesChart from '@/components/BaseChartContainer/MonthlyBillingChartConfig/SmartphonesChartConfig'
+import {
+  CATEGORY_OPTIONS,
+  SELECTED_CATEGORY,
+  SMARTPHONES_OPTIONS,
+  SELECTED_SMARY_CATEGORY,
+} from '@/components/BaseChartContainer/constants/monthlyBilling'
 
 export default {
   name: 'MonthlyBilling',
@@ -69,49 +96,35 @@ export default {
     return {
       chartData: [],
       infoData: [],
-      categoryOptions: [
-        {
-          name: 'July 2024',
-        },
-        {
-          name: 'August 2024',
-        },
-        {
-          name: 'September 2024',
-        },
-      ],
-      selectedCategory: 'September 2024',
+      smartphonesData: [],
+      categoryOptions: CATEGORY_OPTIONS,
+      selectedCategory: SELECTED_CATEGORY,
+      smartphonesOptions: SMARTPHONES_OPTIONS,
+      selectedSmartCategory: SELECTED_SMARY_CATEGORY,
     }
   },
   computed: {
-    firstInfoChartKey() {
-      return this.infoChartData ? Object.keys(this.infoChartData)[0] : ''
-    },
     categoryIndex() {
-      return this.categoryOptions.findIndex(
-        category => category.name === this.selectedCategory,
+      return this.findCategoryIndex(this.categoryOptions, this.selectedCategory)
+    },
+    smartCategoryIndex() {
+      return this.findCategoryIndex(
+        this.smartphonesOptions,
+        this.selectedSmartCategory,
       )
     },
-    chartDataCopy() {
-      return this.categoryIndex >= 0 && this.chartData[this.categoryIndex]
-        ? this.chartData[this.categoryIndex]
-        : null
+    chartDataSelected() {
+      return this.getSelectedData(this.chartData, this.categoryIndex)
     },
-    infoChartData() {
-      const data = this.infoData[this.categoryIndex]
-      if (!data) return null
-      return Object.fromEntries(Object.entries(data).slice(0, 3))
-    },
-    dashboardData() {
-      const data = this.infoData[this.categoryIndex]
-      if (!data) return null
-      return Object.fromEntries(Object.entries(data).slice(3))
+    smartphonesChartDataSelected() {
+      return this.getSelectedData(this.smartphonesData, this.smartCategoryIndex)
     },
   },
   async created() {
     try {
       this.chartData = await fetchMonthlyBilling()
       this.infoData = await fetchInfoPanelsData()
+      this.smartphonesData = await fetchSmartphonesData()
     } catch (error) {
       console.error('Data fetching error:', error)
     }
@@ -119,6 +132,20 @@ export default {
   methods: {
     onChartCreated(chart, chartData) {
       initXYChart(chart, chartData)
+    },
+    onSmartphonesChartCreated(chart, chartData) {
+      initXYSmartphonesChart(chart, chartData)
+    },
+    infoChartData(start, end) {
+      const data = this.infoData[this.categoryIndex]
+      if (!data) return null
+      return Object.fromEntries(Object.entries(data).slice(start, end))
+    },
+    findCategoryIndex(options, selectedCategory) {
+      return options.findIndex(category => category.name === selectedCategory)
+    },
+    getSelectedData(dataArray, index) {
+      return index >= 0 && dataArray[index] ? dataArray[index] : null
     },
   },
 }
@@ -186,6 +213,9 @@ export default {
       padding: 0 18px;
     }
     &_medium {
+      padding: 10px 24px;
+    }
+    &_large {
       padding: 24px;
     }
   }

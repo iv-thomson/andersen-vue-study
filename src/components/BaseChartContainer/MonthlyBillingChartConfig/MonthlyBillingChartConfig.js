@@ -29,8 +29,7 @@ export default function initXYChart(chart, chartData) {
   series1.dataFields.categoryX = 'month'
   series1.name = 'T-Mobile'
   series1.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]'
-  const series1Color = am4core.color('#67b7dc')
-  series1.columns.template.fill = series1Color
+  series1.columns.template.fill = am4core.color('#67b7dc')
   series1.columns.template.strokeWidth = 0
   series1.columns.template.adapter.add('y', y => y - 10)
 
@@ -39,8 +38,7 @@ export default function initXYChart(chart, chartData) {
   series2.dataFields.categoryX = 'month'
   series2.name = 'Bell'
   series2.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]'
-  const series2Color = am4core.color('#6794dc')
-  series2.columns.template.fill = series2Color
+  series2.columns.template.fill = am4core.color('#6794dc')
   series2.columns.template.strokeWidth = 0
   series2.stacked = true
   series2.columns.template.adapter.add('y', y => y - 10)
@@ -50,8 +48,7 @@ export default function initXYChart(chart, chartData) {
   series3.dataFields.categoryX = 'month'
   series3.name = 'AT&T'
   series3.columns.template.tooltipText = '{categoryX}: [bold]{valueY}[/]'
-  const series3Color = am4core.color('#6771dc')
-  series3.columns.template.fill = series3Color
+  series3.columns.template.fill = am4core.color('#6771dc')
   series3.columns.template.strokeWidth = 0
   series3.columns.template.column.cornerRadiusTopLeft = 8
   series3.columns.template.column.cornerRadiusTopRight = 8

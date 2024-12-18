@@ -7,3 +7,7 @@ export const fetchMonthlyBilling = async () => {
 export const fetchInfoPanelsData = async () => {
   return await getHttpRequest('/montly-billing/info-panels-data.json')
 }
+
+export const fetchSmartphonesData = async () => {
+  return await getHttpRequest('/montly-billing/smartphones.json')
+}

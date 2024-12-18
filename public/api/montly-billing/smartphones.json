@@ -1,0 +1,36 @@
+[
+  [
+    { "parameter": "Rate Plan", "sum": 230000 },
+    { "parameter": "Features", "sum": 60000 },
+    { "parameter": "Taxes", "sum": 40000 },
+    { "parameter": "Airtime Overage", "sum": 30000 },
+    { "parameter": "Roaming", "sum": 20000 },
+    { "parameter": "Data Overage", "sum": 10000 }
+  ],
+  [
+    { "parameter": "Rate Plan", "sum": 180000 },
+    { "parameter": "Huawei", "sum": 50000 },
+    { "parameter": "Xiaomi", "sum": 30000 },
+    { "parameter": "Samsung", "sum": 20000 },
+    { "parameter": "Iphone", "sum": 10000 },
+    { "parameter": "Sony", "sum": 7000 }
+  ],
+  [
+    { "parameter": "Rate Plan", "sum": 90000 },
+    { "parameter": "A-DATA", "sum": 30000 },
+    { "parameter": "Transcend", "sum": 10000 },
+    { "parameter": "Sony", "sum": 20000 }
+  ],
+  [
+    { "parameter": "Samsung", "sum": 100000 },
+    { "parameter": "Iphone", "sum": 90000 },
+    { "parameter": "A-DATA", "sum": 80000 },
+    { "parameter": "Transcend", "sum": 70000 },
+    { "parameter": "Huawei", "sum": 60000 },
+    { "parameter": "Sony", "sum": 50000 },
+    { "parameter": "Xiaomi", "sum": 40000 },
+    { "parameter": "Prestigio", "sum": 30000 },
+    { "parameter": "Lenovo", "sum": 20000 },
+    { "parameter": "Vivo", "sum": 10000 }
+  ]
+]
