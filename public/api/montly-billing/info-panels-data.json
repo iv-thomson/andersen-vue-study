@@ -1,0 +1,26 @@
+[
+  {
+    "July 2024": 11459.75,
+    "Overage Charges": 1432.2,
+    "Roaming Charges": 2356.5,
+    "Total Devices": 9140,
+    "No-Usage Devices": 1233,
+    "Average Cost Per Device": 2.25
+  },
+  {
+    "August 2024": 17356.22,
+    "Overage Charges": 1234.6,
+    "Roaming Charges": 2659.1,
+    "Total Devices": 9268,
+    "No-Usage Devices": 1359,
+    "Average Cost Per Device": 2.12
+  },
+  {
+    "September 2024": 18168.43,
+    "Overage Charges": 1169.9,
+    "Roaming Charges": 2425.5,
+    "Total Devices": 9423,
+    "No-Usage Devices": 1535,
+    "Average Cost Per Device": 1.93
+  }
+]

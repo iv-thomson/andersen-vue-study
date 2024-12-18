@@ -1,0 +1,44 @@
+[
+  [
+    { "month": "aug", "t-mobile": 295000, "bell": 7900, "AT&T": 9400 },
+    { "month": "sep", "t-mobile": 305000, "bell": 9800, "AT&T": 8600 },
+    { "month": "oct", "t-mobile": 295000, "bell": 9200, "AT&T": 9100 },
+    { "month": "nov", "t-mobile": 215000, "bell": 9500, "AT&T": 11000 },
+    { "month": "dec", "t-mobile": 250000, "bell": 9200, "AT&T": 9700 },
+    { "month": "jan", "t-mobile": 295000, "bell": 8900, "AT&T": 9500 },
+    { "month": "feb", "t-mobile": 220000, "bell": 10100, "AT&T": 8800 },
+    { "month": "mar", "t-mobile": 315000, "bell": 7800, "AT&T": 9200 },
+    { "month": "apr", "t-mobile": 290000, "bell": 8000, "AT&T": 9300 },
+    { "month": "may", "t-mobile": 275000, "bell": 10300, "AT&T": 9900 },
+    { "month": "jun", "t-mobile": 310000, "bell": 9700, "AT&T": 10100 },
+    { "month": "jul", "t-mobile": 265000, "bell": 8500, "AT&T": 8700 }
+  ],
+  [
+    { "month": "sep", "t-mobile": 310000, "bell": 10200, "AT&T": 8700 },
+    { "month": "oct", "t-mobile": 305000, "bell": 9100, "AT&T": 8900 },
+    { "month": "nov", "t-mobile": 225000, "bell": 11000, "AT&T": 9500 },
+    { "month": "dec", "t-mobile": 235000, "bell": 8500, "AT&T": 10500 },
+    { "month": "jan", "t-mobile": 310000, "bell": 9000, "AT&T": 9200 },
+    { "month": "feb", "t-mobile": 240000, "bell": 10500, "AT&T": 8100 },
+    { "month": "mar", "t-mobile": 305000, "bell": 7500, "AT&T": 8900 },
+    { "month": "apr", "t-mobile": 295000, "bell": 8200, "AT&T": 9100 },
+    { "month": "may", "t-mobile": 285000, "bell": 9800, "AT&T": 9500 },
+    { "month": "jun", "t-mobile": 290000, "bell": 9600, "AT&T": 10200 },
+    { "month": "jul", "t-mobile": 275000, "bell": 8800, "AT&T": 8500 },
+    { "month": "aug", "t-mobile": 300000, "bell": 7700, "AT&T": 9300 }
+  ],
+  [
+    { "month": "oct", "t-mobile": 300000, "bell": 9000, "AT&T": 9000 },
+    { "month": "nov", "t-mobile": 220000, "bell": 10000, "AT&T": 10000 },
+    { "month": "dec", "t-mobile": 240000, "bell": 9000, "AT&T": 10000 },
+    { "month": "jan", "t-mobile": 300000, "bell": 8000, "AT&T": 9000 },
+    { "month": "feb", "t-mobile": 230000, "bell": 10000, "AT&T": 8000 },
+    { "month": "mar", "t-mobile": 300000, "bell": 8000, "AT&T": 9000 },
+    { "month": "apr", "t-mobile": 300000, "bell": 8000, "AT&T": 9000 },
+    { "month": "may", "t-mobile": 280000, "bell": 10000, "AT&T": 10000 },
+    { "month": "jun", "t-mobile": 300000, "bell": 10000, "AT&T": 10000 },
+    { "month": "jul", "t-mobile": 270000, "bell": 9000, "AT&T": 8000 },
+    { "month": "aug", "t-mobile": 290000, "bell": 8000, "AT&T": 9000 },
+    { "month": "sep", "t-mobile": 300000, "bell": 10000, "AT&T": 8000 }
+  ]
+]

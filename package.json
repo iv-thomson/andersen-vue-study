@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@amcharts/amcharts4": "^4.10.39",
     "@primevue/themes": "^4.2.3",
     "dompurify": "^3.2.1",
     "primeicons": "^7.0.0",

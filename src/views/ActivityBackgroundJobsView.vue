@@ -44,10 +44,10 @@
 </template>
 
 <script>
+import { fetchBackgroundJobs } from '@/api/background-jobs.api'
 import BaseTable from '@/components/BaseTable/BaseTable.vue'
 import BaseSelect from '@/components/BaseSelect.vue'
 import BaseSearch from '@/components/BaseSearch.vue'
-import { getHttpRequest } from '@/services/httpService'
 
 export default {
   name: 'ActivityBacgroundJobs',
@@ -100,7 +100,7 @@ export default {
   },
   async created() {
     try {
-      const data = await getHttpRequest('/activity-background-jobs.json')
+      const data = await fetchBackgroundJobs()
       this.jobsData = data
     } catch (error) {
       console.error('Data fetching error:', error)

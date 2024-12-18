@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { getHttpRequest } from '@/services/httpService'
+import { fetchBackgroundJobs } from '@/api/background-jobs.api'
 import DOMPurify from 'dompurify'
 
 export default {
@@ -84,7 +84,7 @@ export default {
   },
   async created() {
     try {
-      const data = await getHttpRequest('/activity-background-jobs.json')
+      const data = await fetchBackgroundJobs()
       this.jobsData = data
     } catch (error) {
       console.error('Data fetching error:', error)
